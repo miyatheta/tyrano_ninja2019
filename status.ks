@@ -5,10 +5,10 @@
 [eval exp="f.P_STR=24"]
 ;耐久＞防御力
 [eval exp="f.P_DUR=20"]
-;敏捷＞回避と命中
+;敏捷＞回避
 [eval exp="f.P_AGI=36"]
-;技量＞クリティカル率
-[eval exp="f.P_TEC=30"]
+;技量＞命中
+[eval exp="f.P_DEX=26"]
 ;幸運＞乱数の幅
 [eval exp="f.P_LUK=5"]
 ;呼吸＞行動回数
@@ -32,7 +32,7 @@
 ;敏捷＞回避
 [eval exp="f.E_AGI=20"]
 ;技量＞クリティカル率
-[eval exp="f.E_TEC=24"]
+[eval exp="f.E_DEX=30"]
 ;幸運＞乱数の幅
 [eval exp="f.E_LUK=5"]
 ;呼吸＞行動回数

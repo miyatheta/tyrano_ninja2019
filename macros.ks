@@ -37,7 +37,7 @@ f.BaseEnFP = f.originEnFP;
 f.BaseEnERO = f.originEnERO;
 f.BaseEnMND = f.originEnMND;
 f.BaseEnANG = f.originEnANG;
-f.BaseEnTEC = f.originEnTEC;
+f.BaseEnDEX = f.originEnDEX;
 f.BaseEnEND = f.originEnEND;
 f.BaseBindPower = f.originBindPower;
 
@@ -50,7 +50,7 @@ f.EnFP = f.BaseEnFP;
 f.EnERO = f.BaseEnERO;
 f.EnMND = f.BaseEnMND;
 f.EnANG = f.BaseEnANG;
-f.EnTEC = f.BaseEnTEC;
+f.EnDEX = f.BaseEnDEX;
 f.EnEND = f.BaseEnEND;
 f.BindPower = f.BaseBindPower;
 
