@@ -77,8 +77,43 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *P_attack_select
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="攻撃"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="240"  text="攻撃"  target="*P_attack_option"  ]
+[s]
+
+*P_skill_option
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="310"  text="戻る"  target="*P_attack_select"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
+[s]
+
+*P_skill_conf1
+火炎：気力40：印4：呼吸-1：手番継続[p]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
+
+*P_skill1
+くぬぎの忍術・火炎[p]
+[call target="*E_Def_select"]
+[eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = tf.P_POW * 10 + tf.dice"]
+[eval exp="tf.Damage = tf.ATP - tf.DEF"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald"]
+[quake count=5 time=300 hmax=20]
+敵に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump target="*P_turn_start"]
+[s]
+
+*P_skill_conf2
+
+[s]
+
+*P_skill_conf3
+
 [s]
 
 *P_attack_option
@@ -109,6 +144,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.RATE = 9.0 , tf.ACC = 0 , tf.comb=0"]
 [eval exp="tf.TAG = tf.ACC + tf.P_DEX * 3 - tf.E_AGI"]
 回し蹴り：威力90×１：命中率[emb exp="tf.TAG"]％：呼吸-2：手番終了[p]
+[if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  target="*P_attack3"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_attack_option"  ]
 [s]
@@ -136,11 +172,11 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [return]
 
 *P_attack1
-PLの拳[p]
+くぬぎの拳[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.TAG < tf.dice + tf.E_AVD"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2 + tf.dice) * tf.E_DEFd1"]
+[eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = tf.P_STR * tf.RATE"]
 [dice][eval exp="tf.Damage1 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage1 = 0" cond="tf.Damage1<0"]
 [dice][eval exp="tf.Damage2 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage2 = 0" cond="tf.Damage2<0"]
@@ -154,11 +190,11 @@ PLの拳[p]
 [s]
 
 *P_attack2
-PLの下段蹴り[p]
+くぬぎの下段蹴り[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.TAG < tf.dice + tf.E_AVD"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2 + tf.dice) * tf.E_DEFd1"]
+[eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.ATP = tf.P_STR * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"]
@@ -171,11 +207,11 @@ PLの下段蹴り[p]
 [s]
 
 *P_attack3
-PLの回し蹴り[p]
+くぬぎの回し蹴り[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 2"]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.TAG < tf.dice + tf.E_AVD"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2 + tf.dice) * tf.E_DEFd1"]
+[eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.ATP = tf.P_STR * tf.RATE"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF + tf.dice)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"]
@@ -186,11 +222,11 @@ PLの回し蹴り[p]
 [s]
 
 *P_attack4
-PLのくない[p]
+くぬぎのくない[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.TAG < tf.dice + tf.E_AVD"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2 + tf.dice) * tf.E_DEFd1"]
+[eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = tf.P_STR * tf.RATE"]
 [dice][eval exp="tf.Damage1 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage1 = 0" cond="tf.Damage1<0"]
 [dice][eval exp="tf.Damage2 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage2 = 0" cond="tf.Damage2<0"]
@@ -262,8 +298,8 @@ PLのくない[p]
 
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.TAG < tf.dice + tf.P_AVD"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DEFd1"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.ATP = tf.E_STR * tf.RATE"]
-[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF + tf.dice)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.ATP = tf.E_STR * tf.RATE"]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -281,8 +317,8 @@ PLのくない[p]
 
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.TAG < tf.dice + tf.P_AVD"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DEFd1"]
-[eval exp="tf.Max=9 , tf.Min=0+f.E_LUK"][dice][eval exp="tf.ATP = tf.E_STR * tf.RATE"]
-[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF + tf.dice)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.ATP = tf.E_STR * tf.RATE"]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -318,7 +354,7 @@ PLのくない[p]
 クヌギは敵に抑え込まれた[p]
 
 *mount_start
-[eval exp="tf.mount = 50 + (tf.E_STR - tf.P_STR) * 5"]
+[eval exp="tf.Mount = 50 + (tf.E_STR - tf.P_STR) * 5"]
 
 *P_mount_select
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="暴れる"  target="*P_mount_option1"  ]
@@ -330,12 +366,12 @@ PLのくない[p]
 くぬぎは暴れた[p]
 [quake count=5 time=300 hmax=20]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.mount < tf.dice"]
+[if exp="tf.Mount < tf.dice"]
 くぬぎは拘束を振りほどいた[p]
 [jump target="*mount_end"]
 [else]
 しかし、拘束を振りほどくことはできなかった[p]
-[eval exp="tf.mount = tf.mount - tf.P_STR"]
+[eval exp="tf.Mount = tf.Mount - tf.P_STR"]
 [jump target="*E_mount_select"]
 [endif]
 [s]
@@ -357,11 +393,11 @@ PLのくない[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.TAG < tf.dice"]
 柔らかな感触に敵は相好を崩した[p]
-[eval exp="tf.mount = tf.mount - tf.P_APP"]
+[eval exp="tf.Mount = tf.Mount - tf.P_APP"]
 [else]
 しかし、敵は動じなかった[p]
 [endif]
-[if exp="tf.mount <= 0"]
+[if exp="tf.Mount <= 0"]
 #くぬぎ
 隙あり！！[p]
 くぬぎは敵の拘束から抜け出した[p]
