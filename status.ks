@@ -31,12 +31,12 @@
 ;体力
 [eval exp="f.E_HP=1000"]
 ;腕力＞攻撃力
-[eval exp="f.E_STR=36"]
+[eval exp="f.E_STR=33"]
 ;耐久＞防御力
 [eval exp="f.E_DUR=30"]
 ;敏捷＞回避
 [eval exp="f.E_AGI=18"]
-;技量＞クリティカル率
+;技量＞命中
 [eval exp="f.E_DEX=24"]
 ;幸運＞乱数の幅
 [eval exp="f.E_LUK=5"]
