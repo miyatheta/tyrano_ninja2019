@@ -53,47 +53,52 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [jump target="*game_set" cond="tf.E_HP <= 0"]
 [endmacro]
 
+[macro name="HPlimit"]
+[eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
+[eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
+[endmacro]
+
 #
 戦闘を開始します[p]
 [chara_show  name="kunugi"  ]
 [chara_show  name="gouza"  ]
-
+;ステータスのインストール
 [eval exp="tf.Round=0"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACT=f.P_ACT, tf.P_ERO=f.P_ERO"]
 [eval exp="tf.P_DEFd1=1 , tf.P_AGId1=1 ,tf.P_DEXd1=1"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW, tf.E_ACT=f.E_ACT , tf.E_ERO=f.E_ERO"]
 [eval exp="tf.E_DEFd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
 ;疲労の反映
-[if exp="f.P_EXH >89"]
-疲労（重度）[p]
-[eval exp="tf.P_AGI=tf.P_AGI-20 , tf.P_ACT=tf.P_ACT-2"]
-
-[elsif exp="f.P_EXH >69"]
-疲労[p]
-[eval exp="tf.P_AGI=tf.P_AGI-15 , tf.P_ACT=tf.P_ACT-1"]
-
-[elsif exp="f.P_EXH >49"]
-疲労（軽度）[p]
-[eval exp="tf.P_AGI=tf.P_AGI-10"]
+[if exp="f.P_EXH >89"]疲労（重度）[p][eval exp="tf.P_AGI=tf.P_AGI-20 , tf.P_ACT=tf.P_ACT-2"]
+[elsif exp="f.P_EXH >69"]疲労[p][eval exp="tf.P_AGI=tf.P_AGI-15 , tf.P_ACT=tf.P_ACT-1"]
+[elsif exp="f.P_EXH >49"]疲労（軽度）[p][eval exp="tf.P_AGI=tf.P_AGI-10"]
 [endif]
 
 *round_start
 ;ターン開始
 [eval exp="tf.Round=tf.Round+1"]
+;状態異常のカウント・治癒
+;火傷
+
+;
 
 *P_turn_start
+;プレーヤーターンの開始
 [show_status]
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 
 *E_skill_quick
+;敵のスキル
 
 *P_attack_select
+;プレイヤーの攻撃選択
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="240"  text="攻撃"  target="*P_attack_option"  ]
 [s]
 
 *P_skill_option
+;プレイヤーのスキル選択
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
@@ -114,7 +119,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = tf.P_POW * 10 + tf.dice"]
 [eval exp="tf.Damage = tf.ATP - tf.DEF"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][HPlimit]
 [quake count=5 time=300 hmax=20]
 敵に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
@@ -198,7 +203,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = tf.P_STR * tf.RATE"]
 [dice][eval exp="tf.Damage1 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage1 = 0" cond="tf.Damage1<0"]
 [dice][eval exp="tf.Damage2 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage2 = 0" cond="tf.Damage2<0"]
-[eval exp="tf.Damage = Math.floor(tf.Damage1 + tf.Damage2) , tf.E_HP = tf.E_HP - tf.Damage"]
+[eval exp="tf.Damage = Math.floor(tf.Damage1 + tf.Damage2) , tf.E_HP = tf.E_HP - tf.Damage"][HPlimit]
 [eval exp="tf.E_DEFd1 = tf.E_DEFd1 - 0.2"][eval exp="tf.E_DEFd1=0" cond="tf.E_DEFd1 < 0"]
 [quake count=5 time=300 hmax=20]
 敵に[emb exp="tf.Damage"]のダメージ[p]
@@ -216,7 +221,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.ATP = tf.P_STR * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][HPlimit]
 [eval exp="tf.E_AGId1 = tf.E_AGId1 - 0.2"][eval exp="tf.E_AGId1=0" cond="tf.E_AGId1 < 0"]
 [quake count=5 time=300 hmax=20]
 敵に[emb exp="tf.Damage"]のダメージ[p]
@@ -234,7 +239,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.DEF = (tf.E_DUR * tf.E_GRD * 2) * tf.E_DEFd1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.ATP = tf.P_STR * tf.RATE"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF + tf.dice)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][HPlimit]
 [quake count=5 time=300 hmax=20]
 敵に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
@@ -252,7 +257,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [dice][eval exp="tf.Damage1 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage1 = 0" cond="tf.Damage1<0"]
 [dice][eval exp="tf.Damage2 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage2 = 0" cond="tf.Damage2<0"]
 [dice][eval exp="tf.Damage3 = tf.ATP - tf.DEF + tf.dice"][eval exp="tf.Damage3 = 0" cond="tf.Damage3<0"]
-[eval exp="tf.Damage = Math.floor(tf.Damage1 + tf.Damage2 + tf.Damage3) , tf.E_HP = tf.E_HP - tf.Damage"]
+[eval exp="tf.Damage = Math.floor(tf.Damage1 + tf.Damage2 + tf.Damage3) , tf.E_HP = tf.E_HP - tf.Damage"][HPlimit]
 [eval exp="tf.E_DEXd1 = tf.E_DEXd1 - 0.2" cond="tf.E_DEXd1 > 0"]
 [quake count=5 time=300 hmax=20]
 敵に[emb exp="tf.Damage"]のダメージ[p]
@@ -343,7 +348,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DEFd1"]
 [eval exp="tf.ATP = tf.E_STR * tf.RATE"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [triage]
@@ -357,7 +362,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DEFd1"]
 [eval exp="tf.ATP = tf.E_STR * tf.RATE"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [triage]
@@ -377,6 +382,12 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *E_turn_end
+;火傷ダメージ
+[if exp="tf.E_scald>1"]
+[eval exp="tf.E_HP = tf.E_HP - 100"][HPlimit]
+火傷で敵の体力が100減少[p]
+[triage]
+[endif]
 [if exp="tf.E_ACT>0"]
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 [jump target="*E_turn_start"]
@@ -463,7 +474,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [quake count=5 time=300 hmax=20]
 [eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 2"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [triage]
 
 [else]
@@ -471,7 +482,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [quake count=5 time=300 hmax=20]
 [eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 4"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][eval exp="tf.P_HP = 0" cond="tf.P_HP<=0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [triage]
 [endif]
 
@@ -491,8 +502,10 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
 [eval exp="tf.Max=2 , tf.Min=1"][dice][eval exp="f.E_AUR=f.E_AUR+tf.dice*10"]
 [eval exp="tf.P_ACT = f.P_ACT , tf.E_ACT = f.E_ACT"]
+;デバフと状態異常の回復
 [eval exp="tf.E_DEFd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
 [eval exp="tf.P_DEFd1=1 , tf.P_AGId1=1 ,tf.P_DEXd1=1"]
+[eval exp="tf.E_scald = tf.E_scald - 1"]
 [jump target="*round_start"]
 
 
