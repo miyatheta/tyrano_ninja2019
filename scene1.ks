@@ -29,6 +29,7 @@
 ;このゲームで登場するキャラクターを宣言
 ;akane
 [chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
+[chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
 ;キャラクターの表情登録
 
 ;yamato
@@ -49,8 +50,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [endmacro]
 
 [macro name="triage"]
-[jump target="*game_set" cond="tf.P_HP <= 0"]
-[jump target="*game_set" cond="tf.E_HP <= 0"]
+[jump target="*game_lose" cond="tf.P_HP <= 0"]
+[jump target="*game_win" cond="tf.E_HP <= 0"]
 [endmacro]
 
 [macro name="HPlimit"]
@@ -460,42 +461,63 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *E_mount_select
 [eval exp="tf.Max=10 , tf.Min=1"][dice]
+[if exp="tf.dice>9 - (tf.E_ERO/10) && f.P_DRESS>0"][jump target="*E_mount_option1"]
+[elsif exp="tf.dice>9 - (tf.E_ERO/10)"][jump target="*E_mount_option2"]
+[elsif exp="tf.dice>5 - (tf.E_ERO/10)"][jump target="*E_mount_option3"]
+[else][jump target="*E_mount_option4"][endif]
 
-[if exp="tf.dice>9 - (tf.E_ERO/10) && f.P_DRESS>0"]
+*E_mount_option1
 敵はくぬぎの装束を剥ぎ取ろうとした[p]
 [eval exp="f.P_DRESS = f.P_DRESS - 30"]
+[if exp="f.P_DRESS < 34"]
+くぬぎは下着姿に剥かれた[p]くぬぎの色気が1上昇した[p]
+[eval exp="tf.P_APP = tf.P_APP+1"]
+[chara_mod name="kunugi" face="seminude"]
+[elsif exp="f.P_DRESS < 1"]
+くぬぎは一糸まとわぬ姿に剥かれた[p]
+[eval exp="tf.P_APP = tf.P_APP+1"]
+[chara_mod name="kunugi" face="seminude"]
+[endif]
 
-[elsif exp="tf.dice>9 - (tf.E_ERO/10)"]
+[jump target="*mount_continue"]
+[s]
+
+*E_mount_option2
 敵はくぬぎの胸を揉みしだいた[p]
 [eval exp="tf.P_ERO = tf.P_ERO + 10"]
+[jump target="*mount_continue"]
+[s]
 
-[elsif exp="tf.dice>5 - (tf.E_ERO/10)"]
+*E_mount_option3
 敵はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
 [eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 2"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [triage]
+[jump target="*mount_continue"]
+[s]
 
-[else]
+*E_mount_option4
 敵はくぬぎを殴りつけた[p]
 [quake count=5 time=300 hmax=20]
 [eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 4"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][HPlimit]
 [triage]
-[endif]
+[jump target="*mount_continue"]
+[s]
 
+*mount_continue
 くぬぎは拘束されている！[p]
-[eval exp="tf.Round=tf.Round+1"]
+疲労度が１上昇した[p]
+[eval exp="f.P_EXH = f.P_EXH+1"]
 [show_status]
 [jump target="*P_mount_select"]
 [s]
 
-*mount_end
 [jump target="*round_end"]
 [s]
-
 
 *round_end
 ラウンド終了[p]
@@ -509,12 +531,18 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [jump target="*round_start"]
 
 
-*game_set
-[if exp="tf.P_HP<1"]
+*game_lose
 くぬぎは敗北した。
+[if exp="tf.Round<6"][eval exp="f.P_EXH = f.P_EXH + 5"]疲労度が5増加[p]
+[elsif exp="tf.Round<10"][eval exp="f.P_EXH = f.P_EXH + 10"]疲労度が10増加[p]
+[else][eval exp="f.P_EXH = f.P_EXH + 15"]疲労度が15増加[p]
 [endif]
-[if exp="tf.E_HP<1"]
+[s]
 
+*game_win
+戦闘に勝利した。
+[if exp="tf.Round<6"][eval exp="f.P_EXH = f.P_EXH + 5"]疲労度が5増加[p]
+[elsif exp="tf.Round<10"][eval exp="f.P_EXH = f.P_EXH + 10"]疲労度が10増加[p]
+[else][eval exp="f.P_EXH = f.P_EXH + 15"]疲労度が15増加[p]
 [endif]
-
 [s]
