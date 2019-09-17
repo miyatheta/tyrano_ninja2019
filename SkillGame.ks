@@ -44,7 +44,7 @@
 [eval exp="tf.MP=-1"]
 失敗[p]
 くぬぎは術の発動に失敗した[p]
-[jump storage="scene1.ks" target="*P_turn_start"]
+[jump storage="scene1.ks" target="*P_phase_start"]
 [endif]
 
 [if exp="tf.MP >= tf.Cost"]
@@ -61,5 +61,5 @@
 [eval exp="tf.MP=-1"]
 失敗[p]
 くぬぎは術の発動に失敗した[p]
-[jump storage="scene1.ks" target="*P_turn_start"]
+[jump storage="scene1.ks" target="*P_phase_start"]
 [s]

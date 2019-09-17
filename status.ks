@@ -20,13 +20,15 @@
 ;気力＞MP
 [eval exp="f.P_AUR=0"]
 ;疲労(exhaustion)
-[eval exp="f.P_EXH=0"]
+[eval exp="f.P_EXH=90"]
 ;感情
-[eval exp="f.P_ERO=0"]
+[eval exp="f.P_ERO=90"]
 ;理性,SAN値
 [eval exp="f.P_SAN=89"]
-;着衣状態  100＞着衣　50＞損傷　0＞脱衣
-[eval exp="f.P_DRESS=100"]
+;衣服耐久度
+[eval exp="f.P_ARMOR=100"]
+;着衣状態  2=着衣　1=損傷　0=脱衣
+[eval exp="f.P_DRESS=2"]
 
 ;体力
 [eval exp="f.E_HP=1000"]
@@ -43,7 +45,7 @@
 ;精神力＞術の威力
 [eval exp="f.E_POW=5"]
 ;魅力>敵は魅了への抵抗として使用？
-[eval exp="f.E_APP=10"]
+[eval exp="f.E_APP=7"]
 ;呼吸＞行動回数
 [eval exp="f.E_ACT=4"]
 ;気力＞MP
