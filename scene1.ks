@@ -496,7 +496,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *P_mount_option2
 くぬぎは息を整えた[p]
 くぬぎの気力が１０上昇[p]
-[eval exp="tf.P_ACT = tf.P_ACT + 3 , f.P_AUR = f.P_AUR + 10"][limit]
+[eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = f.P_AUR + 10"][limit]
 [jump target="*E_mount_select"]
 [s]
 
@@ -636,17 +636,16 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *E_mount_option1
 敵はくぬぎを締め上げた[p]
 [quake count=3 time=300 hmax=30]
-[eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 2"]
-くぬぎに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[triage]
+くぬぎの呼吸が１減少[p]
+[eval exp="tf.P_ACT = tf.P_ACT - 1"][limit]
+[if exp="tf.P_ACT == 0"][jump target="*Remount"][endif]
 [jump target="*mount_continue"]
 [s]
 
 *E_mount_option2
-敵はくぬぎを殴りつけた[p]
+敵はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
-[eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 4"]
+[eval exp="tf.Damage=(tf.E_STR - tf.P_DUR) * 2"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
@@ -655,13 +654,30 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *mount_continue
 くぬぎは拘束されている！[p]
+[eval exxp="tf.Max=99 ,tf.Min=0"][dice]
+[if exp="tf.dice>33"]
 疲労度が１上昇した[p]
 [eval exp="f.P_EXH = f.P_EXH+1"]
+[endif]
 [jump target="*P_mount_phase"]
 [s]
 *mount_end
 [jump target="*turn_end"]
 [s]
+
+*Remount
+くぬぎは息切れした[p]
+#敵
+苦しそうだなフハハハ[p]
+#
+敵はくぬぎを拘束し直した[p]
+[eval exp="tf.Mount = tf.Mount - tf.E_STR"]
+[eval exxp="tf.Max=99 ,tf.Min=0"][dice]
+[if exp="tf.dice>33"]
+疲労度が１上昇した[p]
+[eval exp="f.P_EXH = f.P_EXH+1"]
+[endif]
+
 
 *turn_end
 ラウンド終了[p]
