@@ -114,6 +114,10 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [endif]
 ;火傷
 
+;デバフ
+[if exp="tf.P_AGId3_count > 0"][eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1"][endif]
+
+
 *P_phase_start
 ;プレーヤーターンの開始
 [show_status]
@@ -128,14 +132,14 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 ;コンボルート選定
 [if exp="tf.dice >= 66"][eval exp="tf.E_skill_route =1"]
 ;コンボルート1 足止め＞足止め＞火力アップ・防御ダウン
-[eval exp="tf.E_skill1=11 , tf.E_skill2=11 , tf.E_skill3=12"]
+[eval exp="tf.E_skill1='*気迫' , tf.E_skill2='*気迫' , tf.E_skill3='*捨て身'"]
 [elsif exp="tf.dice >= 33"][eval exp="tf.E_skill_route =2"]
 ;コンボルート2　火力アップ＞足止め＞組付
-[eval exp="tf.E_skill1=12 , tf.E_skill2=11 , tf.E_skill3=12"]
+[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*気迫' , tf.E_skill3='*全力'"]
 [else exp="tf.dice >= 0"][eval exp="tf.E_skill_route =3"]
 ;コンボルート3 火力アップ＞火力アップ・防御ダウン＞組付
-[eval exp="tf.E_skill1=12 , tf.E_skill2=13 , tf.E_skill3=14"]
-[endlink]
+[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*捨て身' , tf.E_skill3='*組付'"]
+[endif]
 [jump target="*E_skill_play"]
 [s]
 
@@ -147,7 +151,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [elese]
 [jump storage="skilllist.ks" target="&tf.E_skill3"]
 [endif]
-
+[s]
 
 *P_attack_select
 ;プレイヤーの攻撃選択
@@ -379,7 +383,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *P_DEF_conf1
-[eval exp="tf.P_AVD=Math.floor(tf.P_AGI * tf.ArousAGId * tf.P_AGId3 * 3) , tf.P_GRD=0"]
+[eval exp="tf.P_AVD=Math.floor(tf.P_AGI * tf.ArousAGId * tf.P_AGId1 * 3) , tf.P_GRD=0"]
 [eval exp="tf.AvoidRate = Math.floor(tf.HitRate * (100 - tf.P_AVD) / 100)"][limit]
 回避率[emb exp="tf.AvoidRate"]%[p]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="回避"  target="*P_DEF_1" ]
