@@ -60,8 +60,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [macro name="GoSKB"]
 [eval exp="tf.GoSKB = 0"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[eval exp="tf.TAG = tf.E_ERO/10 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 500)/500"]
-[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 500 && tf.TAG > tf.dice"]
+[eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/10/2 + (2 - f.P_DRESS)*10 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3)"]
+[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 500 && tf.dice> tf.SKB"]
 [endmacro]
 
 [macro name="limit"]
