@@ -63,6 +63,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.E_ERO = 100" cond="tf.E_ERO > 100"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
 [eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
+[eval exp="tf.AvoidRate = 0" cond="tf.AvoidRate < 0"]
+[eval exp="tf.AvoidRate = 100" cond="tf.AvoidRate > 100"]
 [eval exp="tf.E_ACT = f.E_ACT" cond="tf.E_ACT > f.E_ACT"]
 [eval exp="tf.P_ACT = tf.P_ACTmax" cond="tf.P_ACT > tf.P_ACTmax"]
 [endmacro]
@@ -112,15 +114,40 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [endif]
 ;火傷
 
-;
-
 *P_phase_start
 ;プレーヤーターンの開始
 [show_status]
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 
-*E_skill_quick
-;敵のスキル
+*E_skill_select
+;敵のスキル(３の倍数+1のターンのみ実行)
+[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
+[jump target="*E_skill_play"]
+[endif]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+;コンボルート選定
+[if exp="tf.dice >= 66"][eval exp="tf.E_skill_route =1"]
+;コンボルート1 足止め＞足止め＞火力アップ・防御ダウン
+[eval exp="tf.E_skill1=11 , tf.E_skill2=11 , tf.E_skill3=12"]
+[elsif exp="tf.dice >= 33"][eval exp="tf.E_skill_route =2"]
+;コンボルート2　火力アップ＞足止め＞組付
+[eval exp="tf.E_skill1=12 , tf.E_skill2=11 , tf.E_skill3=12"]
+[else exp="tf.dice >= 0"][eval exp="tf.E_skill_route =3"]
+;コンボルート3 火力アップ＞火力アップ・防御ダウン＞組付
+[eval exp="tf.E_skill1=12 , tf.E_skill2=13 , tf.E_skill3=14"]
+[endlink]
+[jump target="*E_skill_play"]
+[s]
+
+*E_skill_play
+[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
+[jump storage="skilllist.ks" target="&tf.E_skill1"]
+[elsif exp="tf.sho = tf.Turn % 3 , tf.sho!=2"]
+[jump storage="skilllist.ks" target="&tf.E_skill2"]
+[elese]
+[jump storage="skilllist.ks" target="&tf.E_skill3"]
+[endif]
+
 
 *P_attack_select
 ;プレイヤーの攻撃選択
@@ -220,8 +247,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [else]
 ;回避
 [eval exp="tf.E_AVD = Math.floor(tf.E_AGI * tf.E_AGId1 * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
-[eval exp="tf.AvoidRate = Math.floor(tf.HitRate * (100 - tf.E_AVD) / 100)"][eval exp="tf.AvoidRate=0" cond="tf.AvoidRate<0"]
-[eval exp="tf.AvoidRate = 100" cond="tf.E_AVD >= 100"]
+[eval exp="tf.AvoidRate = Math.floor(100 - (tf.HitRate * (100-tf.E_AVD) / 100))"][limit]
 回避：[emb exp="tf.AvoidRate"]％[p]
 [endif]
 [return]
@@ -353,9 +379,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *P_DEF_conf1
-[eval exp="tf.P_AVD=Math.floor(tf.P_AGI * tf.ArousAGId * 3) , tf.P_GRD=0"]
-[eval exp="tf.AvoidRate = Math.floor(tf.HitRate * (100 - tf.P_AVD) / 100)"][eval exp="tf.AvoidRate=0" cond="tf.AvoidRate<0"]
-[eval exp="tf.AvoidRate = 100" cond="tf.P_AVD >= 100"]
+[eval exp="tf.P_AVD=Math.floor(tf.P_AGI * tf.ArousAGId * tf.P_AGId3 * 3) , tf.P_GRD=0"]
+[eval exp="tf.AvoidRate = Math.floor(tf.HitRate * (100 - tf.P_AVD) / 100)"][limit]
 回避率[emb exp="tf.AvoidRate"]%[p]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="回避"  target="*P_DEF_1" ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_Def_select"  ]
