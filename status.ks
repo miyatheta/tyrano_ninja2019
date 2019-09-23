@@ -21,8 +21,8 @@
 [eval exp="f.P_AUR=0"]
 ;疲労(exhaustion)
 [eval exp="f.P_EXH=90"]
-;感情
-[eval exp="f.P_ERO=90"]
+;欲情
+[eval exp="f.P_ERO=0"]
 ;理性,SAN値
 [eval exp="f.P_SAN=89"]
 ;衣服耐久度
@@ -56,6 +56,8 @@
 [eval exp="f.E_ERO=0"]
 ;理性,SAN値,敵の好色度>色仕掛けへの抵抗力
 [eval exp="f.E_SAN=50"]
+;房中のテクニック
+[eval exp="f.E_SEX=18"]
 
 
 [return]
