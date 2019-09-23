@@ -51,16 +51,18 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 [macro name="triage"]
 [jump target="*game_lose" cond="tf.P_HP <= 0"]
+[jump target="*game_lose" cond="tf.P_EXH <= 0"]
 [jump target="*game_win" cond="tf.E_HP <= 0"]
 [endmacro]
 
 [macro name="limit"]
-[eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
-[eval exp="tf.E_ERO = 100" cond="tf.E_ERO > 100"]
+[eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
+[eval exp="tf.P_EXH = 100" cond="tf.P_EXH > 100"]
 [eval exp="tf.P_ERO = 100" cond="tf.P_ERO > 100"]
-[eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
+[eval exp="tf.E_ERO = 100" cond="tf.E_ERO > 100"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
+[eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
 [eval exp="tf.E_ACT = f.E_ACT" cond="tf.E_ACT > f.E_ACT"]
 [eval exp="tf.P_ACT = tf.P_ACTmax" cond="tf.P_ACT > tf.P_ACTmax"]
 [endmacro]
@@ -652,32 +654,33 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [jump target="*mount_continue"]
 [s]
 
-*mount_continue
-くぬぎは拘束されている！[p]
-[eval exxp="tf.Max=99 ,tf.Min=0"][dice]
-[if exp="tf.dice>33"]
-疲労度が１上昇した[p]
-[eval exp="f.P_EXH = f.P_EXH+1"]
-[endif]
-[jump target="*P_mount_phase"]
-[s]
-*mount_end
-[jump target="*turn_end"]
-[s]
-
 *Remount
 くぬぎは息切れした[p]
 #敵
 苦しそうだなフハハハ[p]
 #
 敵はくぬぎを拘束し直した[p]
-[eval exp="tf.Mount = tf.Mount - tf.E_STR"]
-[eval exxp="tf.Max=99 ,tf.Min=0"][dice]
+[eval exp="tf.Mount = tf.Mount + tf.E_STR"]
+[eval exp="tf.Max=99 ,tf.Min=0"][dice]
 [if exp="tf.dice>33"]
 疲労度が１上昇した[p]
-[eval exp="f.P_EXH = f.P_EXH+1"]
+[eval exp="f.P_EXH = f.P_EXH+1"][limit][triage]
 [endif]
+[jump target="*mount_continue"]
+[s]
 
+*mount_continue
+くぬぎは拘束されている！[p]
+[eval exp="tf.Max=99 ,tf.Min=0"][dice]
+[if exp="tf.dice>33"]
+疲労度が１上昇した[p]
+[eval exp="f.P_EXH = f.P_EXH+1"][limit][triage]
+[endif]
+[jump target="*P_mount_phase"]
+[s]
+*mount_end
+[jump target="*turn_end"]
+[s]
 
 *turn_end
 ラウンド終了[p]
@@ -692,18 +695,21 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 
 *game_lose
-くぬぎは敗北した。
-[if exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"]疲労度が5増加[p]
-[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"]疲労度が10増加[p]
-[else][eval exp="f.P_EXH = f.P_EXH + 15"]疲労度が15増加[p]
+[if exp="tf.P_EXH >= 100"]
+疲労のためにくぬぎは立ち上がれなくなった[p]
+[endif]
+くぬぎは敗北した。[p]
+[if exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"][limit]疲労度が5増加[p]
+[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"][limit]疲労度が10増加[p]
+[else][eval exp="f.P_EXH = f.P_EXH + 15"][limit]疲労度が15増加[p]
 [endif]
 [s]
 
 *game_win
-戦闘に勝利した。
-[if exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"]疲労度が5増加[p]
-[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"]疲労度が10増加[p]
-[else][eval exp="f.P_EXH = f.P_EXH + 15"]疲労度が15増加[p]
+戦闘に勝利した。[p]
+[if exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"][limit]疲労度が5増加[p]
+[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"][limit]疲労度が10増加[p]
+[else][eval exp="f.P_EXH = f.P_EXH + 15"][limit]疲労度が15増加[p]
 [endif]
 [s]
 
