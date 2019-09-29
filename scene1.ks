@@ -670,7 +670,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *E_mount_option0
 ;セクハラ
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice> 49 && f.P_ARMOR>0"][jump target="*E_mount_datui"]
+[if exp="tf.dice> 49 && f.P_DRESS>0"][jump target="*E_mount_datui"]
 [elsif][jump target="*E_mount_sukebe1"]
 [else][jump target="*E_mount_sukebe2"]
 [endif]
@@ -691,13 +691,13 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="f.P_DRESS > 1"]
-[eval exp="f.P_DRESS = 1"]
+[eval exp="f.P_ARMOR = 33 ,f.P_DRESS = 1"]
 くぬぎは下着姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="f.P_DRESS > 0"]
-[eval exp="f.P_DRESS = 0"]
+[eval exp="f.P_ARMOR = 0 ,f.P_DRESS = 0"]
 くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
@@ -708,7 +708,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *E_mount_sukebe1
 敵はくぬぎの胸を揉みしだいた[p]
-[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 20 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
+[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 2 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
 [emb exp="tf.HDamage"]の快感[r]くぬぎの欲情が上昇した[p]
 
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
@@ -735,7 +735,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *E_mount_sukebe2
 敵はくぬぎの秘処をまさぐった[p]
-[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 20 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
+[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 2 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
 [emb exp="tf.HDamage"]の快感[r]くぬぎの欲情が上昇した[p]
 
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
