@@ -221,7 +221,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *P_skill_conf1
 火炎：気力40：印4：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 40"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 40 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
@@ -242,10 +242,36 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *P_skill_conf2
 
+
 [s]
 
 *P_skill_conf3
+火炎：魅了30：印4：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 30"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
+*P_skill3
+くぬぎの忍術・魅了[p]
+#くぬぎ
+あはぁん[p]
+#
+くぬぎは胸を寄せながら、胸元をはだけて見せた[p]
+;感情は確定で上昇、上昇幅は抵抗値次第
+[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP)* 3 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
+敵の欲情が[emb exp="tf.HDamage"]上昇した[p]
 
+;デバフは抵抗判定、魅力VS理性と感情
+[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+
+[if exp="tf.TAG < tf.dice"]
+;魅了によるスタン
+敵は前かがみになって固まった[p]
+[eval exp="tf.Mount = tf.Mount - (tf.P_APP + tf.ArousAPPb)"]
+[endif]
+[triage]
+[jump target="*P_phase_start"]
 [s]
 
 *P_skill_conf4
@@ -297,7 +323,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *P_attack_conf4
-[eval exp="tf.RATE = 5 , tf.ACC = 20 , tf.comb=0"]
+[eval exp="tf.RATE = 5 , tf.ACC = 30 , tf.comb=0"]
 [eval exp="tf.HIT = tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 くない：命中率[emb exp="tf.HitRate"]％[p]
@@ -628,6 +654,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Mount = tf.Mount - (tf.P_APP + tf.ArousAPPb)"]
 [else]
 しかし、敵は動じなかった[p]
+[eval exp="tf.Mount = tf.Mount - Math.floor((tf.P_APP + tf.ArousAPPb)/2)"]
 [endif]
 
 [if exp="tf.Mount <= 0"]
