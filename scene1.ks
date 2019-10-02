@@ -97,6 +97,10 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 [eval exp="tf.E_STRb3=1 , tf.E_DURb3=1 , tf.E_AGIb3=1 , tf.E_DEXb3=1"]
 [eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1"]
+
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_DEX=1 "]
+[eval exp="tf.E_charm_count=1 "]
+
 [endmacro]
 
 [macro name="Refresh_3Tbuff"]
@@ -117,6 +121,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=1 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
 [eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=1 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
 [eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=1 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DEX=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
 #
@@ -246,9 +251,9 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *P_skill_conf3
-火炎：魅了30：印4：呼吸-1：手番継続[p]
+魅了：気力30：印3：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 30"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
 [glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 *P_skill3
@@ -261,14 +266,15 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP)* 3 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
 敵の欲情が[emb exp="tf.HDamage"]上昇した[p]
 
-;デバフは抵抗判定、魅力VS理性と感情
-[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
 
+;デバフは抵抗判定、魅力VS理性と感情
+[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.TAG < tf.dice"]
-;魅了によるスタン
-敵は前かがみになって固まった[p]
-[eval exp="tf.Mount = tf.Mount - (tf.P_APP + tf.ArousAPPb)"]
+;魅了による弱体化
+敵は前かがみになった[p]
+[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.7 ,tf.E_charm_DEX=0.7"]
+敵の攻撃力と回避力が減少した[p]
 [endif]
 [triage]
 [jump target="*P_phase_start"]
@@ -451,7 +457,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [if exp="tf.dice>4"]
 敵の薙ぎ払い[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 5.0 , tf.ACC = 30 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_DEXd1 * 3 - tf.P_AGI * tf.ArousAGId)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_charm_DEX * tf.E_DEXd1 * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [jump target="*P_Def_select"]
@@ -459,7 +465,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [else]
 敵の体当たり[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 7.0 , tf.ACC = 0 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_DEXd1 * 3 - tf.P_AGI * tf.ArousAGId)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_charm_DEX * tf.E_DEXd1 * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [jump target="*P_Def_select"]
@@ -499,7 +505,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DURd1 * tf.P_DURd3 * tf.P_DURb1 * tf.P_DURb3"]
-[eval exp="tf.ATP = tf.E_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 * tf.RATE"]
+[eval exp="tf.ATP = tf.RATE * tf.E_STR * tf.E_charm_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
@@ -513,7 +519,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = (tf.P_DUR * tf.P_GRD * 2 + tf.dice) * tf.P_DURd1 * tf.P_DURd3 * tf.P_DURb1 * tf.P_DURb3"]
-[eval exp="tf.ATP = tf.E_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 * tf.RATE"]
+[eval exp="tf.ATP = tf.E_STR * tf.E_charm_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 * tf.RATE"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
@@ -562,12 +568,13 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *mount_start
 [eval exp="tf.P_ACT = tf.P_ACTmax , tf.mount_turn=0 , tf.Esc=0"][limit]
-[eval exp="tf.Mount = 50 + Math.floor(tf.E_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 - tf.P_STR * tf.P_STRb1 * tf.P_STRb3 * tf.P_STRd1 * tf.P_STRd3 * tf.ArousSTRd) * 5"]
+[eval exp="tf.Mount = 50 + Math.floor(tf.E_STR * tf.E_charm_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 - tf.P_STR * tf.P_STRb1 * tf.P_STRb3 * tf.P_STRd1 * tf.P_STRd3 * tf.ArousSTRd) * 5"]
 
 *P_mount_phase
 [eval exp="tf.mount_turn = tf.mount_turn + 1"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-拘束[emb exp="tf.mount_turn"]ターン目[p]
+拘束[emb exp="tf.mount_turn"]ターン目[r]
+拘束力[emb exp="tf.Mount"][p]
 
 [if exp="tf.Orga==4 && tf.dice>49"]
 くぬぎは絶頂の衝撃で動けない(行動不能)[p]
@@ -646,15 +653,15 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 敵の欲情が[emb exp="tf.HDamage"]上昇した[p]
 
 ;デバフは抵抗判定、魅力VS理性と感情
-[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO"]
+[eval exp="tf.TAG = tf.E_SAN - tf.E_ERO"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 [if exp="tf.TAG < tf.dice"]
-柔らかな感触に敵は相好を崩した[p]
+柔らかな感触に敵は大きく動揺した[p]
 [eval exp="tf.Mount = tf.Mount - (tf.P_APP + tf.ArousAPPb)"]
 [else]
-しかし、敵は動じなかった[p]
-[eval exp="tf.Mount = tf.Mount - Math.floor((tf.P_APP + tf.ArousAPPb)/2)"]
+柔らかな感触に敵は動揺した[p]
+[eval exp="tf.Mount = tf.Mount - (tf.P_APP + tf.ArousAPPb)/2"]
 [endif]
 
 [if exp="tf.Mount <= 0"]
@@ -798,7 +805,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *E_mount_option2
 敵はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
-[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 - tf.P_DUR * tf.P_DURd1 * tf.P_DURd3 * tf.P_DURb1 * tf.P_DURb3) * 2"]
+[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3 - tf.P_DUR * tf.P_DURd1 * tf.P_DURd3 * tf.P_DURb1 * tf.P_DURb3) * 2"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
@@ -811,7 +818,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 苦しそうだなフハハハ[p]
 #
 敵はくぬぎを拘束し直した[p]
-[eval exp="tf.Mount = tf.Mount + tf.E_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3"]
+[eval exp="tf.Mount = tf.Mount + tf.E_STR * tf.E_charm_STR * tf.E_STRb1 * tf.E_STRb3 * tf.E_STRd1 * tf.E_STRd3"]
 [jump target="*mount_end"]
 [s]
 

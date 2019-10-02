@@ -55,7 +55,7 @@
 ;感情
 [eval exp="f.E_ERO=0"]
 ;理性,SAN値,敵の好色度>色仕掛けへの抵抗力
-[eval exp="f.E_SAN=50"]
+[eval exp="f.E_SAN=30"]
 ;房中のテクニック
 [eval exp="f.E_SEX=18"]
 
