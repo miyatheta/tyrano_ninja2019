@@ -11,4 +11,4 @@
 房中を開始します。
 [bg storage="samplehalf" time="100"]
 [wait time=6000]
-[jump storage="scene1.ks" target=*start""]
+[jump storage="battle.ks" target=*start""]

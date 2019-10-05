@@ -20,7 +20,7 @@
 ;気力＞MP
 [eval exp="f.P_AUR=0"]
 ;疲労(exhaustion)
-[eval exp="f.P_EXH=90"]
+[eval exp="f.P_EXH=0"]
 ;欲情
 [eval exp="f.P_ERO=0"]
 ;理性,SAN値

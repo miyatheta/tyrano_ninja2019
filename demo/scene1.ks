@@ -64,9 +64,9 @@
 #あかね
 もしかして、ノベルゲームの開発に興味があるの？[p]
 
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="100"  text="はい。興味あります"  target="*selectinterest"  ]
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="170"  text="興味あります！"  target="*selectinterest"  ]
-[glink  color="blue"  storage="scene1.ks"  size="20"  x="260"  width="400"  y="240"  text="どちらかと言うと興味あり"  target="*selectinterest"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="はい。興味あります"  target="*selectinterest"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="興味あります！"  target="*selectinterest"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="240"  text="どちらかと言うと興味あり"  target="*selectinterest"  ]
 [s  ]
 *selectinterest
 
