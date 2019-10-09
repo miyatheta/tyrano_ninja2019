@@ -136,6 +136,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [Initialize_1Tbuff][Initialize_3Tbuff]
 ;状態異常の初期値設定
 [eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1 , tf.OrgaPOWb = 1"]
+[eval exp="tf.E_scald = 0"]
+
 ;疲労の反映
 [if exp="f.P_EXH >89"]疲労（重度）[p][eval exp="tf.P_AGI=tf.P_AGI-20 , tf.P_ACTmax=tf.P_ACTmax-2"]
 [elsif exp="f.P_EXH >69"]疲労[p][eval exp="tf.P_AGI=tf.P_AGI-15 , tf.P_ACTmax=tf.P_ACTmax-1"]
