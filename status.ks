@@ -20,9 +20,9 @@
 ;気力＞MP
 [eval exp="f.P_AUR=0"]
 ;疲労(exhaustion)
-[eval exp="f.P_EXH=0"]
+[eval exp="f.P_EXH=70"]
 ;欲情
-[eval exp="f.P_ERO=0"]
+[eval exp="f.P_ERO=50"]
 ;理性,SAN値
 [eval exp="f.P_SAN=89"]
 ;衣服耐久度

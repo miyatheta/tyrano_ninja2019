@@ -64,6 +64,13 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 50 && tf.dice> tf.SKB"]
 [endmacro]
 
+[macro name="SUKEBE"]
+;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_SEXb1 * (100 - tf.P_SAN)/100 * (tf.P_ERO + 100)/100)"]
+;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
+[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_SEXb1 * (100 - tf.P_SAN)/100)"]
+[endmacro]
+
 [macro name="limit"]
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
 [eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
@@ -80,7 +87,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 [macro name="Initialize_1Tbuff"]
 [eval exp="tf.P_STRd1=1 , tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1 , tf.P_EROd1=1"]
-[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_EROb1=1"]
+[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_EROb1=1 , tf.P_SEXb1=1"]
 [eval exp="tf.E_STRd1=1 , tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1 , tf.E_EROd1=1"]
 [eval exp="tf.E_STRb1=1 , tf.E_DURb1=1 , tf.E_AGIb1=1 , tf.E_DEXb1=1 , tf.E_EROb1=1"]
 [endmacro]
@@ -621,7 +628,8 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.P_ACT = tf.P_ACT-1"]
 くぬぎは暴れた[p]
 [quake count=5 time=300 hmax=20]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.P_STRb1 * tf.P_STRb3 * tf.P_STRd1 * tf.P_STRd3 * tf.ArousSTRd)"]
+[eval exp="tf.Max=tf.Resist , tf.Min=0"][dice]
 [if exp="tf.Mount < tf.dice"]
 くぬぎは拘束を振りほどいた[p]
 [eval exp="tf.Esc=1"]
@@ -629,7 +637,7 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 [else]
 しかし、拘束を振りほどくことはできなかった[p]
-[eval exp="tf.Mount = tf.Mount - Math.floor(tf.P_STR * tf.P_STRb1 * tf.P_STRb3 * tf.P_STRd1 * tf.P_STRd3 * tf.ArousSTRd)"]
+[eval exp="tf.Mount = tf.Mount - tf.Resist"]
 [jump target="*E_mount_select"]
 [endif]
 [s]
@@ -706,8 +714,10 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 *E_mount_option0
 ;セクハラ
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice> 49 && f.P_DRESS>0"][jump target="*E_mount_datui"]
-[elsif][jump target="*E_mount_sukebe1"]
+[if exp="tf.dice> 66 && f.P_DRESS>0"][jump target="*E_mount_datui"]
+[endif]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.dice> 49"][jump target="*E_mount_sukebe1"]
 [else][jump target="*E_mount_sukebe2"]
 [endif]
 
@@ -744,8 +754,9 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *E_mount_sukebe1
 [enemyname]はくぬぎの胸を揉みしだいた[p]
-[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 2 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
-[emb exp="tf.HDamage"]の快感[r]くぬぎの欲情が上昇した[p]
+[eval exp="tf.RATE=2"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情[emb exp="tf.Yokujo"]が上昇した[p]
 
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
@@ -753,13 +764,13 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
 [endif]
 
-[if exp="tf.HDamage > 99 && tf.Orga < 1"]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 くぬぎは絶頂した[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 
-[elsif exp="tf.HDamage > 99 && tf.Orga >= 1"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
@@ -771,21 +782,22 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 
 *E_mount_sukebe2
 [enemyname]はくぬぎの秘処をまさぐった[p]
-[eval exp="tf.HDamage = Math.floor(tf.E_SEX * 2 * tf.ArousSEXd * tf.P_SEXb1 * (100 - f.P_SAN)/100 * (tf.P_ERO + 100)/100) , tf.P_ERO = tf.P_ERO + tf.HDamage"][limit]
-[emb exp="tf.HDamage"]の快感[r]くぬぎの欲情が上昇した[p]
+[eval exp="tf.RATE=4"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情[emb exp="tf.Yokujo"]が上昇した[p]
 
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
 くぬぎは興奮状態になった[p]
 [endif]
 
-[if exp="tf.HDamage > 99 && tf.Orga < 1"]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 くぬぎは絶頂した[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 
-[elsif exp="tf.HDamage > 99 && tf.Orga >= 1"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
@@ -894,6 +906,5 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [s]
 
 *bochu
-[chara_hide name="kunugi"][chara_hide name="gouza"]
-[bg  time="1000" method="slide"  storage="sample_back.jpg" ]
-房中を開始します[p]
+[jump storage="bochu.ks" target="*start"]
+[s]
