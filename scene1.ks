@@ -108,7 +108,10 @@
 [s]
 
 *hard-1
+[eval exp="tf.E_name='遅延魔'"]
+[eval exp="f.E_HP=1000 , f.E_STR=25 , f.E_DUR=30 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18"]
 @jump storage="battle.ks"
+
 
 *hard-2
 @jump storage="battle.ks"
@@ -123,4 +126,7 @@
 @jump storage="battle.ks"
 
 *hard-6
+[eval exp="tf.E_name='大砲魔'"]
+[eval exp="f.E_HP=1000 , f.E_STR=40 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18"]
+
 @jump storage="battle.ks"
