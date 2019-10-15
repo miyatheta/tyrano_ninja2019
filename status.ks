@@ -29,6 +29,8 @@
 [eval exp="f.P_ARMOR=100"]
 ;着衣状態  2=着衣　1=損傷　0=脱衣
 [eval exp="f.P_DRESS=2"]
+;感度それぞれ膣、尻、口、胸
+[eval exp="f.P_SEN_VG=100 , f.P_SEN_AN=100 , f.P_SEN_MO=100 , f.P_SEN_BB=100"]
 
 ;体力
 [eval exp="f.E_HP=1000"]
@@ -56,8 +58,11 @@
 [eval exp="f.E_ERO=0"]
 ;理性,SAN値,敵の好色度>色仕掛けへの抵抗力
 [eval exp="f.E_SAN=30"]
+;拘束力、攻撃力とは別に設定
+[eval exp="f.E_BND=30"]
 ;房中のテクニック
 [eval exp="f.E_SEX=18"]
-
+;逸物のサイズ１〜20で５段階
+[eval exp="f.E_SIZ=10"]
 
 [return]
