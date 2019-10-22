@@ -13,20 +13,35 @@
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
 
-
-[eval exp="f.question001=['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
+＜印ゲーム１[p]
+[eval exp="f.array=['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
 [eval exp="tf.Max=15 , tf.Min=0"][dice]
-[eval exp="tf.Sample=f.question001[tf.dice]"]
+[eval exp="tf.Sample=f.array[tf.dice]"]
 [l]
 [iscript]
-for(var i = f.question001.length - 1; i >= 0; i--){
+for(var i = f.array.length - 1; i >= 0; i--){
     var r = Math.floor(Math.random() * (i + 1));
-    var tmp = f.question001[i];
-    f.question001[i] = f.question001[r];
-    f.question001[r] = tmp;
+    var tmp = f.array[i];
+    f.array[i] = f.array[r];
+    f.array[r] = tmp;
 }
 [endscript]
-[emb exp="f.question001"]
+
+[emb exp="tf.Sample"]を選べ
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="100"  text="&f.array[0]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="170"  text="f.array[1]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="240"  text="f.array[2]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="310"  text="f.array[3]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="100"  text="f.array[4]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="170"  text="f.array[5]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="240"  text="f.array[6]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="310"  text="f.array[7]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="100"  text="f.array[8]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="170"  text="f.array[9]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="240"  text="f.array[10]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="310"  text="f.array[11]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
 [s]
 
 *route_select
