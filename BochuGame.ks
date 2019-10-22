@@ -13,26 +13,26 @@ for(var i = f.array.length - 1; i >= 0; i--){
 
 [emb exp="tf.Sample"]を選べ
 [wait time=300]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="260"  width="20"  y="100"  text="&f.array[0]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="260"  width="20"  y="170"  text="&f.array[1]"  exp="tf.Answer=f.array[1]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="260"  width="20"  y="240"  text="&f.array[2]"  exp="tf.Answer=f.array[2]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="260"  width="20"  y="310"  text="&f.array[3]"  exp="tf.Answer=f.array[3]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="100"  text="&f.array[0]"  exp="tf.Answer=f.array[0]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="170"  text="&f.array[1]"  exp="tf.Answer=f.array[1]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="240"  text="&f.array[2]"  exp="tf.Answer=f.array[2]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="310"  text="&f.array[3]"  exp="tf.Answer=f.array[3]" storage="BochuGame.ks" target="*Kotae"  ]
 
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="360"  width="20"  y="100"  text="&f.array[4]"  exp="tf.Answer=f.array[4]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="360"  width="20"  y="170"  text="&f.array[5]"  exp="tf.Answer=f.array[5]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="360"  width="20"  y="240"  text="&f.array[6]"  exp="tf.Answer=f.array[6]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="360"  width="20"  y="310"  text="&f.array[7]"  exp="tf.Answer=f.array[7]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="360"  width="20"  y="100"  text="&f.array[4]"  exp="tf.Answer=f.array[4]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="360"  width="20"  y="170"  text="&f.array[5]"  exp="tf.Answer=f.array[5]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="360"  width="20"  y="240"  text="&f.array[6]"  exp="tf.Answer=f.array[6]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="360"  width="20"  y="310"  text="&f.array[7]"  exp="tf.Answer=f.array[7]" storage="BochuGame.ks" target="*Kotae"  ]
 
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="460"  width="20"  y="100"  text="&f.array[8]"  exp="tf.Answer=f.array[8]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="460"  width="20"  y="170"  text="&f.array[9]"  exp="tf.Answer=f.array[9]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="460"  width="20"  y="240"  text="&f.array[10]"  exp="tf.Answer=f.array[10]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="460"  width="20"  y="310"  text="&f.array[11]"  exp="tf.Answer=f.array[11]" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="460"  width="20"  y="100"  text="&f.array[8]"  exp="tf.Answer=f.array[8]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="460"  width="20"  y="170"  text="&f.array[9]"  exp="tf.Answer=f.array[9]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="460"  width="20"  y="240"  text="&f.array[10]"  exp="tf.Answer=f.array[10]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="460"  width="20"  y="310"  text="&f.array[11]"  exp="tf.Answer=f.array[11]" storage="BochuGame.ks" target="*Kotae"  ]
 
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="560"  width="20"  y="100"  text="&f.array[12]"  exp="tf.Answer=f.array[12]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="560"  width="20"  y="170"  text="&f.array[13]"  exp="tf.Answer=f.array[13]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="560"  width="20"  y="240"  text="&f.array[14]"  exp="tf.Answer=f.array[14]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="rosy"  storage="battle.ks"  size="20"  x="560"  width="20"  y="310"  text="&f.array[15]"  exp="tf.Answer=f.array[15]" storage="SkillGame.ks" target="*Kotae"  ]
-[wait time=3000]
+[glink  color="rosy"  size="20"  x="560"  width="20"  y="100"  text="&f.array[12]"  exp="tf.Answer=f.array[12]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="560"  width="20"  y="170"  text="&f.array[13]"  exp="tf.Answer=f.array[13]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="560"  width="20"  y="240"  text="&f.array[14]"  exp="tf.Answer=f.array[14]" storage="BochuGame.ks" target="*Kotae"  ]
+[glink  color="rosy"  size="20"  x="560"  width="20"  y="310"  text="&f.array[15]"  exp="tf.Answer=f.array[15]" storage="BochuGame.ks" target="*Kotae"  ]
+[wait time=5000]
 [jump target="*timeout"]
 [s]
 
@@ -46,8 +46,7 @@ for(var i = f.array.length - 1; i >= 0; i--){
 失敗[p]
 くぬぎはうまく集中することができなかった[p]
 [endif]
-
-[jump storage="bouchu.ks" target="&tf.label"]
+[jump storage="bochu.ks" target="&tf.label"]
 [s]
 
 *timeout
@@ -55,5 +54,5 @@ for(var i = f.array.length - 1; i >= 0; i--){
 時間切れ[p]
 失敗[p]
 くぬぎはうまく集中することができなかった[p]
-[jump storage="bouchu.ks" target="&tf.label"]
+[jump storage="bochu.ks" target="&tf.label"]
 [s]

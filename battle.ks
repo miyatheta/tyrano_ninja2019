@@ -735,7 +735,7 @@
 [s]
 
 *P_mount_option5
-[jump target="*bouchu"]
+[jump target="*bochu"]
 [s]
 
 *E_mount_select

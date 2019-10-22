@@ -1,5 +1,6 @@
 *start
-[eval exp="tf.VP=0"];ミニゲームの勝利数
+;ミニゲームの勝利数
+[eval exp="tf.VP=0"]
 
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 敵は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
@@ -19,8 +20,8 @@
 
 *bochu001_game01
 ＜印ゲーム１[p]
-[eval exp="tf.label='*bochu001_game01end'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001_game01end
+[eval exp="tf.label='*bochu001-01'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-01
 
 「うっ！」[p]
 ＜快感発生[p]
@@ -58,8 +59,8 @@
 
 *bochu001_game02
 ＜印ゲーム１[p]
-[eval exp="tf.label='*bochu001_game02end'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001_game02end
+[eval exp="tf.label='*bochu001return02'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001return02
 
 ＜印ゲーム２[p]
 くぬぎが気を練る間に敵は肉棒を膣の奥まで沈めきった[p]
@@ -96,8 +97,8 @@
 
 *bochu001_game03
 ＜印ゲーム１[p]
-[eval exp="tf.label='*bochu001_game03end'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001_game03end
+[eval exp="tf.label='*bochu001return03'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001return03
 
 ＜印ゲーム３[p]
 「へっ、あぶねぇ。危うく主導権を奪われるところだったぜ」[p]
@@ -143,8 +144,8 @@
 
 *bochu001_game04
 ＜印ゲーム１[p]
-[eval exp="tf.label='*bochu001_game04end'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001_game04end
+[eval exp="tf.label='*bochu001return04'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001return04
 
 ＜印ゲーム４[p]
 「あうう。もう、堪忍してぇ・・・」[p]
@@ -176,11 +177,11 @@
 
 *bochu001_game05
 ＜印ゲーム５[p]
-[eval exp="tf.label='*bochu001_game05end'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001_game05end
+[eval exp="tf.label='*bochu001return05'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001return05
 
 ＜全５ゲームの結果を受けて最後に敵に快感が叩きつけられる。ダメージが１００を超えたら勝利[p]
-[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * (tf.VP + 1) * tf.E_SAN / 100 * (tf.E_ERO + 50)/100)"]
+[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * (tf.VP + 1) * (100-tf.E_SAN) / 100 * (tf.E_ERO + 50)/100)"]
 敵に[emb exp="tf.HDamage"]の快感[p]
 [jump target="*bochu001_win" cond="tf.HDamage>=100"]
 [jump target="*bochu001_lose"]
@@ -253,7 +254,7 @@
 ＜快感発生[p]
 敵の射精と同時にくぬぎは絶頂した[p]
 身も世もなく喘ぎ声を上げイキ狂う様子から一度に複数回の絶頂を迎えているのかもしれない[p]
-「ひいいいいん！！ふううううううっ！あああ〜〜〜っ！！」
+「ひいいいいん！！ふううううううっ！あああ〜〜〜っ！！」[p]
 「ふぅっ！いや、良かったぜぇ！」[p]
 敵は逸物を引き抜くと、びくびくと痙攣を繰り返す白い裸身を眺め回した[p]
 「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
@@ -261,4 +262,4 @@
 「仕方ねぇ、屋敷まで運ぶか・・・」[p]
 どうやら意識を失ったらしい[r]
 完全に呆けた表情のくぬぎを敵は抱えあげるとその場から立ち去った[p]
-[jump storage="*prison.ks" target="*start"]
+[jump storage="prison.ks" target="*start"]
