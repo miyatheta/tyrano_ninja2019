@@ -3,7 +3,7 @@
 敵は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [bg  time="1000" method="slide"  storage="sample_back.jpg" ]
 房中を開始します[p]
-
+幸運判定。運が悪いと敵の増援が出現[p]
 *bochu001
 #
 敵はくぬぎを後ろ手に縛り上げると背後から覆いかぶさった[p]
@@ -16,6 +16,40 @@
 （……まぁ、こうなるわよね。術をかけて昏倒させるしかないわね）[p]
 *bochu001_game01
 ＜印ゲーム１[p]
+[eval exp="f.question001['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
+[eval exp="tf.Max=15 , tf.Min=0"][dice]
+[eval exp="tf.Sample=f.question001[tf.dice]"]
+[eval exp="f.shuffle[]"]
+[iscript]
+for(var i = f.question001.length - 1; i > 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.question001[i];
+    f.question001[i] = f.shuffle[r];
+    f.shuffle[r] = tmp;
+}
+[endscript]
+[emb exp="f.question001"]
+
+[emb exp="tf.Sample"]を選べ
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="100"  text="水"  exp="tf.Answer='水'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="170"  text="金"  exp="tf.Answer='金'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="240"  text="土"  exp="tf.Answer='土'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="310"  text="火"  exp="tf.Answer='火'" storage="SkillGame.ks" target="*Kotae"  ]
+
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="100"  text="水"  exp="tf.Answer='水'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="170"  text="金"  exp="tf.Answer='金'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="240"  text="土"  exp="tf.Answer='土'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="310"  text="火"  exp="tf.Answer='火'" storage="SkillGame.ks" target="*Kotae"  ]
+
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="100"  text="水"  exp="tf.Answer='水'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="170"  text="金"  exp="tf.Answer='金'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="240"  text="土"  exp="tf.Answer='土'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="310"  text="火"  exp="tf.Answer='火'" storage="SkillGame.ks" target="*Kotae"  ]
+[wait time=3000]
+[jump target="*timeout"]
+[s]
+
+
 「うっ！」[p]
 ＜快感発生[p]
 忍術のために集中を始めたくぬぎだったが[p]
@@ -183,7 +217,50 @@
 くぬぎの欲情度が減少した。[p]
 [s]
 *bochu001_lose
-
-
-
-」
+＜術が不発の場合は別のテキスト
+（今だ！！）[p]
+「忍法！魂吸い・子壺奈落！！」[p]
+乾坤一擲、くぬぎの忍術が発動して、膣壁が強烈に収縮を始める[p]
+「ぐおおおおお？！！！」[p]
+(早く!早くイきなさいよ！！)[p]
+だが、[p]
+「ふんっ！！」[p]
+「あんっ！！」[p]
+本来ならば咥えた男をけして離さず、強制的に絶頂させて精気を吸い取るくぬぎの忍法[p]
+しかし、気の練り込みが足りなかったのか、敵は強引に腰を引いて逸物を引き抜いてしまった[p]
+「そんな・・・」[p]
+「あぶねぇな・・・。今のがくノ一の房中術ってやつか？」
+汗を拭う敵をくぬぎは青ざめた顔で見上げた[p]
+今の術で気力は全て使い果たしてしまったのだ。こうなってしまえば後に待つのは・・・[p]
+「今度はこっちの番だぜぇ！！オラぁっ！！」[p]
+敵の肉棒が再びくぬぎの膣内に突きこまれた[p]
+「やめっ！！あひぃぃぃぃぃんんんっ！！」[p]
+今までとは異なる甲高い嬌声が上がった[p]
+ここまで快感を抑え込み膣肉を制御していた気が霧散してしまった今、くぬぎはただの娘同然・・・[p]
+「はぁん！！くぅんっ！！おほぉんっ！！」[p]
+いや、一匹の雌にまで成り下がっていた[p]
+＜快感発生[p]
+（だめぇっ！！精気を吸うはずだったから、身体が欲しがってるぅっ！！）[p]
+ごちそうを食べ逃してしまった女肉はくぬぎの意思を離れ男の精を求めて暴れ盛っていた[p]
+「ハハッ！！なんだぁさっきまでとは具合が違うじゃねぇか！！良いヨガりっぷりだぜ！！」[p]
+「ふあああっ！！ぐうっ！！あはぁっ！！ああああああああん！！！」[p]
+声の限りあえぎ、跳ねるようにのけぞり、がくがくと身体を震わす[p]
+敵の声もくぬぎにちゃんと届いているのか怪しい有様だ[p]
+「今度こそ行くぜえええええ！！てめぇもイっちまいなぁっ！！」[p]
+「だめぇっ！！イクゥ！！イッちゃうううううう！！！」[p]
+ぶしゃああああああああ！！[p]
+「ひああああああああああっ！！！イクッ！！イぐぅうううううううっ！！！」[p]
+＜快感発生[p]
+＜快感発生[p]
+＜快感発生[p]
+敵の射精と同時にくぬぎは絶頂した[p]
+身も世もなく喘ぎ声を上げイキ狂う様子から一度に複数回の絶頂を迎えているのかもしれない[p]
+「ひいいいいん！！ふううううううっ！あああ〜〜〜っ！！」
+「ふぅっ！いや、良かったぜぇ！」[p]
+敵は逸物を引き抜くと、びくびくと痙攣を繰り返す白い裸身を眺め回した[p]
+「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
+「あーーーーっ、あああーーーー、あはぁ、んぅぅぅぅ・・・」[p]
+「仕方ねぇ、屋敷まで運ぶか・・・」[p]
+どうやら意識を失ったらしい[r]
+完全に呆けた表情のくぬぎを敵は抱えあげるとその場から立ち去った[p]
+[jump storage="*prison.ks" target="*start"]

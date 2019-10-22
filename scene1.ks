@@ -14,6 +14,21 @@
 @layopt layer=message0 visible=true
 
 
+[eval exp="f.question001=['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
+[eval exp="tf.Max=15 , tf.Min=0"][dice]
+[eval exp="tf.Sample=f.question001[tf.dice]"]
+[l]
+[iscript]
+for(var i = f.question001.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.question001[i];
+    f.question001[i] = f.question001[r];
+    f.question001[r] = tmp;
+}
+[endscript]
+[emb exp="f.question001"]
+[s]
+
 *route_select
 ルートを選びます[p]
 [link target="*easy"]かんたん[endlink][r]

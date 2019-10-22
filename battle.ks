@@ -41,12 +41,6 @@
 [cm]
 [endmacro]
 
-[macro name="dice"]
-[iscript]
-tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
-[endscript]
-[endmacro]
-
 [macro name="enemyname"]
 [emb exp="tf.E_name"]
 [endmacro]

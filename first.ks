@@ -17,6 +17,12 @@
 ;最初は右下のメニューボタンを非表示にする
 [hidemenubutton]
 
+[macro name="dice"]
+[iscript]
+tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
+[endscript]
+[endmacro]
+
 [call storage="status.ks"]
 
 ;タイトル画面へ移動
