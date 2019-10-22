@@ -1,4 +1,6 @@
 *start
+[eval exp="tf.VP=0"];ミニゲームの勝利数
+
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 敵は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [bg  time="1000" method="slide"  storage="sample_back.jpg" ]
@@ -14,40 +16,11 @@
 ずりずり。と、敵の逸物がくぬぎの太股の間を前後する[p]
 「ううっ……」[p]
 （……まぁ、こうなるわよね。術をかけて昏倒させるしかないわね）[p]
+
 *bochu001_game01
 ＜印ゲーム１[p]
-[eval exp="f.array=['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
-[eval exp="tf.Max=15 , tf.Min=0"][dice]
-[eval exp="tf.Sample=f.array[tf.dice]"]
-[l]
-[iscript]
-for(var i = f.array.length - 1; i >= 0; i--){
-    var r = Math.floor(Math.random() * (i + 1));
-    var tmp = f.array[i];
-    f.array[i] = f.array[r];
-    f.array[r] = tmp;
-}
-[endscript]
-
-[emb exp="tf.Sample"]を選べ
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="100"  text="f.array[0]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="170"  text="f.array[1]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="240"  text="f.array[2]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="310"  text="f.array[3]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="100"  text="f.array[4]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="170"  text="f.array[5]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="240"  text="f.array[6]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="310"  text="f.array[7]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="100"  text="f.array[8]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="170"  text="f.array[9]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="240"  text="f.array[10]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="310"  text="f.array[11]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[wait time=3000]
-[jump target="*timeout"]
-[s]
-
+[eval exp="tf.label='*bochu001_game01end'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001_game01end
 
 「うっ！」[p]
 ＜快感発生[p]
@@ -81,8 +54,13 @@ for(var i = f.array.length - 1; i >= 0; i--){
 「あうっ！・・・このっ、いきなり、挿れてんじゃないわよ！！」[p]
 「おおっと？痛かったかい？」[p]
 （コイツ調子に乗って！）[p]
-歯噛みしながらくぬぎは術の準備を再開する
+歯噛みしながらくぬぎは術の準備を再開する[p]
+
 *bochu001_game02
+＜印ゲーム１[p]
+[eval exp="tf.label='*bochu001_game02end'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001_game02end
+
 ＜印ゲーム２[p]
 くぬぎが気を練る間に敵は肉棒を膣の奥まで沈めきった[p]
 「っ！」[p]
@@ -115,7 +93,12 @@ for(var i = f.array.length - 1; i >= 0; i--){
 えも言われぬ快感に敵は呻いた[p]
 「おおうっ！！こ、こいつは！！すげぇ」[p]
 （夢中になってるわね。この隙に術の準備を・・・）[p]
+
 *bochu001_game03
+＜印ゲーム１[p]
+[eval exp="tf.label='*bochu001_game03end'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001_game03end
+
 ＜印ゲーム３[p]
 「へっ、あぶねぇ。危うく主導権を奪われるところだったぜ」[p]
 敵は肉棒を一度抜くと汗をぬぐった[p]
@@ -157,7 +140,12 @@ for(var i = f.array.length - 1; i >= 0; i--){
 「ひぃんっ！！ああああっ！！」[p]
 さすがのくぬぎもこの衝撃には本気の悲鳴を上げ身悶えした[p]
 （ヤバい！早く術にかけないと、こっちの身が持たない！！）[p]
+
 *bochu001_game04
+＜印ゲーム１[p]
+[eval exp="tf.label='*bochu001_game04end'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001_game04end
+
 ＜印ゲーム４[p]
 「あうう。もう、堪忍してぇ・・・」[p]
 「いいぜぇ。とどめを刺してやる」[p]
@@ -185,9 +173,19 @@ for(var i = f.array.length - 1; i >= 0; i--){
 （でも、仕掛けるなら今しかない！！）[p]
 敵の魔羅が蠕動を始めるのを感じて、くぬぎは歯を食いしばり気を練り上げる[p]
 （この術で落とす！！）[p]
+
 *bochu001_game05
 ＜印ゲーム５[p]
+[eval exp="tf.label='*bochu001_game05end'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001_game05end
+
 ＜全５ゲームの結果を受けて最後に敵に快感が叩きつけられる。ダメージが１００を超えたら勝利[p]
+[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * (tf.VP + 1) * tf.E_SAN / 100 * (tf.E_ERO + 50)/100)"]
+敵に[emb exp="tf.HDamage"]の快感[p]
+[jump target="*bochu001_win" cond="tf.HDamage>=100"]
+[jump target="*bochu001_lose"]
+[s]
+
 *bochu001_win
 「うおおおおおっ！！出すぞおおおおっ！！！」[p]
 獣の咆哮と同時に敵の陰茎が暴れ勢いよく精液がくぬぎの膣内に噴き出した[p]
@@ -215,6 +213,7 @@ for(var i = f.array.length - 1; i >= 0; i--){
 くぬぎの疲労が減少した。[p]
 くぬぎの欲情度が減少した。[p]
 [s]
+
 *bochu001_lose
 ＜術が不発の場合は別のテキスト
 （今だ！！）[p]

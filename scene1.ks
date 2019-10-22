@@ -13,37 +13,6 @@
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
 
-＜印ゲーム１[p]
-[eval exp="f.array=['欲','煩','懊','悩','悦','愉','快','色','情','乱','姦','淫','絶','雌','雄','痴']"]
-[eval exp="tf.Max=15 , tf.Min=0"][dice]
-[eval exp="tf.Sample=f.array[tf.dice]"]
-[l]
-[iscript]
-for(var i = f.array.length - 1; i >= 0; i--){
-    var r = Math.floor(Math.random() * (i + 1));
-    var tmp = f.array[i];
-    f.array[i] = f.array[r];
-    f.array[r] = tmp;
-}
-[endscript]
-
-[emb exp="tf.Sample"]を選べ
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="100"  text="&f.array[0]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="170"  text="f.array[1]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="240"  text="f.array[2]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="200"  y="310"  text="f.array[3]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="100"  text="f.array[4]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="170"  text="f.array[5]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="240"  text="f.array[6]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="460"  width="200"  y="310"  text="f.array[7]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="100"  text="f.array[8]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="170"  text="f.array[9]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="240"  text="f.array[10]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="660"  width="200"  y="310"  text="f.array[11]"  exp="tf.Answer=f.array[0]" storage="SkillGame.ks" target="*Kotae"  ]
-[s]
-
 *route_select
 ルートを選びます[p]
 [link target="*easy"]かんたん[endlink][r]
@@ -157,6 +126,6 @@ for(var i = f.array.length - 1; i >= 0; i--){
 
 *hard-6
 [eval exp="tf.E_name='大砲魔'"]
-[eval exp="f.E_HP=1000 , f.E_STR=40 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 30"]
+[eval exp="f.E_HP=3000 , f.E_STR=40 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 30"]
 
 @jump storage="battle.ks"

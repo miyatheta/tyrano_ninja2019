@@ -735,8 +735,7 @@
 [s]
 
 *P_mount_option5
-準備中です[p]
-[jump target="*P_mount_phase"]
+[jump target="*bouchu"]
 [s]
 
 *E_mount_select
