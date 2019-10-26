@@ -35,8 +35,8 @@
 [macro name="show_status"]
 [nowait]
 [if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
-体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
-敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
+体力[emb exp="tf.P_HP"]　気力[emb exp="tf.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
+敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="tf.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
 [endnowait]
 [cm]
 [endmacro]
@@ -69,6 +69,8 @@
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
 [eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
 [eval exp="f.P_EXH = 100" cond="f.P_EXH > 100"]
+[eval exp="f.P_AUR = 100" cond="f.P_AUR > 100"]
+[eval exp="f.E_AUR = 100" cond="f.E_AUR > 100"]
 [eval exp="tf.P_ERO = 999" cond="tf.P_ERO > 999"]
 [eval exp="tf.E_ERO = 999" cond="tf.E_ERO > 999"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
@@ -147,9 +149,9 @@
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , tf.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR"]
-[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , tf.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 ;サイズの設定
 [eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ=tf.dice"]
@@ -211,10 +213,10 @@
 ;コンボルート選定
 [if exp="tf.dice >= 66"][eval exp="tf.E_skill_route =1"]
 ;コンボルート1 足止め＞足止め＞火力アップ・防御ダウン
-[eval exp="tf.E_skill1='*気迫' , tf.E_skill2='*気迫' , tf.E_skill3='*捨て身'"]
+[eval exp="tf.E_skill1='*集中' , tf.E_skill2='*集中' , tf.E_skill3='*捨て身'"]
 [elsif exp="tf.dice >= 33"][eval exp="tf.E_skill_route =2"]
 ;コンボルート2　火力アップ＞足止め＞組付
-[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*気迫' , tf.E_skill3='*全力'"]
+[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*集中' , tf.E_skill3='*全力'"]
 [else exp="tf.dice >= 0"][eval exp="tf.E_skill_route =3"]
 ;コンボルート3 火力アップ＞火力アップ・防御ダウン＞組付
 [eval exp="tf.E_skill1='*全力' , tf.E_skill2='*捨て身' , tf.E_skill3='*組付'"]
@@ -493,8 +495,18 @@
 
 *E_skill_select2
 [eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="tf.E_AUR>0 && tf.dice>4"]
+[if exp="tf.E_AUR>0 && tf.dice>7"]
+[jump storage="skilllist.ks" target="*組付"]
+[endif]
+
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="tf.E_AUR>=10 && tf.dice>6"]
 [jump storage="skilllist.ks" target="*気迫"]
+[endif]
+
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="tf.E_AUR>=50 && tf.dice>0"]
+[jump storage="skilllist.ks" target="*轟爆斧"]
 [endif]
 
 *E_attack_select
@@ -603,7 +615,8 @@
 [eval exp="tf.Max=9 , tf.Min=0"][dice]
 [if exp="tf.E_ACT>1"]
 [jump target="*E_phase_start"]
-[elsif exp="tf.E_ACT==1 && tf.dice>4"]
+[eval exp="tf.E_AUR = tf.E_AUR + 10"][elsif exp="tf.E_ACT==1 && tf.dice>4"]
+[jump target="*turn_end"]
 [else]
 [jump target="*turn_end"]
 [endif]
@@ -747,16 +760,18 @@
 [s]
 
 *E_mount_select
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.dice> 79"][jump target="*E_mount_option1"]
+[elsif exp="tf.dice> 59"][jump target="*E_mount_option2"]
+[endif]
+
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
 [if exp="tf.dice> tf.SKB"][jump target="*E_mount_option0"]
 [endif]
 
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice> 49"][jump target="*E_mount_option1"]
-[else][jump target="*E_mount_option2"]
-[endif]
+[jump target="*E_mount_select"]
 [s]
 
 *E_mount_option0
@@ -869,7 +884,7 @@
 [enemyname]はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
 [Calc_Status]
-[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR - tf.P_DUR) * 2"]
+[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR - tf.P_DUR) * 3"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
@@ -909,7 +924,7 @@
 *turn_end
 ターン終了[p]
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
-[eval exp="tf.Max=2 , tf.Min=1"][dice][eval exp="f.E_AUR=f.E_AUR+tf.dice*10"]
+[eval exp="tf.E_AUR = tf.E_AUR + 10"]
 [eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
 [Initialize_1Tbuff][Refresh_3Tbuff]
 ;デバフと状態異常の回復

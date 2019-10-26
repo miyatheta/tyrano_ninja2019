@@ -1,11 +1,3 @@
-
-*気迫
-「気迫」[p]
-敵に気圧されたくぬぎの呼吸が１減少[p]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"][limit]
-[jump storage="battle.ks" target="*E_skill_select2"]
-[s]
-
 *集中
 「集中」[p]
 敵の命中力が上昇[p]
@@ -39,6 +31,30 @@
 [jump storage="battle.ks" target="*mount_start"]
 [else]
 くぬぎは敵の組付を躱した[p]
-[jump storage="battle.ks" target="*P_phase_start"]
+[jump storage="battle.ks" target="*E_attack_select"]
 [endif]
+[s]
+
+*気迫
+「気迫」[p]
+敵に気圧されたくぬぎの呼吸が１減少[p]
+[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+[eval exp="tf.E_AUR = tf.E_AUR - 10"]
+[limit]
+[jump storage="battle.ks" target="*E_attack_select"]
+[s]
+
+*轟爆斧
+「轟爆斧」[p]
+大上段から敵の薙刀が振り下ろされた[p]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
+[eval exp="tf.ATP = tf.RATE * tf.E_STR * tf.E_charm_STR "]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[quake count=5 time=300 hmax=20]
+くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[eval exp="tf.E_AUR = tf.E_AUR - 50"]
+[limit]
+[jump storage="battle.ks" target="*E_attack_select"]
 [s]
