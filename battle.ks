@@ -491,7 +491,11 @@
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 [enemyname]の攻撃[p]
 
-*P_skill_select_DEF
+*E_skill_select2
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="tf.E_AUR>0 && tf.dice>4"]
+[jump storage="skilllist.ks" target="*気迫"]
+[endif]
 
 *E_attack_select
 [eval exp="tf.max=9 , tf.Min=0"][dice]
@@ -593,9 +597,13 @@
 火傷で[enemyname]の体力が100減少[p]
 [triage]
 [endif]
-[if exp="tf.E_ACT>0"]
+
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
+
+[eval exp="tf.Max=9 , tf.Min=0"][dice]
+[if exp="tf.E_ACT>1"]
 [jump target="*E_phase_start"]
+[elsif exp="tf.E_ACT==1 && tf.dice>4"]
 [else]
 [jump target="*turn_end"]
 [endif]

@@ -99,11 +99,12 @@
 *hard
 [cm]
 [link target="*hard-1"]1:遅延タイプ[endlink]
-[link target="*hard-2"]2:削りタイプ[endlink]
+[link target="*hard-2"]2:削りタイプ[endlink][r]
 [link target="*hard-3"]3:特殊削りタイプ[endlink]
-[link target="*hard-4"]４:拘束タイプ[endlink]
+[link target="*hard-4"]４:拘束タイプ[endlink][r]
 [link target="*hard-5"]5:セクハラタイプ[endlink]
 [link target="*hard-6"]6:一発屋タイプ[endlink]
+[link target="*hard-7"]7:無敵マン[endlink]
 [s]
 
 *hard-1
@@ -127,5 +128,11 @@
 *hard-6
 [eval exp="tf.E_name='大砲魔'"]
 [eval exp="f.E_HP=3000 , f.E_STR=40 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 30"]
+
+@jump storage="battle.ks"
+
+*hard-7
+[eval exp="tf.E_name='魔人'"]
+[eval exp="f.E_HP=5000 , f.E_STR=40 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 30"]
 
 @jump storage="battle.ks"

@@ -1,22 +1,29 @@
 
 *気迫
 「気迫」[p]
-敵に気圧されてくぬぎの回避力が低下（１ターン）[p]
-[eval exp="tf.P_AGId1 = 0.8"]
+敵に気圧されたくぬぎの呼吸が１減少[p]
+[eval exp="tf.P_ACT = tf.P_ACT - 1"][limit]
+[jump storage="battle.ks" target="*E_skill_select2"]
+[s]
+
+*集中
+「集中」[p]
+敵の命中力が上昇[p]
+[eval exp="tf.E_DEXb1 = 1.5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *全力
 「全力」[p]
 敵の物理攻撃力が上昇[p]
-[eval exp="tf.E_STRb3 = 1.2"]
+[eval exp="tf.E_STRb3 = 1.3"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *捨て身
 「捨て身」[p]
 敵の物理攻撃力が上昇、耐久力が減少（1ターン）[p]
-[eval exp="tf.E_STRb1 = 1.3 ,tf.E_DURb1 = 0.8"]
+[eval exp="tf.E_STRb1 = 1.5 ,tf.E_DURb1 = 0.7"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 

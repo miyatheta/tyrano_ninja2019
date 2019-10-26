@@ -1,4 +1,6 @@
 *status
+[eval exp="f.被虐調教lv=0 , f.乳房改造lv=0 , f.尻穴開発lv=0 , f.膣内蟲姦lv=0 , f.催淫呪術lv=0"]
+
 ;体力
 [eval exp="f.P_HP=1000"]
 ;腕力＞攻撃力
@@ -31,6 +33,8 @@
 [eval exp="f.P_DRESS=2"]
 ;感度それぞれ膣、尻、口、胸
 [eval exp="f.P_SEN_VG=100 , f.P_SEN_AN=100 , f.P_SEN_MO=100 , f.P_SEN_BB=100"]
+;エロ状態異常
+[eval exp="f.P_BOOB=0 , f.P_ANAL=0 , f.P_MAZO=0 , f.P_PARSITE=0 , f.P_HYPNO=0"]
 
 ;体力
 [eval exp="f.E_HP=1000"]

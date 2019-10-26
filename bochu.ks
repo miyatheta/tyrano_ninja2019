@@ -58,11 +58,10 @@
 歯噛みしながらくぬぎは術の準備を再開する[p]
 
 *bochu001_game02
-＜印ゲーム１[p]
+＜印ゲーム２[p]
 [eval exp="tf.label='*bochu001return02'"][jump storage="BochuGame.ks" target="*game_start"]
 *bochu001return02
 
-＜印ゲーム２[p]
 くぬぎが気を練る間に敵は肉棒を膣の奥まで沈めきった[p]
 「っ！」[p]
 「よーし、ずっぽり収まったぜぇ」[p]
@@ -96,11 +95,10 @@
 （夢中になってるわね。この隙に術の準備を・・・）[p]
 
 *bochu001_game03
-＜印ゲーム１[p]
+＜印ゲーム３[p]
 [eval exp="tf.label='*bochu001return03'"][jump storage="BochuGame.ks" target="*game_start"]
 *bochu001return03
 
-＜印ゲーム３[p]
 「へっ、あぶねぇ。危うく主導権を奪われるところだったぜ」[p]
 敵は肉棒を一度抜くと汗をぬぐった[p]
 「あら？もうおしまい？」[p]
@@ -143,11 +141,10 @@
 （ヤバい！早く術にかけないと、こっちの身が持たない！！）[p]
 
 *bochu001_game04
-＜印ゲーム１[p]
+＜印ゲーム４[p]
 [eval exp="tf.label='*bochu001return04'"][jump storage="BochuGame.ks" target="*game_start"]
 *bochu001return04
 
-＜印ゲーム４[p]
 「あうう。もう、堪忍してぇ・・・」[p]
 「いいぜぇ。とどめを刺してやる」[p]
 三点を責め抜かれ震える声を上げるくぬぎ。敵は満足げな笑みを浮かべると魔羅を秘唇にあてがった[p]
