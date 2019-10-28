@@ -1,3 +1,21 @@
+*Sex
+[SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは絶頂した[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[endif]
+[jump target="&tf.label"]
+[s]
+
 *start
 ;ミニゲームの勝利数
 [eval exp="tf.VP=0"]
@@ -18,13 +36,15 @@
 「ううっ……」[p]
 （……まぁ、こうなるわよね。術をかけて昏倒させるしかないわね）[p]
 
-*bochu001_game01
 ＜印ゲーム１[p]
-[eval exp="tf.label='*bochu001-01'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001-01
+[eval exp="tf.label='*bochu001-game01'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-game01
 
 「うっ！」[p]
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex01' , tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex01
+
 忍術のために集中を始めたくぬぎだったが[p]
 素股を楽しむ敵の逸物に女陰を刺激して小さく呻いた[p]
 「おっと、ちょいと擦られただけで感じてるのかい？」[p]
@@ -50,17 +70,21 @@
 （コイツ、気性が荒いわね）[p]
 「へっ！生意気な口聞けなくなるようにしてやるぜ」[p]
 敵はそう言うやいなや逸物をくぬぎの膣に挿入した[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex02' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex02
+
+[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 ＜欲情度によって返答が変化[p]
 「あうっ！・・・このっ、いきなり、挿れてんじゃないわよ！！」[p]
 「おおっと？痛かったかい？」[p]
 （コイツ調子に乗って！）[p]
 歯噛みしながらくぬぎは術の準備を再開する[p]
 
-*bochu001_game02
 ＜印ゲーム２[p]
-[eval exp="tf.label='*bochu001return02'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001return02
+[eval exp="tf.label='*bochu001-game02'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-game02
 
 くぬぎが気を練る間に敵は肉棒を膣の奥まで沈めきった[p]
 「っ！」[p]
@@ -71,12 +95,20 @@
 敵はくぬぎの尻を撫で回すとその腰を掴んでおもむろに腰を動かし始めた[p]
 「うっ！……はぁっ！」[p]
 「へっへっへっ！どうだいお前さんが馬鹿にした魔羅様のお味は？」[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex03' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex03
+
 ＜欲情度によって返答が変化[p]
 「はっ！どうってことないわね！！犬の方が上手なんじゃない？」[p]
 憎まれ口を叩くくぬぎに敵はニヤリと笑って[p]
 「言うねぇ。だが、下の口はそうは言ってないみたいだぜ?」[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex04' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex04
+
 「ひううっ！」[p]
 敵に唐突に陰核を弄られくぬぎは思わず悲鳴を上げた。[p]
 「ほーら？もうびしょびしょだぜ！？」[p]
@@ -94,10 +126,9 @@
 「おおうっ！！こ、こいつは！！すげぇ」[p]
 （夢中になってるわね。この隙に術の準備を・・・）[p]
 
-*bochu001_game03
 ＜印ゲーム３[p]
-[eval exp="tf.label='*bochu001return03'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001return03
+[eval exp="tf.label='*bochu001-game03'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-game03
 
 「へっ、あぶねぇ。危うく主導権を奪われるところだったぜ」[p]
 敵は肉棒を一度抜くと汗をぬぐった[p]
@@ -109,7 +140,11 @@
 「きゃあっ！」[p]
 「へへっ。絶景！絶景！」[p]
 敵は舌なめずりをするとくぬぎの股座に顔を埋めた[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex05' , tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex05
+
 「はうっ！！」[p]
 敵の舌に秘裂を舐め回されくぬぎは身を震わせた[p]
 「このっ！一心不乱に舐め回してぇ！あんっ！アンタ本当に犬だったのね！んっ！」[p]
@@ -128,29 +163,41 @@
 「ああんっ！！やめなさいっ！！この野郎！ううんっ！！」[p]
 右の乳首をしゃぶられ、左の乳房を左手でこね回される。さらに空いた右手が秘唇に指を差し込みかき回し始めた[p]
 三点責めである[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex06' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex06
+
 「ああんっ！！あうっ！！いやぁっ！！」[p]
 くぬぎは責めから逃れようと暴れるが、いかに鍛えていても小柄な彼女にのしかかる男を跳ね除けることはできない[p]
 ＜状態異常：膨乳時は展開が変化[p]
 「痛っ！！噛むなぁ！！このっ！！ううんっ！！」[p]
 「はっ！ようやく！いい声で鳴くようになってきたな！！」[p]
 陰唇に突きこまれる指が追加され３本となり、同時に親指が陰核をすり潰す[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex07' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex07
+
 「ひぃんっ！！ああああっ！！」[p]
 さすがのくぬぎもこの衝撃には本気の悲鳴を上げ身悶えした[p]
 （ヤバい！早く術にかけないと、こっちの身が持たない！！）[p]
 
-*bochu001_game04
 ＜印ゲーム４[p]
-[eval exp="tf.label='*bochu001return04'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001return04
+[eval exp="tf.label='*bochu001-game04'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-game04
 
 「あうう。もう、堪忍してぇ・・・」[p]
 「いいぜぇ。とどめを刺してやる」[p]
 三点を責め抜かれ震える声を上げるくぬぎ。敵は満足げな笑みを浮かべると魔羅を秘唇にあてがった[p]
 「おらぁ！！イケぇ！！」[p]
 先程よりも一層硬く大きく屹立した敵の逸物がくぬぎの膣を一気に最奥まで貫いた[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex08' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex08
+
+[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 「あああああっ！！深いいいいっ！！んんんんっ！！！」[p]
 「オラオラオラオラぁっ！！鳴け！！喘げ！！」[p]
 ヨガり声を上げ悶えるくぬぎの身体を固定するように杭を打つような勢いで敵の腰が上下する[p]
@@ -165,20 +212,23 @@
 「うおおおおおおおっ！このまま逝かせてやる！！イケぇ！！」[p]
 ぐりぐりとくぬぎの膣を抉る敵の魔羅は始めよりもさらに熱く感じられる。[p]
 どうやら敵も絶頂が近いらしい。腰振りが一際激しく、獣じみた荒々しさになっていく。[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex09' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex09
+
 「あんっ！！あんっ！！ふあっ！！あんっ！！あああんっ！！！」[p]
 女陰からはとめどなく愛液が、瞳からは涙、口からは涎、くぬぎも息も絶え絶えな有様だ[p]
 （でも、仕掛けるなら今しかない！！）[p]
 敵の魔羅が蠕動を始めるのを感じて、くぬぎは歯を食いしばり気を練り上げる[p]
 （この術で落とす！！）[p]
 
-*bochu001_game05
 ＜印ゲーム５[p]
-[eval exp="tf.label='*bochu001return05'"][jump storage="BochuGame.ks" target="*game_start"]
-*bochu001return05
+[eval exp="tf.label='*bochu001-game05'"][jump storage="BochuGame.ks" target="*game_start"]
+*bochu001-game05
 
 ＜全５ゲームの結果を受けて最後に敵に快感が叩きつけられる。ダメージが１００を超えたら勝利[p]
-[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * (tf.VP + 1) * (100-tf.E_SAN) / 100 * (tf.E_ERO + 50)/100)"]
+[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * tf.VP * (100-tf.E_SAN) / 100 * (tf.E_ERO + 50)/100)"]
 敵に[emb exp="tf.HDamage"]の快感[p]
 [jump target="*bochu001_win" cond="tf.HDamage>=100"]
 [jump target="*bochu001_lose"]
@@ -235,7 +285,11 @@
 ここまで快感を抑え込み膣肉を制御していた気が霧散してしまった今、くぬぎはただの娘同然・・・[p]
 「はぁん！！くぅんっ！！おほぉんっ！！」[p]
 いや、一匹の雌にまで成り下がっていた[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex20' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex20
+
 （だめぇっ！！精気を吸うはずだったから、身体が欲しがってるぅっ！！）[p]
 ごちそうを食べ逃してしまった女肉はくぬぎの意思を離れ男の精を求めて暴れ盛っていた[p]
 「ハハッ！！なんだぁさっきまでとは具合が違うじゃねぇか！！良いヨガりっぷりだぜ！！」[p]
@@ -246,9 +300,17 @@
 「だめぇっ！！イクゥ！！イッちゃうううううう！！！」[p]
 ぶしゃああああああああ！！[p]
 「ひああああああああああっ！！！イクッ！！イぐぅうううううううっ！！！」[p]
+
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex21' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex21
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex22' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex22
 ＜快感発生[p]
+[eval exp="tf.label='*bochu001-sex23' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+*bochu001-sex23
+
 敵の射精と同時にくぬぎは絶頂した[p]
 身も世もなく喘ぎ声を上げイキ狂う様子から一度に複数回の絶頂を迎えているのかもしれない[p]
 「ひいいいいん！！ふううううううっ！あああ〜〜〜っ！！」[p]

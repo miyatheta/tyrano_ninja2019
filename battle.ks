@@ -35,8 +35,8 @@
 [macro name="show_status"]
 [nowait]
 [if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
-体力[emb exp="tf.P_HP"]　気力[emb exp="tf.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
-敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="tf.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
+体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
+敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
 [endnowait]
 [cm]
 [endmacro]
@@ -149,9 +149,9 @@
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , tf.P_AUR = f.P_AUR"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR"]
-[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , tf.E_AUR=0"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 ;サイズの設定
 [eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ=tf.dice"]
@@ -495,17 +495,17 @@
 
 *E_skill_select2
 [eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="tf.E_AUR>0 && tf.dice>7"]
+[if exp="f.E_AUR>0 && tf.dice>7"]
 [jump storage="skilllist.ks" target="*組付"]
 [endif]
 
 [eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="tf.E_AUR>=10 && tf.dice>6"]
+[if exp="f.E_AUR>=10 && tf.dice>6"]
 [jump storage="skilllist.ks" target="*気迫"]
 [endif]
 
 [eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="tf.E_AUR>=50 && tf.dice>0"]
+[if exp="f.E_AUR>=50 && tf.dice>0"]
 [jump storage="skilllist.ks" target="*轟爆斧"]
 [endif]
 
@@ -615,7 +615,7 @@
 [eval exp="tf.Max=9 , tf.Min=0"][dice]
 [if exp="tf.E_ACT>1"]
 [jump target="*E_phase_start"]
-[eval exp="tf.E_AUR = tf.E_AUR + 10"][elsif exp="tf.E_ACT==1 && tf.dice>4"]
+[eval exp="f.E_AUR = f.E_AUR + 10"][elsif exp="tf.E_ACT==1 && tf.dice>4"]
 [jump target="*turn_end"]
 [else]
 [jump target="*turn_end"]
@@ -846,7 +846,7 @@
 
 *E_mount_sukebe2
 [enemyname]はくぬぎの秘処をまさぐった[p]
-[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
+[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 
@@ -924,7 +924,7 @@
 *turn_end
 ターン終了[p]
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
-[eval exp="tf.E_AUR = tf.E_AUR + 10"]
+[eval exp="f.E_AUR = f.E_AUR + 10"]
 [eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
 [Initialize_1Tbuff][Refresh_3Tbuff]
 ;デバフと状態異常の回復

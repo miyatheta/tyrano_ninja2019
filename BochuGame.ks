@@ -40,11 +40,12 @@ for(var i = f.array.length - 1; i >= 0; i--){
 [wait_cancel]
 [if exp="tf.Sample == tf.Answer"]
 成功[p]
-[eval exp="tf.VP=tf.VP+1"]
+[eval exp="tf.VP=tf.VP+3"]
 
 [else]
 失敗[p]
 くぬぎはうまく集中することができなかった[p]
+[eval exp="tf.VP=tf.VP+1"]
 [endif]
 [jump storage="bochu.ks" target="&tf.label"]
 [s]

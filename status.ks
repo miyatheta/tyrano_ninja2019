@@ -24,7 +24,7 @@
 ;疲労(exhaustion)
 [eval exp="f.P_EXH=70"]
 ;欲情
-[eval exp="f.P_ERO=50"]
+[eval exp="f.P_ERO=0"]
 ;理性,SAN値
 [eval exp="f.P_SAN=89"]
 ;衣服耐久度
