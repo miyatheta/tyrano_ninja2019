@@ -2,7 +2,7 @@
 [eval exp="f.被虐調教lv=0 , f.乳房改造lv=0 , f.尻穴開発lv=0 , f.膣内蟲姦lv=0 , f.催淫呪術lv=0"]
 
 ;体力
-[eval exp="f.P_HP=1000"]
+[eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
 ;腕力＞攻撃力
 [eval exp="f.P_STR=24"]
 ;耐久＞防御力
@@ -22,7 +22,7 @@
 ;気力＞MP
 [eval exp="f.P_AUR=0"]
 ;疲労(exhaustion)
-[eval exp="f.P_EXH=70"]
+[eval exp="f.P_EXH=0"]
 ;欲情
 [eval exp="f.P_ERO=0"]
 ;理性,SAN値

@@ -60,9 +60,9 @@
 
 [macro name="SUKEBE"]
 ;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
-[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_SEXb1 * (100 - tf.P_SAN)/100)"]
+[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_SEXb1 * tf.P_SEN / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * tf.P_SEN / 100 * (tf.P_ERO + 50)/100)"]
 [endmacro]
 
 [macro name="limit"]
@@ -99,7 +99,7 @@
 
 [macro name="Initialize_1Tbuff"]
 [eval exp="tf.P_STRd1=1 , tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1 , tf.P_POWd1=1 , tf.P_APPd1=1"]
-[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_POWb1=1 , tf.P_APPb1=1 , tf.P_SEXb1=1"]
+[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_POWb1=1 , tf.P_APPb1=1 , tf.P_DefSKBb1=1"]
 [eval exp="tf.E_STRd1=1 , tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1 , tf.E_POWd1=1 , tf.E_APPd1=1"]
 [eval exp="tf.E_STRb1=1 , tf.E_DURb1=1 , tf.E_AGIb1=1 , tf.E_DEXb1=1 , tf.E_POWb1=1 , tf.E_APPb1=1"]
 [endmacro]
@@ -148,7 +148,7 @@
 [chara_show  name="gouza"  ]
 ;ステータスのインストール
 *Initialize
-[eval exp="tf.Turn=0"]
+[eval exp="tf.Turn=0 , tf.P_EXH=0"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
@@ -265,7 +265,7 @@
 *P_skill1
 くぬぎの忍術・火炎[p]
 [Calc_Status]
-[eval exp="tf.HIT = 100"]
+[eval exp="tf.HIT = 200"]
 [eval exp="tf.HitRate = tf.HIT"]
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
@@ -607,6 +607,7 @@
 [if exp="tf.E_scald>1"]
 [eval exp="tf.E_HP = tf.E_HP - 100"][limit]
 火傷で[enemyname]の体力が100減少[p]
+[eval exp="tf.E_scald = tf.E_scald - 1"]
 [triage]
 [endif]
 
@@ -706,7 +707,7 @@
 くぬぎは息を整えた[p]
 くぬぎの気力が１０上昇[p]
 このターンのくぬぎは快感への抵抗力が上昇[p]
-[eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = f.P_AUR + 10 , tf.P_SEXb1 = 0.5"][limit]
+[eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = f.P_AUR + 10 , tf.P_DefSKBb1 = 0.5"][limit]
 [jump target="*E_mount_select"]
 [s]
 
@@ -908,17 +909,31 @@
 [s]
 
 *mount_end
-;ターンエンド処理
-[eval exp="tf.P_SEXb1=1"]
+;疲労処理
+[eval exp="tf.Damage = Math.floor(tf.mount_turn / 3) + 1 , f.P_EXH = f.P_EXH + 1"]
+くぬぎの疲労度が1上昇した[p][triage]
+;火傷ダメージ
+[if exp="tf.E_scald>1"]
+[eval exp="tf.E_HP = tf.E_HP - 100"][limit]
+火傷で[enemyname]の体力が100減少[p]
+[eval exp="tf.E_scald = tf.E_scald - 1"]
+[triage]
+[endif]
+;セクハラ抵抗力をリセット
+[eval exp="tf.P_DefSKBb1=1"]
 ;拘束継続
 [if exp="tf.Esc != 1"]
 [jump target="*mount_continue"]
 [endif]
-
-;くぬぎは敵の拘束から抜け出した
-[eval exp="tf.Damage = Math.floor(tf.mount_turn / 5) + 1 , f.P_EXH = f.P_EXH + tf.Damage"]
-くぬぎの疲労度が[emb exp="tf.Damage"]上昇した[p][triage]
-[jump target="*turn_end"]
+;ターンエンド処理
+[eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
+[eval exp="f.E_AUR = f.E_AUR + 10"]
+;[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]呼吸は回復しない
+[Initialize_1Tbuff][Refresh_3Tbuff]
+;デバフと状態異常の回復
+[eval exp="tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
+[eval exp="tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1"]
+[jump target="*turn_start"]
 [s]
 
 *turn_end
@@ -930,7 +945,6 @@
 ;デバフと状態異常の回復
 [eval exp="tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
 [eval exp="tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1"]
-[eval exp="tf.E_scald = tf.E_scald - 1"]
 [jump target="*turn_start"]
 
 
@@ -939,15 +953,12 @@
 疲労のためにくぬぎは立ち上がれなくなった[p]
 [endif]
 くぬぎは敗北した。[p]
-[if exp="f.P_EXH >= 100"]
-[elsif exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"][limit]疲労度が5増加[p]
-[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"][limit]疲労度が10増加[p]
-[else][eval exp="f.P_EXH = f.P_EXH + 15"][limit]疲労度が15増加[p]
-[endif]
+[eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
+疲労度が[emb exp="tf.Temp"]上昇した[p]
 [GoSKB]
 [if exp="tf.GoSKB == 1"]
 #敵
-もう！我慢ならん！！[p]
+ぐふふふふ！さぁて楽しませてもらおうか！！[p]
 #くぬぎ
 きゃあ！！[p]
 #
@@ -958,17 +969,16 @@
 おらっ！！大人しくしな！！[p]
 #くぬぎ
 くふっ！！[p]
-くぬぎは昏倒した[p]
-その後くぬぎを見たものはいない[p]
-[jump storage="title.ks" target="*start"]
+「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
+「仕方ねぇ、屋敷まで運ぶか・・・」[p]
+意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
+[jump storage="prison.ks" target="*start"]
 [s]
 
 *game_win
 戦闘に勝利した。[p]
-[if exp="tf.Turn<6"][eval exp="f.P_EXH = f.P_EXH + 5"][limit]疲労度が5増加[p]
-[elsif exp="tf.Turn<10"][eval exp="f.P_EXH = f.P_EXH + 10"][limit]疲労度が10増加[p]
-[else][eval exp="f.P_EXH = f.P_EXH + 15"][limit]疲労度が15増加[p]
-[endif]
+[eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
+疲労度が[emb exp="tf.Temp"]上昇した[p]
 [jump storage="scene1.ks"]
 [s]
 
