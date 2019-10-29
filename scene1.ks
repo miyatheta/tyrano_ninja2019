@@ -12,6 +12,12 @@
 
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
+;このゲームで登場するキャラクターを宣言
+[chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
+;キャラクターの表情登録
+[chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
+[chara_mod name="kunugi" face="default"]
+
 
 *route_select
 ルートを選びます[p]

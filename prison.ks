@@ -1,4 +1,5 @@
 *start
+[clearfix]
 [bg  time="1000" method="slide"  storage="sample_prison.jpg" ]
 拷問です[p]
 さて、今日お主に施す拷問は・・・[p]

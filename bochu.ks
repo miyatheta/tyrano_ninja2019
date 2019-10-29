@@ -17,11 +17,9 @@
 [s]
 
 *start
+[clearfix]
 ;ミニゲームの勝利数
 [eval exp="tf.VP=0"]
-
-[chara_hide name="kunugi"][chara_hide name="gouza"]
-敵は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [bg  time="1000" method="slide"  storage="sample_back.jpg" ]
 房中を開始します[p]
 幸運判定。運が悪いと敵の増援が出現[p]

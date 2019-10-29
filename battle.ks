@@ -1,6 +1,5 @@
 *start
-
-[cm  ]
+[cm]
 [clearfix]
 [start_keyconfig]
 
@@ -23,12 +22,6 @@
 [chara_config ptext="chara_name_area"]
 
 ;このゲームで登場するキャラクターを宣言
-;akane
-[chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
-[chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
-;キャラクターの表情登録
-
-;yamato
 [chara_new  name="gouza"  storage="chara/gouza/pr_gouza.png" jname="豪座" ]
 
 
@@ -269,7 +262,7 @@
 [eval exp="tf.HitRate = tf.HIT"]
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 10 + tf.dice"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 15 + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
 [quake count=5 time=300 hmax=20]
@@ -336,7 +329,7 @@
 
 *P_attack_conf1
 [Calc_Status]
-[eval exp="tf.RATE = 5.5 , tf.ACC = 30 , tf.comb=1"]
+[eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 拳：命中率[emb exp="tf.HitRate"]％[p]
@@ -346,7 +339,7 @@
 
 *P_attack_conf2
 [Calc_Status]
-[eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.comb=1"]
+[eval exp="tf.RATE = 7.5 , tf.ACC = 20 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 蹴り：命中率[emb exp="tf.HitRate"]％[p]
@@ -356,7 +349,7 @@
 
 *P_attack_conf3
 [Calc_Status]
-[eval exp="tf.RATE = 9.0 , tf.ACC = 0 , tf.comb=0"]
+[eval exp="tf.RATE = 13.0 , tf.ACC = 0 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 回し蹴り：命中率[emb exp="tf.HitRate"]％[p]
@@ -367,7 +360,7 @@
 
 *P_attack_conf4
 [Calc_Status]
-[eval exp="tf.RATE = 5 , tf.ACC = 30 , tf.comb=0"]
+[eval exp="tf.RATE = 5.5 , tf.ACC = 30 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 くない：命中率[emb exp="tf.HitRate"]％[p]
@@ -402,7 +395,7 @@
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[eval exp="tf.E_DURd1 = tf.E_DURd1 - 0.2"][eval exp="tf.E_DURd1=0" cond="tf.E_DURd1 < 0"]
+[eval exp="tf.E_DURd1 = tf.E_DURd1 - 0.25"][eval exp="tf.E_DURd1=0" cond="tf.E_DURd1 < 0"]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [enemyname]の防御力低下[p]
@@ -422,7 +415,7 @@
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[eval exp="tf.E_AGId1 = tf.E_AGId1 - 0.2"][eval exp="tf.E_AGId1=0" cond="tf.E_AGId1 < 0"]
+[eval exp="tf.E_AGId1 = tf.E_AGId1 - 0.25"][eval exp="tf.E_AGId1=0" cond="tf.E_AGId1 < 0"]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [enemyname]の回避が低下[p]
@@ -523,7 +516,7 @@
 [else]
 [enemyname]の体当たり[p]
 [Calc_Status]
-[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 7.0 , tf.ACC = 0 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 8.5 , tf.ACC = 0 , tf.E_ATK='*E_attack_2'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_charm_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
@@ -779,7 +772,7 @@
 ;セクハラ
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice> 66 && f.P_DRESS>0"][jump target="*E_mount_datui"]
+[if exp="tf.dice> 66 && tf.P_DRESS>0"][jump target="*E_mount_datui"]
 [endif]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.dice> 49"][jump target="*E_mount_sukebe1"]
@@ -789,26 +782,26 @@
 *E_mount_datui
 [enemyname]はくぬぎの装束を剥ぎ取ろうとした[p]
 
-[if exp="tf.OrgaStan > 0 && f.P_DRESS > 1"]
+[if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
 絶頂で身動きの取れないくぬぎは一気に全裸に剥かれてしまった[p]くぬぎの色気が上昇した[p]
-[eval exp="f.P_ARMOR = 0 , f.P_DRESS = 0"]
+[eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [eval exp="tf.P_APP = tf.P_APP+2"]
 [chara_mod name="kunugi" face="seminude"]
 
-[elsif exp="tf.OrgaStan > 0 && f.P_DRESS > 0"]
+[elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
 絶頂で身動きの取れないくぬぎは為す術なく全裸にされた[p]くぬぎの色気が上昇した[p]
-[eval exp="f.P_ARMOR = 0 , f.P_DRESS = 0"]
+[eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
 
-[elsif exp="f.P_DRESS > 1"]
-[eval exp="f.P_ARMOR = 33 ,f.P_DRESS = 1"]
+[elsif exp="tf.P_DRESS > 1"]
+[eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
 くぬぎは下着姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
 
-[elsif exp="f.P_DRESS > 0"]
-[eval exp="f.P_ARMOR = 0 ,f.P_DRESS = 0"]
+[elsif exp="tf.P_DRESS > 0"]
+[eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
 くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
@@ -962,7 +955,8 @@
 #くぬぎ
 きゃあ！！[p]
 #
-[enemyname]はくぬぎを押し倒した[p]
+[enemyname]下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
+[chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump target="*bochu"]
 [endif]
 #敵
@@ -972,13 +966,16 @@
 「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
 「仕方ねぇ、屋敷まで運ぶか・・・」[p]
 意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
+[chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump storage="prison.ks" target="*start"]
 [s]
 
 *game_win
+[chara_hide name="gouza"]
 戦闘に勝利した。[p]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
+[chara_hide name="kunugi"]
 [jump storage="scene1.ks"]
 [s]
 
@@ -987,6 +984,11 @@
 もう・・・らめぇ・・・・[p]
 #
 くぬぎは立て続けの絶頂により気を失った[p]
+「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
+「仕方ねぇ、屋敷まで運ぶか・・・」[p]
+意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
+[chara_hide name="kunugi"][chara_hide name="gouza"]
+[jump storage="prison.ks" target="*start"]
 [s]
 
 *bochu
