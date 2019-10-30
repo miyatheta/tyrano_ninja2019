@@ -1,6 +1,8 @@
 *start
 [clearfix]
 [bg  time="1000" method="slide"  storage="sample_prison.jpg" ]
+;HPなどは表示しないが回復する
+[eval exp="f.P_HP = f.P_HPmax"][eval exp="f.P_EXH = 0"][eval exp="f.P_ERO = 0"]
 拷問です[p]
 さて、今日お主に施す拷問は・・・[p]
 [glink  color="black"  size="20"  x="260"  width="400"  y="100"  text="被虐調教-壱-"  target="*被虐調教lv1"  cond="f.被虐調教lv<1"]

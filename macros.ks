@@ -82,8 +82,8 @@ function calcStatus(Digit,Point){
 f.TURNdigit=[];
 calcStatus(f.TURNdigit,f.turn);
 
-f.HPdigit=[];
-calcStatus(f.HPdigit,f.HP);
+f.P_HPdigit=[];
+calcStatus(f.P_HPdigit,f.P_HP);
 f.FPdigit=[];
 calcStatus(f.FPdigit,f.FP);
 f.SPDdigit=[];
@@ -144,17 +144,17 @@ calcStatus(f.EnErectdigit,f.EnErect);
 ;◆↓可変部分の描画を一旦消します
 [freeimage layer = 9]
 ;◆↓HP値によりHPバーの長さを計算
-[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.HP / f.BaseHP)"]
+[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.P_HP / f.BaseHP)"]
 [eval exp="f.para_bar_EnHP_now_width = parseInt(f.para_bar_width_En * f.EnHP / f.BaseEnHP)"]
 ;◆↓HP最大値の3割以下にHP値が減ると赤いバーで描画、それよりHP値が高ければ緑色のバーで描画
-[if exp="f.HP <= parseInt(f.BaseHP * 0.3)"]
+[if exp="f.P_HP <= parseInt(f.BaseHP * 0.3)"]
     [image layer=9 x=182 y=15 width=&f.para_bar_HP_now_width height=10 storage="UI/parameter/bar_red.png"]
 [else]
     [image layer=9 x=182 y=15 width=&f.para_bar_HP_now_width height=10 storage="UI/parameter/bar_green.png"]
 [endif]
 [eval exp="f.para_bar_FP_now_width = parseInt(f.para_bar_width * f.FP / 100)"]
 [image layer=9 x=182 y=30 width=&f.para_bar_FP_now_width height=10 storage="UI/parameter/bar_blue.png"]
-[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.HP / f.BaseHP)"]
+[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.P_HP / f.BaseHP)"]
 
 [if exp="f.EnHP <= parseInt(f.BaseEnHP * 0.3)"]
     [image layer=9 x=632 y=15 width=&f.para_bar_EnHP_now_width height=10 storage="UI/parameter/bar_red.png"]
@@ -171,10 +171,10 @@ calcStatus(f.EnErectdigit,f.EnErect);
 [image layer=1 storage="&f.TURNdigit[4]" width="40" top="10" left="450" visible="true"]
 
 [image layer=1 storage="UI/number/体力.png" width="75" top="10" left="30" visible="true"]
-[image layer=1 storage="&f.HPdigit[1]" width="20" top="10" left="95" visible="true"]
-[image layer=1 storage="&f.HPdigit[2]" width="20" top="10" left="115" visible="true"]
-[image layer=1 storage="&f.HPdigit[3]" width="20" top="10" left="135" visible="true"]
-[image layer=1 storage="&f.HPdigit[4]" width="20" top="10" left="155" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[1]" width="20" top="10" left="95" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[2]" width="20" top="10" left="115" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[3]" width="20" top="10" left="135" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[4]" width="20" top="10" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="30" visible="true"]
 [image layer=1 storage="&f.FPdigit[1]" width="20" top="30" left="95" visible="true"]
@@ -296,17 +296,17 @@ calcStatus(f.EnErectdigit,f.EnErect);
 ;◆↓可変部分の描画を一旦消します
 [freeimage layer = 9]
 ;◆↓HP値によりHPバーの長さを計算
-[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.HP / f.BaseHP)"]
+[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.P_HP / f.BaseHP)"]
 [eval exp="f.para_bar_EnHP_now_width = parseInt(f.para_bar_width_En * f.EnHP / f.BaseEnHP)"]
 ;◆↓HP最大値の3割以下にHP値が減ると赤いバーで描画、それよりHP値が高ければ緑色のバーで描画
-[if exp="f.HP <= parseInt(f.BaseHP * 0.3)"]
+[if exp="f.P_HP <= parseInt(f.BaseHP * 0.3)"]
     [image layer=9 x=182 y=15 width=&f.para_bar_HP_now_width height=10 storage="UI/parameter/bar_red.png"]
 [else]
     [image layer=9 x=182 y=15 width=&f.para_bar_HP_now_width height=10 storage="UI/parameter/bar_green.png"]
 [endif]
 [eval exp="f.para_bar_FP_now_width = parseInt(f.para_bar_width * f.FP / 100)"]
 [image layer=9 x=182 y=30 width=&f.para_bar_FP_now_width height=10 storage="UI/parameter/bar_blue.png"]
-[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.HP / f.BaseHP)"]
+[eval exp="f.para_bar_HP_now_width = parseInt(f.para_bar_width * f.P_HP / f.BaseHP)"]
 
 [if exp="f.EnHP <= parseInt(f.BaseEnHP * 0.3)"]
     [image layer=9 x=632 y=15 width=&f.para_bar_EnHP_now_width height=10 storage="UI/parameter/bar_red.png"]
@@ -320,10 +320,10 @@ calcStatus(f.EnErectdigit,f.EnErect);
 [freeimage layer = 1]
 /*
 [image layer=1 storage="UI/number/体力.png" width="75" top="10" left="30" visible="true"]
-[image layer=1 storage="&f.HPdigit[1]" width="20" top="10" left="95" visible="true"]
-[image layer=1 storage="&f.HPdigit[2]" width="20" top="10" left="115" visible="true"]
-[image layer=1 storage="&f.HPdigit[3]" width="20" top="10" left="135" visible="true"]
-[image layer=1 storage="&f.HPdigit[4]" width="20" top="10" left="155" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[1]" width="20" top="10" left="95" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[2]" width="20" top="10" left="115" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[3]" width="20" top="10" left="135" visible="true"]
+[image layer=1 storage="&f.P_HPdigit[4]" width="20" top="10" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="30" visible="true"]
 [image layer=1 storage="&f.FPdigit[1]" width="20" top="30" left="95" visible="true"]
@@ -588,7 +588,7 @@ f.EnCount=0;
 
 [macro name="Reset"]
 [iscript]
-f.HP = f.BaseHP;
+f.P_HP = f.BaseHP;
 f.STR = f.BaseSTR;
 f.DEF = f.BaseDEF;
 f.SPD = f.BaseSPD;
@@ -601,7 +601,7 @@ f.Undress = 0;
 
 [macro name="Restart"]
 [iscript]
-f.HP = f.BaseHP;
+f.P_HP = f.BaseHP;
 f.STR = f.BaseSTR;
 f.DEF = f.BaseDEF;
 f.SPD = f.BaseSPD;

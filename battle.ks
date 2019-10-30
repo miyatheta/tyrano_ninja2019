@@ -975,6 +975,7 @@
 戦闘に勝利した。[p]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
+[eval exp="f.P_HP = tf.P_HP"]
 [chara_hide name="kunugi"]
 [jump storage="scene1.ks"]
 [s]
