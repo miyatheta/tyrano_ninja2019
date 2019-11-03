@@ -19,6 +19,51 @@
 [chara_mod name="kunugi" face="default"]
 
 
+*シャッフルスタート
+[eval exp="tf.set=0 , tf.P_ACT=7 , f.Cemetery=[]"]
+[eval exp="f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]"]
+[iscript]
+for(var i = f.Deck.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.Deck[i];
+    f.Deck[i] = f.Deck[r];
+    f.Deck[r] = tmp;
+}
+[endscript]
+*セレクト
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5],f.Deck[6]]"]
+手札:[emb exp="f.Hand"][r]
+[iscript]
+f.temp=[];
+f.temp = f.Cemetery.concat(f.Hand);
+f.Cemetery = f.temp;
+f.Deck.splice(0,tf.P_ACT);
+tf.length = f.Deck.length;
+[endscript]
+残山札：[emb exp="f.Deck"][r]
+墓地：[emb exp="f.Cemetery"][p]
+[if exp="tf.length < tf.P_ACT"][jump target="*リシャッフル"]
+[else][jump target="*セレクト"][endif]
+[s]
+*リシャッフル
+リシャッフル[p]
+[iscript]
+for(var i = f.Cemetery.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.Cemetery[i];
+    f.Cemetery[i] = f.Cemetery[r];
+    f.Cemetery[r] = tmp;
+}
+f.temp=[];
+f.temp = f.Deck.concat(f.Cemetery);
+f.Deck = f.temp;
+f.Cemetery=[];
+[endscript]
+山札：[emb exp="f.Deck"][r]
+[jump target="*セレクト"]
+[s]
+
+
 *route_select
 ルートを選びます[p]
 [link target="*easy"]かんたん[endlink][r]
