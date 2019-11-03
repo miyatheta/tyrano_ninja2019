@@ -19,9 +19,23 @@
 [chara_mod name="kunugi" face="default"]
 
 
+[iscript]
+f.Deck=[0,1,2,3,4,5,6,7,8];
+f.Cards=[
+{id:0,name:"拳",class:"水",comb:1,active:1},
+{id:1,name:"拳",class:"風",comb:1,active:1},
+{id:2,name:"拳",class:"炎",comb:1,active:1},
+{id:3,name:"蹴り",class:"水",comb:1,active:1},
+{id:4,name:"蹴り",class:"風",comb:1,active:1},
+{id:5,name:"蹴り",class:"炎",comb:1,active:1},
+{id:6,name:"回し蹴り",class:"水",comb:0,active:1},
+{id:7,name:"回し蹴り",class:"風",comb:0,active:1},
+{id:8,name:"回し蹴り",class:"炎",comb:0,active:1},
+];
+[endscript]
+
 *シャッフルスタート
-[eval exp="tf.set=0 , tf.P_ACT=7 , f.Cemetery=[]"]
-[eval exp="f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]"]
+[eval exp="tf.set=0 , tf.P_ACT=3 , f.Selected=[] ,f.Cemetery=[]"]
 [iscript]
 for(var i = f.Deck.length - 1; i >= 0; i--){
     var r = Math.floor(Math.random() * (i + 1));
@@ -30,9 +44,31 @@ for(var i = f.Deck.length - 1; i >= 0; i--){
     f.Deck[r] = tmp;
 }
 [endscript]
-*セレクト
-[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5],f.Deck[6]]"]
-手札:[emb exp="f.Hand"][r]
+
+*手札構築
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2]]"]
+手札:[emb exp="f.Cards[f.Hand[0]]['id']"],[emb exp="f.Cards[f.Hand[1]]['id']"],[emb exp="f.Cards[f.Hand[2]]['id']"][p]
+
+*手札選択
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="100"  text="&f.Cards[f.Hand[0]]['id']"  exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="170"  text="&f.Cards[f.Hand[1]]['id']"  exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
+[glink  color="rosy"  size="20"  x="260"  width="20"  y="240"  text="&f.Cards[f.Hand[2]]['id']"  exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
+[s]
+
+*場札追加
+[iscript]
+f.Selected.push(f.Cards[tf.Answer]['id']);
+[endscript]
+選択済：[emb exp="f.Selected"][r]
+[emb exp="f.Cards[tf.Answer]['id']"][emb exp="f.Cards[tf.Answer]['class']"][emb exp="f.Cards[tf.Answer]['name']"][p]
+[if exp="f.Cards[tf.Answer]['comb'] == 1"][jump target="*再選択"]
+[else][jump target="*選択終了"][endif]
+[s]
+
+*再選択
+[jump target="*手札選択"]
+
+*選択終了
 [iscript]
 f.temp=[];
 f.temp = f.Cemetery.concat(f.Hand);
@@ -42,10 +78,12 @@ tf.length = f.Deck.length;
 [endscript]
 残山札：[emb exp="f.Deck"][r]
 墓地：[emb exp="f.Cemetery"][p]
-[if exp="tf.length < tf.P_ACT"][jump target="*リシャッフル"]
-[else][jump target="*セレクト"][endif]
+
+[if exp="tf.length < tf.P_ACT"][jump target="*山札再構築"]
+[else][eval exp="f.Selected=[]"][jump target="*手札構築"][endif]
 [s]
-*リシャッフル
+
+*山札再構築
 リシャッフル[p]
 [iscript]
 for(var i = f.Cemetery.length - 1; i >= 0; i--){
@@ -60,7 +98,7 @@ f.Deck = f.temp;
 f.Cemetery=[];
 [endscript]
 山札：[emb exp="f.Deck"][r]
-[jump target="*セレクト"]
+[jump target="*手札構築"]
 [s]
 
 
