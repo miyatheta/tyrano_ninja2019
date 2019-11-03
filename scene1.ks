@@ -48,7 +48,7 @@ f.Cards=[
 [endscript]
 
 *シャッフルスタート
-[eval exp="tf.set=0 , tf.P_ACT=7 , f.Selected=[] ,f.Cemetery=[]"]
+[eval exp="tf.set=0 , tf.P_ACTmax=6 , f.Selected=[] ,f.Cemetery=[]"]
 [iscript]
 for(var i = f.Deck.length - 1; i >= 0; i--){
     var r = Math.floor(Math.random() * (i + 1));
@@ -59,16 +59,22 @@ for(var i = f.Deck.length - 1; i >= 0; i--){
 [endscript]
 
 *手札構築
-[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5],f.Deck[6]]"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5],f.Deck[6]]" cond="tf.P_ACTmax>=7"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5]]" cond="tf.P_ACTmax==6"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]" cond="tf.P_ACTmax==5"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3]]" cond="tf.P_ACTmax==4"]
 
 *手札選択
 [glink  color="blue"  size="20"  x="260"  width="150"  y="100"  text="&f.Cards[f.Hand[0]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
 [glink  color="blue"  size="20"  x="260"  width="150"  y="170"  text="&f.Cards[f.Hand[1]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
 [glink  color="blue"  size="20"  x="260"  width="150"  y="240"  text="&f.Cards[f.Hand[2]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
 [glink  color="blue"  size="20"  x="260"  width="150"  y="310"  text="&f.Cards[f.Hand[3]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
-[glink  color="blue"  size="20"  x="560"  width="150"  y="100"  text="&f.Cards[f.Hand[4]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"]
-[glink  color="blue"  size="20"  x="560"  width="150"  y="170"  text="&f.Cards[f.Hand[5]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"]
-[glink  color="blue"  size="20"  x="560"  width="150"  y="240"  text="&f.Cards[f.Hand[6]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"]
+[if exp="tf.P_ACTmax>=5"]
+[glink  color="blue"  size="20"  x="560"  width="150"  y="100"  text="&f.Cards[f.Hand[4]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
+[if exp="tf.P_ACTmax>=6"]
+[glink  color="blue"  size="20"  x="560"  width="150"  y="170"  text="&f.Cards[f.Hand[5]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
+[if exp="tf.P_ACTmax>=7"]
+[glink  color="blue"  size="20"  x="560"  width="150"  y="240"  text="&f.Cards[f.Hand[6]]['txt']"  exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
 [glink  color="blue"  size="20"  x="560"  width="150"  y="310"  text="戻る"  exp="" target="*リセット" ]
 [s]
 
@@ -103,22 +109,20 @@ f.Cards[f.Hand[6]]['active']=1;
 f.temp=[];
 f.temp = f.Cemetery.concat(f.Hand);
 f.Cemetery = f.temp;
-f.Deck.splice(0,tf.P_ACT);
+f.Deck.splice(0,tf.P_ACTmax);
 tf.length = f.Deck.length;
 [endscript]
-[iscript]
-f.Cards[f.Hand[0]]['active']=1;
-f.Cards[f.Hand[1]]['active']=1;
-f.Cards[f.Hand[2]]['active']=1;
-f.Cards[f.Hand[3]]['active']=1;
-f.Cards[f.Hand[4]]['active']=1;
-f.Cards[f.Hand[5]]['active']=1;
-f.Cards[f.Hand[6]]['active']=1;
-[endscript]
+[eval exp="f.Cards[f.Hand[0]]['active']=1"]
+[eval exp="f.Cards[f.Hand[1]]['active']=1"]
+[eval exp="f.Cards[f.Hand[2]]['active']=1"]
+[eval exp="f.Cards[f.Hand[3]]['active']=1"]
+[eval exp="f.Cards[f.Hand[4]]['active']=1" cond="tf.P_ACTmax>=5"]
+[eval exp="f.Cards[f.Hand[5]]['active']=1" cond="tf.P_ACTmax>=6"]
+[eval exp="f.Cards[f.Hand[6]]['active']=1" cond="tf.P_ACTmax>=7"]
 残山札：[emb exp="f.Deck"][r]
 墓地：[emb exp="f.Cemetery"][p]
 
-[if exp="tf.length < tf.P_ACT"][jump target="*山札再構築"]
+[if exp="tf.length < tf.P_ACTmax"][jump target="*山札再構築"]
 [elsif exp="tf.length < 1"][jump target="*山札再構築"]
 [else][eval exp="f.Selected=[]"][jump target="*手札構築"][endif]
 [s]
