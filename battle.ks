@@ -951,7 +951,7 @@
 ;ターンエンド処理
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
 [eval exp="f.E_AUR = f.E_AUR + 10"]
-;[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]呼吸は回復しない
+[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
 [Initialize_1Tbuff][Refresh_3Tbuff]
 ;デバフと状態異常の回復
 [eval exp="tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
