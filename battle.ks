@@ -999,6 +999,7 @@
 [chara_hide name="gouza"]
 戦闘に勝利した。[p]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
+[eval exp="f.P_EXH = 99" cond="f.P_EXH >= 100"]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
 [eval exp="f.P_HP = tf.P_HP"]
 [chara_hide name="kunugi"]
