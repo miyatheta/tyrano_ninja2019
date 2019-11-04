@@ -19,6 +19,7 @@
 [chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
 ;キャラクターの表情登録
 [chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
+[chara_face name="kunugi" face="nude" storage="chara/kunugi/battle_stand_nude.png"]
 [chara_mod name="kunugi" face="default"]
 
 [chara_show  name="kunugi" left=0 top=50 ]

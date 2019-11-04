@@ -811,13 +811,13 @@
 絶頂で身動きの取れないくぬぎは一気に全裸に剥かれてしまった[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [eval exp="tf.P_APP = tf.P_APP+2"]
-[chara_mod name="kunugi" face="seminude"]
+[chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
 絶頂で身動きの取れないくぬぎは為す術なく全裸にされた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [eval exp="tf.P_APP = tf.P_APP+1"]
-[chara_mod name="kunugi" face="seminude"]
+[chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.P_DRESS > 1"]
 [eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
@@ -829,7 +829,7 @@
 [eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
 くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_APP = tf.P_APP+1"]
-[chara_mod name="kunugi" face="seminude"]
+[chara_mod name="kunugi" face="nude"]
 [endif]
 
 [jump target="*mount_end"]
@@ -907,6 +907,11 @@
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
+[if exp="f.P_MAZO>0"]
+[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[endif]
 [jump target="*mount_end"]
 [s]
 
@@ -971,8 +976,7 @@
 疲労のためにくぬぎは立ち上がれなくなった[p]
 [endif]
 くぬぎは敗北した。[p]
-[eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
-疲労度が[emb exp="tf.Temp"]上昇した[p]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"][limit]
 [GoSKB]
 [if exp="tf.GoSKB == 1"]
 #敵
@@ -998,10 +1002,10 @@
 *game_win
 [chara_hide name="gouza"]
 戦闘に勝利した。[p]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 [eval exp="f.P_EXH = 99" cond="f.P_EXH >= 100"]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
-[eval exp="f.P_HP = tf.P_HP"]
 [chara_hide name="kunugi"]
 [jump storage="scene1.ks"]
 [s]
@@ -1015,6 +1019,7 @@
 「仕方ねぇ、屋敷まで運ぶか・・・」[p]
 意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"][limit]
 [jump storage="prison.ks" target="*start"]
 [s]
 
