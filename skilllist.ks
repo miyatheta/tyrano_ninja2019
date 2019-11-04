@@ -21,8 +21,9 @@
 
 *組付
 組付[p]
+[Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_DEXd1 * 3 - tf.P_AGI * tf.ArousAGId)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]

@@ -337,7 +337,7 @@
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 拳：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf2
@@ -347,7 +347,7 @@
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 蹴り：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf3
@@ -358,7 +358,7 @@
 回し蹴り：命中率[emb exp="tf.HitRate"]％[p]
 [if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf4
@@ -368,7 +368,7 @@
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 くない：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *E_Def_select
@@ -546,12 +546,12 @@
 [eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.P_AVD)/10)"][limit]
 回避率[emb exp="tf.AvoidRate"]%[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="回避"  target="*P_DEF_1" ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_Def_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_Def_select"  ]
 [s]
 *P_DEF_conf2
 [eval exp="tf.P_AVD=0 , tf.P_GRD=1.5"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="防御"  target="*P_DEF_2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_Def_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_Def_select"  ]
 [s]
 
 *P_DEF_1
@@ -654,7 +654,7 @@
 
 *mount_start
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACTmax , tf.mount_turn=0 , tf.Esc=0"][limit]
+[eval exp="tf.mount_turn=0 , tf.Esc=0"][limit]
 [eval exp="tf.Mount = 50 + Math.floor(tf.E_BND * tf.E_charm_STR - tf.P_STR * tf.ArousSTRd) * 5"]
 
 *P_mount_phase
