@@ -12,29 +12,32 @@
 
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
+
+[chara_config pos_mode="false"]
+
 ;このゲームで登場するキャラクターを宣言
 [chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
 ;キャラクターの表情登録
 [chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
 [chara_mod name="kunugi" face="default"]
 
-
+[chara_show  name="kunugi" left=0 top=50 ]
 
 *route_select
 ルートを選びます[p]
-[link target="*easy"]かんたん[endlink][r]
-[link target="*normal"]ふつう[endlink][r]
-[link target="*hard"]むずかしい[endlink][r]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="かんたん"  target="*easy"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="ふつう"  target="*normal"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="むずかしい"  target="*hard"  ]
 [s]
 
 *easy
 [cm]
-[link target="*easy-1"]1:遅延タイプ[endlink]　　
-[link target="*easy-2"]2:削りタイプ[endlink]　　[r]
-[link target="*easy-3"]3:特殊削りタイプ[endlink]　　
-[link target="*easy-4"]４:拘束タイプ[endlink]　　[r]
-[link target="*easy-5"]5:セクハラタイプ[endlink]　　
-[link target="*easy-6"]6:一発屋タイプ[endlink]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="1:遅延タイプ"  target="*easy-1"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="2:削りタイプ"  target="*easy-2"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="3:特殊削りタイプ"  target="*easy-3"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="４:拘束タイプ"  target="*easy-4"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="5:セクハラタイプ"  target="*easy-5"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="450"  text="6:一発屋タイプ"  target="*easy-6"  ]
 [s]
 
 *easy-1
@@ -75,12 +78,12 @@
 
 *normal
 [cm]
-[link target="*normal-1"]1:遅延タイプ[endlink]
-[link target="*normal-2"]2:削りタイプ[endlink]
-[link target="*normal-3"]3:特殊削りタイプ[endlink]
-[link target="*normal-4"]４:拘束タイプ[endlink]
-[link target="*normal-5"]5:セクハラタイプ[endlink]
-[link target="*normal-6"]6:一発屋タイプ[endlink]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="1:遅延タイプ"  target="*normal-1"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="2:削りタイプ"  target="*normal-2"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="3:特殊削りタイプ"  target="*normal-3"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="４:拘束タイプ"  target="*normal-4"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="5:セクハラタイプ"  target="*normal-5"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="450"  text="6:一発屋タイプ"  target="*normal-6"  ]
 [s]
 
 *normal-1
@@ -105,13 +108,12 @@
 
 *hard
 [cm]
-[link target="*hard-1"]1:遅延タイプ[endlink]
-[link target="*hard-2"]2:削りタイプ[endlink][r]
-[link target="*hard-3"]3:特殊削りタイプ[endlink]
-[link target="*hard-4"]４:拘束タイプ[endlink][r]
-[link target="*hard-5"]5:セクハラタイプ[endlink]
-[link target="*hard-6"]6:一発屋タイプ[endlink]
-[link target="*hard-7"]7:無敵マン[endlink]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="1:遅延タイプ"  target="*hard-1"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="2:削りタイプ"  target="*hard-2"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="3:特殊削りタイプ"  target="*hard-3"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="４:拘束タイプ"  target="*hard-4"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="5:セクハラタイプ"  target="*hard-5"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="450"  text="6:一発屋タイプ"  target="*hard-6"  ]
 [s]
 
 *hard-1

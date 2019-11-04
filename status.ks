@@ -31,8 +31,8 @@
 [eval exp="f.P_ARMOR=100"]
 ;着衣状態  2=着衣　1=損傷　0=脱衣
 [eval exp="f.P_DRESS=2"]
-;感度それぞれ膣、尻、口、胸
-[eval exp="f.P_SEN_VG=100 , f.P_SEN_AN=100 , f.P_SEN_MO=100 , f.P_SEN_BB=100"]
+;感度それぞれ膣、尻、胸、その他
+[eval exp="f.P_SEN_VG=100 , f.P_SEN_AN=100 , f.P_SEN_EX=100 , f.P_SEN_BB=100"]
 ;エロ状態異常
 [eval exp="f.P_BOOB=0 , f.P_ANAL=0 , f.P_MAZO=0 , f.P_PARSITE=0 , f.P_HYPNO=0"]
 

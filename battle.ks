@@ -136,9 +136,12 @@
 [endmacro]
 
 #
+[chara_show  name="gouza" width=300 left=1000 top=50 wait="true"]
+[anim name="gouza" opacity=0 time=1]
+[anim name="gouza" left=750 top=50 time=1]
+[anim name="gouza" opacity=255 left=550 top=50 time=300 anim="true" effect="jswing" ]
 戦闘を開始します[p]
-[chara_show  name="kunugi"  ]
-[chara_show  name="gouza"  ]
+
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0 , tf.P_EXH=0"]
@@ -234,25 +237,25 @@
 
 *P_attack_select
 ;プレイヤーの攻撃選択
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="240"  text="攻撃"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="攻撃"  target="*P_attack_option"  ]
 [s]
 
 *P_skill_option
 ;プレイヤーのスキル選択
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="310"  text="降参"  target="*P_skill_conf4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="降参"  target="*P_skill_conf4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
 [s]
 
 *P_skill_conf1
 火炎：気力40：印4：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 40"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 40 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 40 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
 *P_skill1
@@ -279,8 +282,8 @@
 *P_skill_conf3
 魅了：気力30：印3：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 30"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
 *P_skill3
@@ -320,11 +323,11 @@
 [s]
 
 *P_attack_option
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="拳　：呼吸-1【攻撃継続】"  target="*P_attack_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="蹴り　：呼吸-1【攻撃継続】"  target="*P_attack_conf2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="240"  text="回し蹴り　：呼吸-2【攻守交代】"  target="*P_attack_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="310"  text="飛び道具　：呼吸-1【攻守交代】"  target="*P_attack_conf4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="拳　：呼吸-1【攻撃継続】"  target="*P_attack_conf1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="蹴り　：呼吸-1【攻撃継続】"  target="*P_attack_conf2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="回し蹴り　：呼吸-2【攻守交代】"  target="*P_attack_conf3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="飛び道具　：呼吸-1【攻守交代】"  target="*P_attack_conf4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
 [s]
 
 *P_attack_conf1
@@ -333,8 +336,8 @@
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 拳：命中率[emb exp="tf.HitRate"]％[p]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf2
@@ -343,8 +346,8 @@
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 蹴り：命中率[emb exp="tf.HitRate"]％[p]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf3
@@ -354,8 +357,8 @@
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 回し蹴り：命中率[emb exp="tf.HitRate"]％[p]
 [if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="決定"  target="*P_attack3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *P_attack_conf4
@@ -364,8 +367,8 @@
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 くない：命中率[emb exp="tf.HitRate"]％[p]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *E_Def_select
@@ -533,8 +536,8 @@
 [s]
 
 *P_Def_select
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="回避"  target="*P_DEF_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="防御"  target="*P_DEF_conf2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="回避"  target="*P_DEF_conf1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="防御"  target="*P_DEF_conf2"  ]
 [s]
 
 *P_DEF_conf1
@@ -542,13 +545,13 @@
 [eval exp="tf.P_AVD=Math.floor(tf.P_AGI * tf.ArousAGId * 3) , tf.P_GRD=0"]
 [eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.P_AVD)/10)"][limit]
 回避率[emb exp="tf.AvoidRate"]%[p]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="回避"  target="*P_DEF_1" ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_Def_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="回避"  target="*P_DEF_1" ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_Def_select"  ]
 [s]
 *P_DEF_conf2
 [eval exp="tf.P_AVD=0 , tf.P_GRD=1.5"]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="160"  y="170"  text="防御"  target="*P_DEF_2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="500"  width="160"  y="170"  text="戻る"  target="*P_Def_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="防御"  target="*P_DEF_2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="300"  text="戻る"  target="*P_Def_select"  ]
 [s]
 
 *P_DEF_1
@@ -575,6 +578,11 @@
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [triage]
+[if exp="f.P_MAZO>0"]
+[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[endif]
 [jump target="*E_phase_end"]
 [s]
 
@@ -592,6 +600,11 @@
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [triage]
+[if exp="f.P_MAZO>0"]
+[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[endif]
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
 
@@ -677,11 +690,11 @@
 [s]
 
 *P_mount_select
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="100"  text="暴れる　：拘束に腕力で抵抗します"  target="*P_mount_option1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="170"  text="耐える　：呼吸を回復し、快感を軽減"  target="*P_mount_option2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="240"  text="色仕掛け：拘束に色気で抵抗します"  target="*P_mount_option3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="310"  text="空蝉の術：気力と衣装を消費して脱出"  target="*P_mount_option4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="260"  width="400"  y="380"  text="降参する：敵の欲情次第で房中に移行"  target="*P_mount_option5"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="暴れる　：拘束に腕力で抵抗します"  target="*P_mount_option1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="耐える　：呼吸を回復し、快感を軽減"  target="*P_mount_option2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="色仕掛け：拘束に色気で抵抗します"  target="*P_mount_option3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="空蝉の術：気力と衣装を消費して脱出"  target="*P_mount_option4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="降参する：敵の欲情次第で房中に移行"  target="*P_mount_option5"  ]
 [s]
 
 *P_mount_option1
