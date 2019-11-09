@@ -281,7 +281,7 @@
 空蝉：敵の攻撃被弾時に一度だけダメージを無効化する。代わりに衣服を失う。衣服を着ていないと使えない[r]
 気力50：印4：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 50"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 50 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 50 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill2'" storage="SkillGame.ks" target="*game_start"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
@@ -328,7 +328,7 @@
 衣変：失った衣装を復元します。どこから服が出てくるかは謎[r]
 気力20：印0：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 20"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 20 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 20 , tf.MP=0 , tf.Cost=3" target="*P_skill4"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
