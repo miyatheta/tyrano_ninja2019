@@ -2,6 +2,8 @@
 [cm ]
 [clearfix]
 [start_keyconfig]
+@call storage="macros.ks" target="*マクロ"
+
 [bg storage="mori_yoru.jpg" time="100"]
 
 ;メッセージウィンドウの設定

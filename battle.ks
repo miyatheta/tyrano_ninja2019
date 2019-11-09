@@ -249,8 +249,24 @@
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2" cond="tf.P_DRESS>0"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="衣変"  target="*P_skill_conf4" cond="tf.P_DRESS==0"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="降参"  target="*P_skill_conf5"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="螺旋功"  target="*P_skill_conf5"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="410"  text="集気法"  target="*P_attack_conf0" cond="tf.P_AUR==0"]
+[s]
+
+*P_skill_conf0
+集気法:気力+10,防御力上昇（１ターン）[r]
+気力0：印0：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 60"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1" target="*P_skill0"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
+
+*P_skill0
+集気法[p]
+[Calc_Status]
+[eval exp="f.P_AUR = f.P_AUR+10 , tf.P_DURb1 = 1.3"]][limit]
+[jump target="*P_phase_start"]
 [s]
 
 *P_skill_conf1
@@ -268,7 +284,7 @@
 [eval exp="tf.HitRate = tf.HIT"]
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 20 + tf.dice"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 18 + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
 [quake count=5 time=300 hmax=20]
@@ -342,15 +358,30 @@
 [s]
 
 *P_skill_conf5
-[GoSKB]
-[if exp="tf.GoSKB == 1"]
-#敵
-・・・よかろう[p]
-[jump target="*bochu"]
-[endif]
-#敵
-たわけ！！そんな見え透いた嘘に引っかかるか！！[p]
-[jump target="P_phase_start"]
+[Calc_Status]
+[eval exp="tf.ACC = 0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+
+螺旋功:防御力無視・装甲貫通の非物理ダメージ[r]
+命中率[emb exp="tf.HitRate"]％[r]
+気力100：印5：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 100"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 100 , tf.MP=0 , tf.Cost=5 , tf.label='*P_skill5'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
+
+*P_skill5
+くぬぎの忍術・螺旋功[p]
+[call target="*E_Def_select"]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 25 + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump target="*P_phase_start"]
 [s]
 
 *P_attack_option
@@ -884,7 +915,18 @@
 
 *E_mount_sukebe1
 [enemyname]はくぬぎの胸を揉みしだいた[p]
-[eval exp="tf.RATE=2 , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
+[if exp="f.P_BOOB==1"]
+#くぬぎ
+いやあっ！！[p]
+揉みしだかれたくぬぎの乳房から母乳が迸った[p]
+#
+[elsif exp="f.P_BOOB==2"]
+#くぬぎ
+いやあっ！！[p]
+揉みしだかれたくぬぎの乳房から母乳が迸った[p]
+#
+[endif]
+[eval exp="tf.RATE=2 + (f.P_BOOB*5) , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 

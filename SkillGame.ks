@@ -1,5 +1,5 @@
 *game_start
-[emb exp="tf.MP"]/[emb exp="tf.Cost"][p]
+[emb exp="tf.MP"]/[emb exp="tf.Cost"][r]
 [eval exp="tf.Max=99 ,tf.Min=0"][dice]
 [if exp="tf.dice>66"][jump target="*Q1"]
 [elsif exp="tf.dice>33"][jump target="*Q2"]
@@ -67,12 +67,12 @@
 *Kotae
 [wait_cancel]
 [if exp="tf.Sample == tf.Answer"]
-成功[p]
+成功[wt5]
 [eval exp="tf.MP=tf.MP+1"]
 
 [else]
 [eval exp="tf.MP=-1"]
-失敗[p]
+失敗[wt7]
 くぬぎは術の発動に失敗した[p]
 [jump storage="battle.ks" target="*P_phase_start"]
 [endif]
