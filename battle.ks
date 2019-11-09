@@ -45,6 +45,7 @@
 [endmacro]
 
 [macro name="GoSKB"]
+[Calc_Status]
 [eval exp="tf.GoSKB = 0"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/2 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
@@ -80,7 +81,7 @@
 [eval exp="tf.P_AGI = f.P_AGI * tf.P_AGId3 * tf.P_AGId1 * tf.P_AGIb3 * tf.P_AGIb1 "]
 [eval exp="tf.P_DEX = f.P_DEX * tf.P_DEXd3 * tf.P_DEXd1 * tf.P_DEXb3 * tf.P_DEXb1 "]
 [eval exp="tf.P_POW = f.P_POW * tf.P_POWd3 * tf.P_POWd1 * tf.P_POWb3 * tf.P_POWb1 "]
-[eval exp="tf.P_APP = f.P_APP * tf.P_APPd3 * tf.P_APPd1 * tf.P_APPb3 * tf.P_APPb1 "]
+[eval exp="tf.P_APP = f.P_APP * tf.P_APPd3 * tf.P_APPd1 * tf.P_APPb3 * tf.P_APPb1 - (2 - tf.P_DRESS)"]
 
 [eval exp="tf.E_STR = f.E_STR * tf.E_STRd3 * tf.E_STRd1 * tf.E_STRb3 * tf.E_STRb1 "]
 [eval exp="tf.E_DUR = f.E_DUR * tf.E_DURd3 * tf.E_DURd1 * tf.E_DURb3 * tf.E_DURb1 "]
@@ -110,7 +111,7 @@
 [eval exp="tf.E_STRb3=1 , tf.E_DURb3=1 , tf.E_AGIb3=1 , tf.E_DEXb3=1 , tf.E_POWb3=1 , tf.E_APPb3=1"]
 [eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_APPb3_count=1"]
 
-[eval exp="tf.E_charm_STR=1 , tf.E_charm_DEX=1 "]
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_AGI=1 "]
 [eval exp="tf.E_charm_count=1 "]
 [endmacro]
 
@@ -132,7 +133,7 @@
 [eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=1 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
 [eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=1 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
 [eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=1 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
-[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DEX=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_AGI=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
 #
@@ -146,7 +147,7 @@
 *Initialize
 [eval exp="tf.Turn=0 , tf.P_EXH=0"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
-[eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR"]
+[eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 ;サイズの設定
@@ -245,27 +246,29 @@
 *P_skill_option
 ;プレイヤーのスキル選択
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2" cond="tf.P_DRESS>0"]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="衣変"  target="*P_skill_conf4" cond="tf.P_DRESS==0"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="降参"  target="*P_skill_conf4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="降参"  target="*P_skill_conf5"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
 [s]
 
 *P_skill_conf1
-火炎：気力40：印4：呼吸-1：手番継続[p]
-[if exp="f.P_AUR < 40"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 40 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+火炎:敵に必中で非物理ダメージ。火傷（100ダメージ）を３回付与[r]
+気力60：印4：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 60"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 60 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
 
 *P_skill1
 くぬぎの忍術・火炎[p]
 [Calc_Status]
-[eval exp="tf.HIT = 200"]
+[eval exp="tf.HIT = 1000"]
 [eval exp="tf.HitRate = tf.HIT"]
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 15 + tf.dice"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 20 + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
 [quake count=5 time=300 hmax=20]
@@ -275,8 +278,19 @@
 [s]
 
 *P_skill_conf2
+空蝉：敵の攻撃被弾時に一度だけダメージを無効化する。代わりに衣服を失う。衣服を着ていないと使えない[r]
+気力50：印4：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 50"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 50 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
 
-
+*P_skill2
+くぬぎの忍術・空蝉[p]
+#
+一度だけダメージを無効化する。（途中で衣服を失った場合は発動しない）[p]
+[eval exp="tf.P_Barrier=1"]
+[jump target="*P_phase_start"]
 [s]
 
 *P_skill_conf3
@@ -303,14 +317,31 @@
 [if exp="tf.TAG < tf.dice"]
 ;魅了による弱体化
 [enemyname]は前かがみになった[p]
-[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.7 ,tf.E_charm_DEX=0.7"]
-[enemyname]の攻撃力と回避力が減少した[p]
+[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_AGI=0.7"]
+[enemyname]の攻撃力と回避力が減少した（3ターン）[p]
 [endif]
 [triage]
 [jump target="*P_phase_start"]
 [s]
 
 *P_skill_conf4
+衣変：失った衣装を復元します。どこから服が出てくるかは謎[r]
+気力20：印0：呼吸-1：手番継続[p]
+[if exp="f.P_AUR < 20"]気力が足りない[p][jump target="*P_skill_option"][endif]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 20 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
+[s]
+
+*P_skill4
+くぬぎの忍術・早着替え[p]
+#
+くぬぎは目にも留まらぬ速さで着衣した[p]
+[eval exp="tf.P_DRESS=2"]
+[chara_mod name="kunugi" face="default"]
+[jump target="*P_phase_start"]
+[s]
+
+*P_skill_conf5
 [GoSKB]
 [if exp="tf.GoSKB == 1"]
 #敵
@@ -333,7 +364,7 @@
 *P_attack_conf1
 [Calc_Status]
 [eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 拳：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
@@ -343,7 +374,7 @@
 *P_attack_conf2
 [Calc_Status]
 [eval exp="tf.RATE = 7.5 , tf.ACC = 20 , tf.CRTrate = 1.0 , tf.comb=1"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 蹴り：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
@@ -353,7 +384,7 @@
 *P_attack_conf3
 [Calc_Status]
 [eval exp="tf.RATE = 13.0 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 回し蹴り：命中率[emb exp="tf.HitRate"]％[p]
 [if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
@@ -363,8 +394,8 @@
 
 *P_attack_conf4
 [Calc_Status]
-[eval exp="tf.RATE = 5.5 , tf.ACC = 30 , tf.CRTrate = 1.0 , tf.comb=0"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.RATE = 5.5 , tf.ACC = 40 , tf.CRTrate = 1.0 , tf.comb=0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 くない：命中率[emb exp="tf.HitRate"]％[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
@@ -380,7 +411,7 @@
 防御[p]
 [else]
 ;回避
-[eval exp="tf.E_AVD = Math.floor(tf.E_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
+[eval exp="tf.E_AVD = Math.floor(tf.E_AGI * tf.E_charm_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
 [eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.E_AVD)/10)"][limit]
 回避：[emb exp="tf.AvoidRate"]％[p]
 [endif]
@@ -519,7 +550,7 @@
 [enemyname]の薙ぎ払い[p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 5.0 , tf.ACC = 30 , tf.CRTrate = 1 ,tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_charm_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [jump target="*P_Def_select"]
@@ -528,7 +559,7 @@
 [enemyname]の体当たり[p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 8.5 , tf.ACC = 0 , tf.CRTrate = 1 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * tf.E_charm_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [jump target="*P_Def_select"]
@@ -573,10 +604,11 @@
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.5" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = tf.RATE * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[jump target="*P_Barrier" cond="tf.P_Barrier>0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
 [if exp="f.P_MAZO>0"]
 [eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
@@ -595,10 +627,11 @@
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.5" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = tf.RATE * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[jump target="*P_Barrier" cond="tf.P_Barrier>0"]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
 [if exp="f.P_MAZO>0"]
 [eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
@@ -617,6 +650,24 @@
 *P_avoid_success
 回避![p]
 くぬぎは攻撃を回避した[p]
+[jump target="*E_phase_end"]
+[s]
+
+*P_Barrier
+#くぬぎ
+甘い！！空蝉の術！！[p]
+#
+くぬぎは服を身代わりにして攻撃を躱した[p]
+[eval exp="tf.P_Barrier=0"]
+[if exp="tf.P_DRESS > 1"]
+[eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
+くぬぎは下着姿になった[p]くぬぎの色気が上昇した[p]
+[chara_mod name="kunugi" face="seminude"]
+[elsif exp="tf.P_DRESS > 0"]
+[eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
+くぬぎは一糸まとわぬ姿になった[p]くぬぎの色気が上昇した[p]
+[chara_mod name="kunugi" face="nude"]
+[endif]
 [jump target="*E_phase_end"]
 [s]
 
@@ -810,25 +861,21 @@
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
 絶頂で身動きの取れないくぬぎは一気に全裸に剥かれてしまった[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
-[eval exp="tf.P_APP = tf.P_APP+2"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
 絶頂で身動きの取れないくぬぎは為す術なく全裸にされた[p]くぬぎの色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
-[eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.P_DRESS > 1"]
 [eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
 くぬぎは下着姿に剥かれた[p]くぬぎの色気が上昇した[p]
-[eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="tf.P_DRESS > 0"]
 [eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
 くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
-[eval exp="tf.P_APP = tf.P_APP+1"]
 [chara_mod name="kunugi" face="nude"]
 [endif]
 

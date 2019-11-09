@@ -27,7 +27,7 @@
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.HIT < tf.dice"]
+[if exp="tf.HIT > tf.dice"]
 くぬぎは敵に組み付かれた[p]
 [jump storage="battle.ks" target="*mount_start"]
 [else]
