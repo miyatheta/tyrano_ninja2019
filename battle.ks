@@ -6,7 +6,7 @@
 [bg storage="mori_yoru.jpg" time="100"]
 
 ;メッセージウィンドウの設定
-[position layer="message0" left=20 top=400 width=920 height=200 page=fore visible=true]
+[position layer="message0" left=20 top=420 width=920 height=200 page=fore visible=true]
 
 ;文字が表示される領域を調整
 [position layer=message0 page=fore margint="45" marginl="50" marginr="70" marginb="60"]
@@ -611,7 +611,7 @@
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
 [if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
@@ -634,7 +634,7 @@
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
 [if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
@@ -955,7 +955,7 @@
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
 [if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
+[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
