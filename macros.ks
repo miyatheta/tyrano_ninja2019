@@ -506,4 +506,102 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [endscript]
 [endmacro]
 
+;新規追加部分
+[macro name="enemyname"]
+[emb exp="tf.E_name"]
+[endmacro]
+
+[macro name="GoSKB"]
+[Calc_Status]
+[eval exp="tf.GoSKB = 0"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/2 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
+[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 50 && tf.dice> tf.SKB"]
+[endmacro]
+
+[macro name="SUKEBE"]
+;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
+[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
+;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * tf.P_SEN / 100 * (tf.P_ERO + 50)/100)"]
+[endmacro]
+
+[macro name="limit"]
+[eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
+[eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
+[eval exp="f.P_EXH = 100" cond="f.P_EXH > 100"]
+[eval exp="f.P_AUR = 100" cond="f.P_AUR > 100"]
+[eval exp="f.E_AUR = 100" cond="f.E_AUR > 100"]
+[eval exp="tf.P_ERO = 999" cond="tf.P_ERO > 999"]
+[eval exp="tf.E_ERO = 999" cond="tf.E_ERO > 999"]
+[eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
+[eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
+[eval exp="tf.AvoidRate = 0" cond="tf.AvoidRate < 0"]
+[eval exp="tf.AvoidRate = 100" cond="tf.AvoidRate > 100"]
+[eval exp="tf.E_ACT = f.E_ACT" cond="tf.E_ACT > f.E_ACT"]
+[eval exp="tf.P_ACT = tf.P_ACTmax" cond="tf.P_ACT > tf.P_ACTmax"]
+[endmacro]
+
+[macro name="Calc_Status"]
+[eval exp="tf.P_STR = f.P_STR * tf.P_STRd3 * tf.P_STRd1 * tf.P_STRb3 * tf.P_STRb1 "]
+[eval exp="tf.P_DUR = f.P_DUR * tf.P_DURd3 * tf.P_DURd1 * tf.P_DURb3 * tf.P_DURb1 "]
+[eval exp="tf.P_AGI = f.P_AGI * tf.P_AGId3 * tf.P_AGId1 * tf.P_AGIb3 * tf.P_AGIb1 "]
+[eval exp="tf.P_DEX = f.P_DEX * tf.P_DEXd3 * tf.P_DEXd1 * tf.P_DEXb3 * tf.P_DEXb1 "]
+[eval exp="tf.P_POW = f.P_POW * tf.P_POWd3 * tf.P_POWd1 * tf.P_POWb3 * tf.P_POWb1 "]
+[eval exp="tf.P_APP = f.P_APP * tf.P_APPd3 * tf.P_APPd1 * tf.P_APPb3 * tf.P_APPb1 - (2 - tf.P_DRESS)"]
+
+[eval exp="tf.E_STR = f.E_STR * tf.E_STRd3 * tf.E_STRd1 * tf.E_STRb3 * tf.E_STRb1 "]
+[eval exp="tf.E_DUR = f.E_DUR * tf.E_DURd3 * tf.E_DURd1 * tf.E_DURb3 * tf.E_DURb1 "]
+[eval exp="tf.E_AGI = f.E_AGI * tf.E_AGId3 * tf.E_AGId1 * tf.E_AGIb3 * tf.E_AGIb1 "]
+[eval exp="tf.E_DEX = f.E_DEX * tf.E_DEXd3 * tf.E_DEXd1 * tf.E_DEXb3 * tf.E_DEXb1 "]
+[eval exp="tf.E_POW = f.E_POW * tf.E_POWd3 * tf.E_POWd1 * tf.E_POWb3 * tf.E_POWb1 "]
+[eval exp="tf.E_APP = f.E_APP * tf.E_APPd3 * tf.E_APPd1 * tf.E_APPb3 * tf.E_APPb1 "]
+[endmacro]
+
+[macro name="Initialize_1Tbuff"]
+[eval exp="tf.P_STRd1=1 , tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1 , tf.P_POWd1=1 , tf.P_APPd1=1"]
+[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_POWb1=1 , tf.P_APPb1=1 , tf.P_DefSKBb1=1"]
+[eval exp="tf.E_STRd1=1 , tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1 , tf.E_POWd1=1 , tf.E_APPd1=1"]
+[eval exp="tf.E_STRb1=1 , tf.E_DURb1=1 , tf.E_AGIb1=1 , tf.E_DEXb1=1 , tf.E_POWb1=1 , tf.E_APPb1=1"]
+[endmacro]
+
+[macro name="Initialize_3Tbuff"]
+[eval exp="tf.P_STRd3=1 , tf.P_DURd3=1 , tf.P_AGId3=1 , tf.P_DEXd3=1 , tf.P_POWd3=1 , tf.P_APPd3=1"]
+[eval exp="tf.P_STRd3_count=1 , tf.P_DURd3_count=1 , tf.P_AGId3_count=1 , tf.P_DEXd3_count=1 , tf.P_POWd3_count=1 , tf.P_APPd3_count=1"]
+
+[eval exp="tf.P_STRb3=1 , tf.P_DURb3=1 , tf.P_AGIb3=1 , tf.P_DEXb3=1 , tf.P_POWb3=1 , tf.P_APPb3=1"]
+[eval exp="tf.P_STRb3_count=1 , tf.P_DURb3_count=1 , tf.P_AGIb3_count=1 , tf.P_DEXb3_count=1 , tf.P_POWb3_count=1 , tf.P_APPb3_count=1"]
+
+[eval exp="tf.E_STRd3=1 , tf.E_DURd3=1 , tf.E_AGId3=1 , tf.E_DEXd3=1 , tf.E_POWd3=1 , tf.E_APPd3=1"]
+[eval exp="tf.E_STRd3_count=1 , tf.E_DURd3_count=1 , tf.E_AGId3_count=1 , tf.E_DEXd3_count=1 , tf.E_POWd3_count=1 , tf.E_APPd3_count=1"]
+
+[eval exp="tf.E_STRb3=1 , tf.E_DURb3=1 , tf.E_AGIb3=1 , tf.E_DEXb3=1 , tf.E_POWb3=1 , tf.E_APPb3=1"]
+[eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_APPb3_count=1"]
+
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_AGI=1 "]
+[eval exp="tf.E_charm_count=1 "]
+[endmacro]
+
+[macro name="Refresh_3Tbuff"]
+[eval exp="tf.P_STRd3_count = tf.P_STRd3_count-1" cond="tf.P_STRd3_count>1"][eval exp="tf.P_STRd3=1 ,tf.P_STRd3_count=0" cond="tf.P_STRd3_count==1"]
+[eval exp="tf.P_DURd3_count = tf.P_DURd3_count-1" cond="tf.P_DURd3_count>1"][eval exp="tf.P_DURd3=1 ,tf.P_DURd3_count=0" cond="tf.P_DURd3_count==1"]
+[eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1" cond="tf.P_AGId3_count>1"][eval exp="tf.P_AGId3=1 ,tf.P_AGId3_count=0" cond="tf.P_AGId3_count==1"]
+[eval exp="tf.P_DEXd3_count = tf.P_DEXd3_count-1" cond="tf.P_DEXd3_count>1"][eval exp="tf.P_DEXd3=1 ,tf.P_DEXd3_count=0" cond="tf.P_DEXd3_count==1"]
+[eval exp="tf.P_STRb3_count = tf.P_STRb3_count-1" cond="tf.P_STRb3_count>1"][eval exp="tf.P_STRb3=1 ,tf.P_STRb3_count=0" cond="tf.P_STRb3_count==1"]
+[eval exp="tf.P_DURb3_count = tf.P_DURb3_count-1" cond="tf.P_DURb3_count>1"][eval exp="tf.P_DURb3=1 ,tf.P_DURb3_count=0" cond="tf.P_DURb3_count==1"]
+[eval exp="tf.P_AGIb3_count = tf.P_AGIb3_count-1" cond="tf.P_AGIb3_count>1"][eval exp="tf.P_AGIb3=1 ,tf.P_AGIb3_count=0" cond="tf.P_AGIb3_count==1"]
+[eval exp="tf.P_DEXb3_count = tf.P_DEXb3_count-1" cond="tf.P_DEXb3_count>1"][eval exp="tf.P_DEXb3=1 ,tf.P_DEXb3_count=0" cond="tf.P_DEXb3_count==1"]
+
+[eval exp="tf.E_STRd3_count = tf.E_STRd3_count-1" cond="tf.E_STRd3_count>1"][eval exp="tf.E_STRd3=1 ,tf.E_STRd3_count=0" cond="tf.E_STRd3_count==1"]
+[eval exp="tf.E_DURd3_count = tf.E_DURd3_count-1" cond="tf.E_DURd3_count>1"][eval exp="tf.E_DURd3=1 ,tf.E_DURd3_count=0" cond="tf.E_DURd3_count==1"]
+[eval exp="tf.E_AGId3_count = tf.E_AGId3_count-1" cond="tf.E_AGId3_count>1"][eval exp="tf.E_AGId3=1 ,tf.E_AGId3_count=0" cond="tf.E_AGId3_count==1"]
+[eval exp="tf.E_DEXd3_count = tf.E_DEXd3_count-1" cond="tf.E_DEXd3_count>1"][eval exp="tf.E_DEXd3=1 ,tf.E_DEXd3_count=0" cond="tf.E_DEXd3_count==1"]
+[eval exp="tf.E_STRb3_count = tf.E_STRb3_count-1" cond="tf.E_STRb3_count>1"][eval exp="tf.E_STRb3=1 ,tf.E_STRb3_count=0" cond="tf.E_STRb3_count==1"]
+[eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=1 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
+[eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=1 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
+[eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=1 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_AGI=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+[endmacro]
+
+
 [return]
