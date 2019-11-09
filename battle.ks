@@ -55,7 +55,11 @@
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 ;サイズの設定
-[eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ=tf.dice"]
+[eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ = tf.dice"]
+[eval exp="tf.Max=5 , tf.Min=1"][dice][eval exp="tf.E_LUK = tf.dice"]
+[eval exp="tf.Max=5 , tf.Min=0"][dice][eval exp="tf.E_APP = tf.E_APP + tf.dice"]
+[eval exp="tf.Max=10 , tf.Min=0"][dice][eval exp="tf.E_SEX = tf.E_SEX + tf.dice"]
+[eval exp="tf.Max=10 , tf.Min=0"][dice][eval exp="tf.E_SAN = tf.E_SAN + tf.dice"]
 ;性格の設定
 ;暴力性の決定
 ;性的指向の設定
@@ -112,26 +116,27 @@
 [endif]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 ;コンボルート選定
-[if exp="tf.dice >= 66"][eval exp="tf.E_skill_route =1"]
-;コンボルート1 足止め＞足止め＞火力アップ・防御ダウン
-[eval exp="tf.E_skill1='*集中' , tf.E_skill2='*集中' , tf.E_skill3='*捨て身'"]
-[elsif exp="tf.dice >= 33"][eval exp="tf.E_skill_route =2"]
-;コンボルート2　火力アップ＞足止め＞組付
-[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*集中' , tf.E_skill3='*全力'"]
-[else exp="tf.dice >= 0"][eval exp="tf.E_skill_route =3"]
-;コンボルート3 火力アップ＞火力アップ・防御ダウン＞組付
-[eval exp="tf.E_skill1='*全力' , tf.E_skill2='*捨て身' , tf.E_skill3='*組付'"]
+[if exp="tf.dice >= 80"]
+[eval exp="tf.E_skill_A=tf.E_skill11 , tf.E_skill_B=tf.E_skill12 , tf.E_skill_C=tf.E_skill13"]
+[elsif exp="tf.dice >= 60"]
+[eval exp="tf.E_skill_A=tf.E_skill21 , tf.E_skill_B=tf.E_skill22 , tf.E_skill_C=tf.E_skill23"]
+[else exp="tf.dice >= 40"]
+[eval exp="tf.E_skill_A=tf.E_skill31 , tf.E_skill_B=tf.E_skill32 , tf.E_skill_C=tf.E_skill33"]
+[else exp="tf.dice >= 20"]
+[eval exp="tf.E_skill_A=tf.E_skill41 , tf.E_skill_B=tf.E_skill42 , tf.E_skill_C=tf.E_skill43"]
+[else exp="tf.dice >= 0"]
+[eval exp="tf.E_skill_A=tf.E_skill51 , tf.E_skill_B=tf.E_skill52 , tf.E_skill_C=tf.E_skill53"]
 [endif]
 [jump target="*E_skill_play"]
 [s]
 
 *E_skill_play
 [if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
-[jump storage="skilllist.ks" target="&tf.E_skill1"]
+[jump storage="skilllist.ks" target="&tf.E_skill_A"]
 [elsif exp="tf.sho = tf.Turn % 3 , tf.sho!=2"]
-[jump storage="skilllist.ks" target="&tf.E_skill2"]
-[elese]
-[jump storage="skilllist.ks" target="&tf.E_skill3"]
+[jump storage="skilllist.ks" target="&tf.E_skill_B"]
+[else]
+[jump storage="skilllist.ks" target="&tf.E_skill_C"]
 [endif]
 [s]
 
@@ -144,7 +149,19 @@
 ;プレイヤーの攻撃選択
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="攻撃"  target="*P_attack_option"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="降参"  target="*P_surrender"  ]
+[s]
+
+*P_skill_surrender
+[GoSKB]
+[if exp="tf.GoSKB == 1"]
+#敵
+・・・よかろう[p]
+[jump target="*bochu"]
+[endif]
+#敵
+たわけ！！そんな見え透いた嘘に引っかかるか！！[p]
+[jump target="P_phase_start"]
 [s]
 
 *P_skill_option
@@ -155,7 +172,7 @@
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="螺旋功"  target="*P_skill_conf5"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="410"  text="集気法"  target="*P_attack_conf0" cond="tf.P_AUR==0"]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="410"  text="集気法"  target="*P_attack_conf0" cond="f.P_AUR==0"]
 [s]
 
 *P_skill_conf0
@@ -279,9 +296,9 @@
 くぬぎの忍術・螺旋功[p]
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 25 + tf.dice"]
-[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 30 + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
@@ -464,19 +481,18 @@
 [enemyname]の攻撃[p]
 
 *E_skill_select2
+[if exp="f.E_AUR>=50 && tf.dice>0"]
+[jump storage="skilllist.ks" target="&tf.E_skill_63"]
+[endif]
+
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="f.E_AUR>0 && tf.dice>7"]
-[jump storage="skilllist.ks" target="*組付"]
+[jump storage="skilllist.ks" target="&tf.E_skill_61"]
 [endif]
 
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="f.E_AUR>=10 && tf.dice>6"]
-[jump storage="skilllist.ks" target="*気迫"]
-[endif]
-
-[eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="f.E_AUR>=50 && tf.dice>0"]
-[jump storage="skilllist.ks" target="*轟爆斧"]
+[jump storage="skilllist.ks" target="&tf.E_skill_62"]
 [endif]
 
 *E_attack_select
@@ -550,6 +566,24 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
+
+[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
+[eval exp="tf.Arousal = 2"]
+くぬぎは興奮状態になった[p]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
+[endif]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは絶頂した[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[endif]
+
 [jump target="*E_phase_end"]
 [s]
 
@@ -573,6 +607,24 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
+
+[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
+[eval exp="tf.Arousal = 2"]
+くぬぎは興奮状態になった[p]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
+[endif]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは絶頂した[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[endif]
+
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
 
@@ -761,7 +813,15 @@
 [s]
 
 *P_mount_option5
+[GoSKB]
+[if exp="tf.GoSKB == 1"]
+#敵
+・・・よかろう[p]
 [jump target="*bochu"]
+[endif]
+#敵
+たわけ！！そんな見え透いた嘘に引っかかるか！！[p]
+[jump target="P_phase_start"]
 [s]
 
 *E_mount_select
@@ -905,6 +965,24 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
+
+[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
+[eval exp="tf.Arousal = 2"]
+くぬぎは興奮状態になった[p]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
+[endif]
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは絶頂した[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[endif]
+
 [jump target="*mount_end"]
 [s]
 
@@ -1017,5 +1095,6 @@
 [s]
 
 *bochu
+[chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump storage="bochu.ks" target="*start"]
 [s]
