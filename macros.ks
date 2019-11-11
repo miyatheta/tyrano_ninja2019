@@ -511,6 +511,14 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [emb exp="tf.E_name"]
 [endmacro]
 
+[macro name="enemy_attack1"]
+[emb exp="tf.E_attack_1"]
+[endmacro]
+
+[macro name="enemy_attack2"]
+[emb exp="tf.E_attack_2"]
+[endmacro]
+
 [macro name="GoSKB"]
 [Calc_Status]
 [eval exp="tf.GoSKB = 0"]
@@ -523,7 +531,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 ;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
 [eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * tf.P_SEN / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * tf.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [endmacro]
 
 [macro name="limit"]
@@ -607,5 +615,9 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_AGI=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
+[macro name="Calc_HitRate"]
+[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+命中率[emb exp="tf.HitRate"]％[p]
+[endmacro]
 
 [return]

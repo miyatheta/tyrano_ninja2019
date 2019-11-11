@@ -54,6 +54,8 @@
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
+;永続バフ
+[eval exp="tf.P_SENboost=1"]
 ;サイズの設定
 [eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ = tf.dice"]
 [eval exp="tf.Max=5 , tf.Min=1"][dice][eval exp="tf.E_LUK = tf.dice"]
@@ -282,10 +284,8 @@
 [Calc_Status]
 [eval exp="tf.ACC = 0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-
 螺旋功:防御力無視・装甲貫通の非物理ダメージ[r]
-命中率[emb exp="tf.HitRate"]％[r]
+[Calc_HitRate]
 気力100：印5：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 100"]気力が足りない[p][jump target="*P_skill_option"][endif]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 100 , tf.MP=0 , tf.Cost=5 , tf.label='*P_skill5'" storage="SkillGame.ks" target="*game_start"  ]
@@ -317,8 +317,7 @@
 [Calc_Status]
 [eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-拳：命中率[emb exp="tf.HitRate"]％[p]
+拳：[Calc_HitRate]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
@@ -327,8 +326,7 @@
 [Calc_Status]
 [eval exp="tf.RATE = 7.5 , tf.ACC = 20 , tf.CRTrate = 1.0 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-蹴り：命中率[emb exp="tf.HitRate"]％[p]
+蹴り：[Calc_HitRate]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
@@ -337,8 +335,7 @@
 [Calc_Status]
 [eval exp="tf.RATE = 13.0 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-回し蹴り：命中率[emb exp="tf.HitRate"]％[p]
+回し蹴り：[Calc_HitRate]
 [if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack3"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
@@ -348,8 +345,7 @@
 [Calc_Status]
 [eval exp="tf.RATE = 5.5 , tf.ACC = 40 , tf.CRTrate = 1.0 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-くない：命中率[emb exp="tf.HitRate"]％[p]
+くない：[Calc_HitRate]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
@@ -482,37 +478,35 @@
 
 *E_skill_select2
 [if exp="f.E_AUR>=50 && tf.dice>0"]
-[jump storage="skilllist.ks" target="&tf.E_skill_63"]
+[jump storage="skilllist.ks" target="&tf.E_skill63"]
 [endif]
 
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="f.E_AUR>0 && tf.dice>7"]
-[jump storage="skilllist.ks" target="&tf.E_skill_61"]
+[jump storage="skilllist.ks" target="&tf.E_skill61"]
 [endif]
 
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="f.E_AUR>=10 && tf.dice>6"]
-[jump storage="skilllist.ks" target="&tf.E_skill_62"]
+[jump storage="skilllist.ks" target="&tf.E_skill62"]
 [endif]
 
 *E_attack_select
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="tf.dice>4"]
-[enemyname]の薙ぎ払い[p]
+[enemyname]の[enemy_attack1][p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 5.0 , tf.ACC = 30 , tf.CRTrate = 1 ,tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-命中：[emb exp="tf.HitRate"]％[p]
+[Calc_HitRate]
 [jump target="*P_Def_select"]
 
 [else]
-[enemyname]の体当たり[p]
+[enemyname]の[enemy_attack2][p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 8.5 , tf.ACC = 0 , tf.CRTrate = 1 , tf.E_ATK='*E_attack_2'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-命中：[emb exp="tf.HitRate"]％[p]
+[Calc_HitRate]
 [jump target="*P_Def_select"]
 [endif]
 [s]
@@ -547,7 +541,7 @@
 [jump target="&tf.E_ATK"][s]
 
 *E_attack_1
-[enemyname]の薙ぎ払い[p]
+[enemyname]の[enemy_attack1][p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
@@ -588,7 +582,7 @@
 [s]
 
 *E_attack_2
-[enemyname]の体当たり[p]
+[enemyname]の[enemy_attack2][p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
@@ -761,9 +755,8 @@
 
 *P_mount_option2
 くぬぎは息を整えた[p]
-くぬぎの気力が１０上昇[p]
 このターンのくぬぎは快感への抵抗力が上昇[p]
-[eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = f.P_AUR + 10 , tf.P_DefSKBb1 = 0.5"][limit]
+[eval exp="tf.P_ACT = tf.P_ACTmax , tf.P_DefSKBb1 = 0.5"][limit]
 [jump target="*E_mount_select"]
 [s]
 
@@ -956,7 +949,7 @@
 [enemyname]はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
 [Calc_Status]
-[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR - tf.P_DUR) * 3"]
+[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR) * 3"]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]

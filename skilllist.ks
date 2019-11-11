@@ -33,6 +33,20 @@
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
+*視姦
+「視姦」[p]
+敵の命中が上昇(１ターン)。この戦闘中、くぬぎの感度が増幅[p]
+[eval exp="tf.E_DEXb1 = 1.3"][eval exp="tf.P_SENboost = tf.P_SENboost + 0.2"]
+[jump storage="battle.ks" target="*P_phase_start"]
+[s]
+
+*挑発
+「挑発」[p]
+くぬぎの攻撃力が上昇、命中が減少(１ターン)[p]
+[eval exp="tf.P_STRb1 = 1.3"][eval exp="tf.P_DEXd1 = 0.7"]
+[jump storage="battle.ks" target="*P_phase_start"]
+[s]
+
 *気合
 「気合」[p]
 敵の気力が上昇[p]
@@ -82,6 +96,23 @@
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
+*組付
+組付[p]
+[Calc_Status]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+;命中：[emb exp="tf.HitRate"]％[p]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.HIT > tf.dice"]
+くぬぎは敵に組み付かれた[p]
+[jump storage="battle.ks" target="*mount_start"]
+[else]
+くぬぎは敵の組付を躱した[p]
+[jump storage="battle.ks" target="*P_phase_start"]
+[endif]
+[s]
+
 *媚薬
 「催淫香」[p]
 くぬぎの欲情が上昇した[p]
@@ -113,7 +144,7 @@
 敵の手が怪しく閃きくぬぎの服の裾を掴んだ[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+[Calc_HitRate]
 ;命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
@@ -147,7 +178,7 @@
 敵の手が怪しく閃きくぬぎの装束に切り裂いた[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+[Calc_HitRate]
 ;命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
@@ -192,12 +223,12 @@
 [s]
 
 
-*組付
+*組付B
 組付[p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+[Calc_HitRate]
 ;命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.HIT > tf.dice"]
@@ -212,9 +243,9 @@
 *強化組付
 組付[p]
 [Calc_Status]
-[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 30 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 40 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
+[Calc_HitRate]
 ;命中：[emb exp="tf.HitRate"]％[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.HIT > tf.dice"]
@@ -232,6 +263,7 @@
 [eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [eval exp="f.E_AUR = f.E_AUR - 10"]
 [limit]
+[jump storage="battle.ks"  target="*ikigire" cond="tf.P_ACT <= 0"]
 [jump storage="battle.ks" target="*E_attack_select"]
 [s]
 
