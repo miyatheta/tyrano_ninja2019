@@ -645,7 +645,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [macro name="SANcheck"]
 ;理性喪失判定
 [eval exp="tf.Max=tf.Kaikan , tf.Min=0"][dice]
-[if exp="tf.Kaikan > 99 && tf.dice >= tf.P_SAN"]
+[if exp="tf.Orga == 4  && tf.dice >= tf.P_SAN"]
 [eval exp="tf.Max=3 , tf.Min=1"][dice]
 絶頂によりくぬぎの理性が[emb exp="tf.dice"]減少[p]
 [eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
@@ -656,6 +656,27 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="f.P_INRAN = 1"]
 [endif]
 [eval exp="tf.Kaikan = 0 , tf.Yokujo = 0"]
+[endmacro]
+
+[macro name="SCALD"]
+[if exp="tf.E_scald>0"]
+[eval exp="tf.E_HP = tf.E_HP - 100"][limit]
+火傷で[enemyname]の体力が100減少[p]
+[eval exp="tf.E_scald = tf.E_scald - 1"]
+[triage]
+[endif]
+[endmacro]
+
+[macro name="MAZO"]
+[if exp="f.P_MAZO>0"]
+[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"]
+;欲情＝敵の性技技能値は無関係
+[eval exp="tf.Yokujo = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
+;快感＝敵の性技技能値は無関係
+[eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * tf.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[endif]
 [endmacro]
 
 [return]

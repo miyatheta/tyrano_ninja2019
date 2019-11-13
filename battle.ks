@@ -60,8 +60,8 @@
 [eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ = tf.dice"]
 [eval exp="tf.Max=5 , tf.Min=1"][dice][eval exp="tf.E_LUK = tf.dice"]
 [eval exp="tf.Max=5 , tf.Min=0"][dice][eval exp="tf.E_APP = tf.E_APP + tf.dice"]
-[eval exp="tf.Max=10 , tf.Min=0"][dice][eval exp="tf.E_SEX = tf.E_SEX + tf.dice"]
-[eval exp="tf.Max=10 , tf.Min=0"][dice][eval exp="tf.E_SAN = tf.E_SAN + tf.dice"]
+[eval exp="tf.Max=8 , tf.Min=0"][dice][eval exp="tf.E_SEX = tf.E_SEX + tf.dice"]
+[eval exp="tf.Max=8 , tf.Min=0"][dice][eval exp="tf.E_SAN = tf.E_SAN + tf.dice"]
 ;性格の設定
 ;暴力性の決定
 ;性的指向の設定
@@ -555,13 +555,7 @@
 [jump target="*P_Barrier" cond="tf.P_Barrier>0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
-[endif]
-
-[Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck]
 [jump target="*E_phase_end"]
 [s]
 
@@ -580,13 +574,7 @@
 [jump target="*P_Barrier" cond="tf.P_Barrier>0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
-[endif]
-;絶頂判定＆正気度判定
-[Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck]
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
 
@@ -622,20 +610,17 @@
 
 *E_phase_end
 ;火傷ダメージ
-[if exp="tf.E_scald>1"]
-[eval exp="tf.E_HP = tf.E_HP - 100"][limit]
-火傷で[enemyname]の体力が100減少[p]
-[eval exp="tf.E_scald = tf.E_scald - 1"]
-[triage]
-[endif]
-
-[jump target="*ikigire" cond="tf.P_ACT <= 0"]
+[SCALD]
 
 [eval exp="tf.Max=9 , tf.Min=0"][dice]
 [if exp="tf.E_ACT>1"]
+[jump target="*ikigire" cond="tf.P_ACT <= 0"]
 [jump target="*E_phase_start"]
-[eval exp="f.E_AUR = f.E_AUR + 10"][elsif exp="tf.E_ACT==1 && tf.dice>4"]
+
+[elsif exp="tf.E_ACT==1 && tf.dice>4"]
+[eval exp="f.E_AUR = f.E_AUR + 10"]
 [jump target="*turn_end"]
+
 [else]
 [jump target="*turn_end"]
 [endif]
@@ -888,13 +873,7 @@
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"][SUKEBE]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
-[endif]
-;絶頂判定&正気度判定
-[Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck]
 [jump target="*mount_end"]
 [s]
 
@@ -919,12 +898,7 @@
 [eval exp="tf.Damage = Math.floor(tf.mount_turn / 3) + 1 , f.P_EXH = f.P_EXH + 1"]
 くぬぎの疲労度が1上昇した[p][triage]
 ;火傷ダメージ
-[if exp="tf.E_scald>1"]
-[eval exp="tf.E_HP = tf.E_HP - 100"][limit]
-火傷で[enemyname]の体力が100減少[p]
-[eval exp="tf.E_scald = tf.E_scald - 1"]
-[triage]
-[endif]
+[SCALD]
 ;セクハラ抵抗力をリセット
 [eval exp="tf.P_DefSKBb1=1"]
 ;拘束継続
@@ -985,6 +959,14 @@
 *game_win
 [chara_hide name="gouza"]
 戦闘に勝利した。[p]
+[if exp="tf.Orga>0"]
+くぬぎは絶頂から抜け出した[p]
+[eval exp="tf.OrgaCount = 0"][eval exp="tf.Arousal = 1"]
+[endif]
+[if exp="tf.Arousal == 1"]
+くぬぎの興奮が収まった[p]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
+[endif]
 [eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 [eval exp="f.P_EXH = 99" cond="f.P_EXH >= 100"]
@@ -1002,6 +984,14 @@
 「仕方ねぇ、屋敷まで運ぶか・・・」[p]
 意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
+[if exp="tf.Orga>0"]
+くぬぎは絶頂から抜け出した[p]
+[eval exp="tf.OrgaCount = 0"][eval exp="tf.Arousal = 1"]
+[endif]
+[if exp="tf.Arousal == 1"]
+くぬぎの興奮が収まった[p]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
+[endif]
 [eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
 [jump storage="prison.ks" target="*start"]
 [s]

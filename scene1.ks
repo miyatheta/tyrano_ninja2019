@@ -45,7 +45,7 @@
 *easy-1
 ;高火力。一発。萬子
 [eval exp="tf.E_name='大砲魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30+5 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-10 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -56,13 +56,13 @@
 [eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
 ;攻撃
 [eval exp="tf.E_attack_1='薙ぎ払い'"]
-[eval exp="tf.E_attack_2='体当たり'"]
+[eval exp="tf.E_attack_2='大根斬り'"]
 @jump storage="battle.ks"
 
 *easy-2
 ;高命中。HPを削るのが役割。索子
 [eval exp="tf.E_name='削り魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30-5 , f.E_DUR=30-10 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -78,8 +78,8 @@
 
 *easy-3
 ;高耐久。ターン数を稼ぐのが役割。風牌
-[eval exp="tf.E_name='時間稼 '"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=22 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="tf.E_name='時間稼'"]
+[eval exp="f.E_HP=2000 , f.E_STR=30-10 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-8 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
 [eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
@@ -88,12 +88,14 @@
 [eval exp="tf.E_skill51='*剛体' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*青龍拳'"]
+[eval exp="tf.E_attack_1='打突'"]
+[eval exp="tf.E_attack_2='飛び蹴り'"]
 @jump storage="battle.ks"
 
 *easy-4
 ;セクハラ攻撃主体。筒子
 [eval exp="tf.E_name='痴漢魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=22 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=24 , f.E_DEX=32-5 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
 [eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*挑発' , tf.E_skill23='*気合'"]
@@ -103,8 +105,8 @@
 ;スキル2
 [eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*怪奇剣'"]
 ;攻撃
-[eval exp="tf.E_attack_1='切りつけ'"]
-[eval exp="tf.E_attack_2='飛び蹴り'"]
+[eval exp="tf.E_attack_1='切りつける'"]
+[eval exp="tf.E_attack_2='乱れ斬り'"]
 @jump storage="battle.ks"
 
 *normal
