@@ -18,6 +18,8 @@
 [s]
 *被虐調教lv1
 被虐調教lv1[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「被虐性癖」になった[p]
 [eval exp="f.P_MAZO=1"]
 [eval exp="f.被虐調教lv=1"]
@@ -25,6 +27,8 @@
 [s]
 *被虐調教lv2
 被虐調教lv2[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「被虐性癖」になった[p]
 [eval exp="f.P_MAZO=2"]
 [eval exp="f.被虐調教lv=2"]
@@ -32,6 +36,8 @@
 [s]
 *乳房改造lv1
 乳房改造lv1[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「爆乳体質」になった[p]
 [eval exp="f.P_BOOB=1"]
 [eval exp="f.乳房改造lv=1"]
@@ -39,6 +45,8 @@
 [s]
 *乳房改造lv2
 乳房改造lv2[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「爆乳体質」になった[p]
 [eval exp="f.P_BOOB=2"]
 [eval exp="f.乳房改造lv=2"]
@@ -46,6 +54,8 @@
 [s]
 *尻穴開発lv1
 尻穴開発lv1[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「尻穴性器」になった[p]
 [eval exp="f.P_ANAL=1"]
 [eval exp="f.尻穴開発lv=1"]
@@ -53,6 +63,8 @@
 [s]
 *尻穴開発lv2
 尻穴開発lv2[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「尻穴性器」になった[p]
 [eval exp="f.P_ANAL=2"]
 [eval exp="f.尻穴開発lv=2"]
@@ -60,6 +72,8 @@
 [s]
 *膣内蟲姦lv1
 膣内蟲姦lv1[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「寄生虫症」になった[p]
 [eval exp="f.P_PARASITE=1"]
 [eval exp="f.膣内蟲姦lv=1"]
@@ -67,6 +81,8 @@
 [s]
 *膣内蟲姦lv2
 膣内蟲姦lv2[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「寄生虫症」になった[p]
 [eval exp="f.P_PARASITE=2"]
 [eval exp="f.膣内蟲姦lv=2"]
@@ -74,6 +90,8 @@
 [s]
 *催淫呪術lv1
 催淫呪術lv1[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「催淫状態」になった[p]
 [eval exp="f.P_HYPNO=1"]
 [eval exp="f.催淫呪術lv=1"]
@@ -81,6 +99,8 @@
 [s]
 *催淫呪術lv2
 催淫呪術lv2[p]
+拷問によりくぬぎの理性が4減少[p]
+[eval exp="f.P_SAN = f.P_SAN - 4"]
 くぬぎは状態異常「催淫状態」になった[p]
 [eval exp="f.P_HYPNO=2"]
 [eval exp="f.催淫呪術lv=2"]

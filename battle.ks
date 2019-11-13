@@ -70,7 +70,7 @@
 
 *Initialize_BudStatus
 ;状態異常の初期値設定
-[eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1"]
+[eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1"]
 
 [eval exp="tf.E_scald = 0"]
@@ -561,23 +561,7 @@
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
 
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
-[eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
-[endif]
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[endif]
-
+[Orgasm][SANcheck]
 [jump target="*E_phase_end"]
 [s]
 
@@ -601,24 +585,8 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
-
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
-[eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
-[endif]
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[endif]
-
+;絶頂判定＆正気度判定
+[Orgasm][SANcheck]
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
 
@@ -886,25 +854,8 @@
 [eval exp="tf.RATE=2 + (f.P_BOOB*3) , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
-
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
-[eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
-[endif]
-
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[endif]
+;絶頂判定＆正気度判定
+[Orgasm][SANcheck]
 [jump target="*Orga_end" cond="tf.OrgaCount > 9"]
 [jump target="*mount_end"]
 [s]
@@ -914,24 +865,8 @@
 [eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
-
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
-[eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
-[endif]
-
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[endif]
+;絶頂判定＆正気度判定
+[Orgasm][SANcheck]
 [jump target="*Orga_end" cond="tf.OrgaCount > 9"]
 [jump target="*mount_end"]
 [s]
@@ -958,24 +893,8 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
-
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
-[eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
-[endif]
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
-[quake count=8 time=300 hmax=30]
-[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[endif]
-
+;絶頂判定&正気度判定
+[Orgasm][SANcheck]
 [jump target="*mount_end"]
 [s]
 
@@ -1040,7 +959,7 @@
 疲労のためにくぬぎは立ち上がれなくなった[p]
 [endif]
 くぬぎは敗北した。[p]
-[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"][limit]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
 [GoSKB]
 [if exp="tf.GoSKB == 1"]
 #敵
@@ -1066,7 +985,7 @@
 *game_win
 [chara_hide name="gouza"]
 戦闘に勝利した。[p]
-[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"]
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 [eval exp="f.P_EXH = 99" cond="f.P_EXH >= 100"]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
@@ -1083,7 +1002,7 @@
 「仕方ねぇ、屋敷まで運ぶか・・・」[p]
 意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
-[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO"][limit]
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
 [jump storage="prison.ks" target="*start"]
 [s]
 

@@ -13,6 +13,7 @@
 くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 [endif]
+[SANcheck]
 [jump target="&tf.label"]
 [s]
 

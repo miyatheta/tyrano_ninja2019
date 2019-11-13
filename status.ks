@@ -34,7 +34,7 @@
 ;感度それぞれ膣、尻、胸、その他
 [eval exp="f.P_SEN_VG=100 , f.P_SEN_AN=100 , f.P_SEN_EX=100 , f.P_SEN_BB=100"]
 ;エロ状態異常
-[eval exp="f.P_BOOB=0 , f.P_ANAL=0 , f.P_MAZO=0 , f.P_PARSITE=0 , f.P_HYPNO=0"]
+[eval exp="f.P_BOOB=0 , f.P_ANAL=0 , f.P_MAZO=0 , f.P_PARSITE=0 , f.P_HYPNO=0 ,f.P_INRAN=0 ,f.P_BITCH=0"]
 
 ;体力
 [eval exp="f.E_HP=1000"]

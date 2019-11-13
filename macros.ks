@@ -620,4 +620,42 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 命中率[emb exp="tf.HitRate"]％[p]
 [endmacro]
 
+;絶頂判定
+[macro name="Orgasm"]
+[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
+[eval exp="tf.Arousal = 2"]
+くぬぎは興奮状態になった[p]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
+[endif]
+
+[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは絶頂した[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+
+[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[quake count=8 time=300 hmax=30]
+[eval exp="tf.OrgaCount = tf.OrgaCount+1"]
+くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[endif]
+[endmacro]
+
+[macro name="SANcheck"]
+;理性喪失判定
+[eval exp="tf.Max=tf.Kaikan , tf.Min=0"][dice]
+[if exp="tf.Kaikan > 99 && tf.dice >= tf.P_SAN"]
+[eval exp="tf.Max=3 , tf.Min=1"][dice]
+絶頂によりくぬぎの理性が[emb exp="tf.dice"]減少[p]
+[eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
+[endif]
+;発狂判定
+[if exp="5 < f.P_SAN - tf.P_SAN"]
+短時間に多くの理性を喪失したことでくぬぎは【淫乱】状態に陥った[p]
+[eval exp="f.P_INRAN = 1"]
+[endif]
+[eval exp="tf.Kaikan = 0 , tf.Yokujo = 0"]
+[endmacro]
+
 [return]
