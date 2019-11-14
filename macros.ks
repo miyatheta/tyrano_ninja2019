@@ -652,8 +652,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [endif]
 ;発狂判定
 [if exp="5 < f.P_SAN - tf.P_SAN"]
-短時間に多くの理性を喪失したことでくぬぎは【淫乱】状態に陥った[p]
-[eval exp="f.P_INRAN = 1"]
+[jump target="*Orga_end"]
 [endif]
 [eval exp="tf.Kaikan = 0 , tf.Yokujo = 0"]
 [endmacro]
@@ -671,7 +670,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [if exp="f.P_MAZO>0"]
 [eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"]
 ;欲情＝敵の性技技能値は無関係
-[eval exp="tf.Yokujo = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
+[eval exp="tf.Yokujo = Math.floor(10 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値は無関係
 [eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * tf.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]

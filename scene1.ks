@@ -26,6 +26,13 @@
 
 [chara_show  name="kunugi" left=0 top=50 ]
 
+*incubation
+;蟲の孵化イベント
+[if exp="f.P_PARASITE_count > 20"]
+[chara_hide name="kunugi"]
+[jump storage="incubation.ks" target="*start"]
+[endif]
+
 *route_select
 ルートを選びます[p]
 [glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="かんたん"  target="*easy"  ]
@@ -55,8 +62,8 @@
 ;スキル2
 [eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
 ;攻撃
-[eval exp="tf.E_attack_1='薙ぎ払い'"]
-[eval exp="tf.E_attack_2='大根斬り'"]
+[eval exp="tf.E_attack_1='薙ぎ払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_attack_2='大根斬り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
 @jump storage="battle.ks"
 
 *easy-2
@@ -72,8 +79,8 @@
 ;スキル2
 [eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*旋風棍'"]
 ;攻撃
-[eval exp="tf.E_attack_1='打ち払い'"]
-[eval exp="tf.E_attack_2='乱れ突き'"]
+[eval exp="tf.E_attack_1='打ち払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_attack_2='乱れ突き' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
 @jump storage="battle.ks"
 
 *easy-3
@@ -88,8 +95,8 @@
 [eval exp="tf.E_skill51='*剛体' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*青龍拳'"]
-[eval exp="tf.E_attack_1='打突'"]
-[eval exp="tf.E_attack_2='飛び蹴り'"]
+[eval exp="tf.E_attack_1='正拳' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_attack_2='飛び蹴り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
 @jump storage="battle.ks"
 
 *easy-4
@@ -105,8 +112,8 @@
 ;スキル2
 [eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*怪奇剣'"]
 ;攻撃
-[eval exp="tf.E_attack_1='切りつける'"]
-[eval exp="tf.E_attack_2='乱れ斬り'"]
+[eval exp="tf.E_attack_1='切りつけ' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_attack_2='めった切り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
 @jump storage="battle.ks"
 
 *normal

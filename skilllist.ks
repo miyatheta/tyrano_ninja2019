@@ -140,6 +140,9 @@
 
 *剥ぎ取り
 [Calc_Status]
+;この時点で裸だった場合
+[jump target="*組付B" cond="tf.P_DRESS==0"]
+
 「剥ぎ取り」[p]
 敵の手が怪しく閃きくぬぎの服の裾を掴んだ[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
@@ -167,6 +170,8 @@
 [eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
 くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
 [chara_mod name="kunugi" face="nude"]
+[else]
+くぬぎは敵の腕を躱した[p]
 [endif]
 
 [jump storage="battle.ks" target="*E_attack_select"]
@@ -174,8 +179,11 @@
 
 *切り裂き
 [Calc_Status]
+;この時点で裸だった場合
+[jump target="*組付B" cond="tf.P_DRESS==0"]
+
 「切り裂き」[p]
-敵の手が怪しく閃きくぬぎの装束に切り裂いた[p]
+敵の手が怪しく閃きくぬぎの装束を切り裂いた[p]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [Calc_HitRate]
@@ -222,7 +230,6 @@
 [jump storage="battle.ks" target="*E_attack_select"]
 [s]
 
-
 *組付B
 組付[p]
 [Calc_Status]
@@ -251,10 +258,10 @@
 [if exp="tf.HIT > tf.dice"]
 くぬぎは敵に組み付かれた[p]
 [jump storage="battle.ks" target="*mount_start"]
-[else]
-くぬぎは敵の組付を躱した[p]
-[jump storage="battle.ks" target="*E_attack_select"]
 [endif]
+くぬぎは敵の組付を躱した[p]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *気迫
@@ -264,7 +271,8 @@
 [eval exp="f.E_AUR = f.E_AUR - 10"]
 [limit]
 [jump storage="battle.ks"  target="*ikigire" cond="tf.P_ACT <= 0"]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *轟爆斧
@@ -280,7 +288,8 @@
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit][triage]
 [limit]
 [MAZO][Orgasm][SANcheck]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *旋風棍
@@ -297,7 +306,8 @@
 くぬぎの防御力が低下した(３ターン)[p]
 [eval exp="tf.P_AGId3 = 0.8"][limit]
 [MAZO][Orgasm][SANcheck]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *青龍拳
@@ -314,12 +324,13 @@
 くぬぎの攻撃力が低下した(３ターン)[p]
 [eval exp="tf.P_AGId3 = 0.8"][limit]
 [MAZO][Orgasm][SANcheck]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *つむじ切り
 「つむじ切り」[p]
-目にも留まらぬ踏み込みから斬撃が放たれた[p]
+それまでとは打って変わった俊敏な踏み込みから斬撃が放たれた[p]
 [eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 6.0 * tf.E_STR * tf.E_charm_STR "]
@@ -331,7 +342,8 @@
 くぬぎの命中が低下した(３ターン)[p]
 [eval exp="tf.P_DEXd3 = 0.8"][limit]
 [MAZO][Orgasm][SANcheck]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]
 
 *波動A
@@ -348,5 +360,6 @@
 くぬぎの敏捷が低下した(３ターン)[p]
 [eval exp="tf.P_AGId3 = 0.8"][limit]
 [MAZO][Orgasm][SANcheck]
-[jump storage="battle.ks" target="*E_attack_select"]
+[if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_attack_select"]
+[else][jump storage="battle.ks" target="*turn_end"][endif]
 [s]

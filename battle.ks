@@ -308,7 +308,7 @@
 *P_attack_option
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="拳　：呼吸-1【攻撃継続】"  target="*P_attack_conf1"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="蹴り　：呼吸-1【攻撃継続】"  target="*P_attack_conf2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="回し蹴り　：呼吸-2【攻守交代】"  target="*P_attack_conf3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="回し蹴り　：呼吸-1【攻守交代】"  target="*P_attack_conf3"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="飛び道具　：呼吸-1【攻守交代】"  target="*P_attack_conf4"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
 [s]
@@ -382,8 +382,8 @@
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
-[enemyname]の防御力低下[p]
 [triage]
+[enemyname]の防御力低下[p]
 [jump target="*P_phase_start"]
 [s]
 
@@ -404,15 +404,15 @@
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
-[enemyname]の回避が低下[p]
 [triage]
+[enemyname]の回避が低下[p]
 [jump target="*P_phase_start"]
 [s]
 
 *P_attack3
 くぬぎの回し蹴り[p]
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT - 2"]
+[eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
@@ -446,8 +446,8 @@
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
-[enemyname]の命中が低下[p]
 [triage]
+[enemyname]の命中が低下[p]
 [jump target="*E_phase_start"]
 [s]
 
@@ -496,7 +496,7 @@
 [if exp="tf.dice>4"]
 [enemyname]の[enemy_attack1][p]
 [Calc_Status]
-[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 5.0 , tf.ACC = 30 , tf.CRTrate = 1 ,tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK1_rate , tf.ACC = tf.E_ATK1_acc , tf.CRTrate = tf.E_ATK1_crt , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [Calc_HitRate]
 [jump target="*P_Def_select"]
@@ -504,7 +504,7 @@
 [else]
 [enemyname]の[enemy_attack2][p]
 [Calc_Status]
-[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 8.5 , tf.ACC = 0 , tf.CRTrate = 1 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK2_rate , tf.ACC = tf.E_ATK2_acc , tf.CRTrate = tf.E_ATK2_crt , tf.E_ATK='*E_attack_2'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
 [Calc_HitRate]
 [jump target="*P_Def_select"]
@@ -836,12 +836,11 @@
 揉みしだかれたくぬぎの乳房から母乳が迸った[p]
 #
 [endif]
-[eval exp="tf.RATE=2 + (f.P_BOOB*3) , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
+[eval exp="tf.RATE=2 + (f.P_BOOB*2) , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
 [Orgasm][SANcheck]
-[jump target="*Orga_end" cond="tf.OrgaCount > 9"]
 [jump target="*mount_end"]
 [s]
 
@@ -852,7 +851,6 @@
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
 [Orgasm][SANcheck]
-[jump target="*Orga_end" cond="tf.OrgaCount > 9"]
 [jump target="*mount_end"]
 [s]
 
@@ -918,6 +916,14 @@
 
 *turn_end
 ターン終了[p]
+[if exp="f.P_PARASITE > 0"]
+くぬぎの膣内で蟲が淫毒を吐いた[p]
+「んっ！」
+この戦闘中のくぬぎの感度が上昇[p]
+[eval exp="tf.P_SENboost = tf.P_SENboost + (0.1 * f.P_PARASITE)"]
+[eval exp="f.P_PARASITE_count = f.P_PARASITE_count + 1"]
+[endif]
+
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
 [eval exp="f.E_AUR = f.E_AUR + 10"]
 [eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
@@ -933,7 +939,6 @@
 疲労のためにくぬぎは立ち上がれなくなった[p]
 [endif]
 くぬぎは敗北した。[p]
-[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
 [GoSKB]
 [if exp="tf.GoSKB == 1"]
 #敵
@@ -976,27 +981,22 @@
 [s]
 
 *Orga_end
-#くぬぎ
-もう・・・らめぇ・・・・[p]
 #
-くぬぎは立て続けの絶頂により気を失った[p]
-「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
-「仕方ねぇ、屋敷まで運ぶか・・・」[p]
-意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
-[chara_hide name="kunugi"][chara_hide name="gouza"]
-[if exp="tf.Orga>0"]
-くぬぎは絶頂から抜け出した[p]
-[eval exp="tf.OrgaCount = 0"][eval exp="tf.Arousal = 1"]
-[endif]
-[if exp="tf.Arousal == 1"]
-くぬぎの興奮が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
-[endif]
-[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
+短時間に５以上の理性を喪失した。[p]
+もう戦えない！！[p]
+「らめぇ・・・・」[p]
+続け様の絶頂によりくぬぎはその場に力なくへたり込んだ[p]
+「へっ、だらしねえな」[p]
+「あううううう・・・」[p]
+目の前に立った敵にくぬぎはいやいやと首を振りながら後ずさりをした[p]
+くぬぎの怯えた表情と潤んだ瞳に敵は舌なめずりをしながら手を伸ばした[p]
+「へへっ、お楽しみはこれからだぜ」[p]
+「いやあああああああっ！！」[p]
 [jump storage="prison.ks" target="*start"]
 [s]
 
 *bochu
+[eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump storage="bochu.ks" target="*start"]
 [s]
