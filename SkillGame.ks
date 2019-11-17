@@ -102,7 +102,7 @@
 *P_skill0
 集気法[p]
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT+1 , tf.P_ERO = tf.P_ERO-10"][limit]
+[eval exp="tf.P_ACT = tf.P_ACT+1 "][limit]
 [jump target="*術の終了"]
 [s]
 

@@ -172,16 +172,14 @@
 *リセット
 ;カードの選択済みステータスactiveをリセット,選択済みf.selectedを空に
 [eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = tf.P_AURtemp ,tf.Set = 0"]
-[iscript]
-f.Cards[f.Hand[0]]['active']=1;
-f.Cards[f.Hand[1]]['active']=1;
-f.Cards[f.Hand[2]]['active']=1;
-f.Cards[f.Hand[3]]['active']=1;
-f.Cards[f.Hand[4]]['active']=1;
-f.Cards[f.Hand[5]]['active']=1;
-f.Cards[f.Hand[6]]['active']=1;
-f.Selected=[];
-[endscript]
+[eval exp="f.Cards[f.Hand[0]]['active']=1"]
+[eval exp="f.Cards[f.Hand[1]]['active']=1"]
+[eval exp="f.Cards[f.Hand[2]]['active']=1"]
+[eval exp="f.Cards[f.Hand[3]]['active']=1"]
+[eval exp="f.Cards[f.Hand[4]]['active']=1" cond="tf.P_ACTmax>=5"]
+[eval exp="f.Cards[f.Hand[5]]['active']=1" cond="tf.P_ACTmax>=6"]
+[eval exp="f.Cards[f.Hand[6]]['active']=1" cond="tf.P_ACTmax>=7"]
+[eval exp="f.Selected=[] , f.SkillSet=[]"]
 [jump target="*手札選択"]
 [s]
 
@@ -278,7 +276,7 @@ if(tf.atk>0){
 [s]
 
 *P_skill_conf0
-集気法:呼吸+1 , 欲情-10[r]
+集気法:呼吸+1 [r]
 気力0：印0[p]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 0" target="*使用スキル登録" ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
