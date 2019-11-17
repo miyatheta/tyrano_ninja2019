@@ -624,7 +624,7 @@ f.P_Skill=[
 {id:2 , name:"空蝉" , aura:50 , MP:0 , cost:3 , label:"*P_skill2"},
 {id:3 , name:"魅了" , aura:30 , MP:0 , cost:2 , label:"*P_skill3"},
 {id:4 , name:"衣変" , aura:20 , MP:0 , cost:2 , label:"*P_skill4"},
-{id:5 , name:"螺旋" , aura:100 , MP:0 , cost:4 , label:"*P_skill5"}
+{id:5 , name:"螺旋功" , aura:100 , MP:0 , cost:4 , label:"*P_skill5"}
 ];
 [endscript]
 ;カードの設定
@@ -674,6 +674,15 @@ f.Selected.splice(0,1)
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 (命中率[emb exp="tf.HitRate"]％)[p]
+[endmacro]
+
+[macro name="Calc_Damage"]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.P_LUK * 3 * tf.CRTrate"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
+[eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endmacro]
 
 ;絶頂判定

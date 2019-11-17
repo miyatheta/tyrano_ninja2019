@@ -2,7 +2,6 @@
 [eval exp="tf.label = f.P_Skill[f.SkillSet[0]]['label']"]
 [eval exp="tf.Cost = f.P_Skill[f.SkillSet[0]]['cost']"]
 [eval exp="tf.MP = f.P_Skill[f.SkillSet[0]]['MP']"]
-[SelectedCardSplice]
 
 *Question
 [emb exp="tf.MP"]/[emb exp="tf.Cost"][r]
@@ -23,11 +22,11 @@
 [endif]
 
 [emb exp="tf.Sample"]を選べ
-[glink  color="blue"  size="20"  x="260"  width="400"  y="100"  text="水"  exp="tf.Answer='水'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="170"  text="金"  exp="tf.Answer='金'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="240"  text="土"  exp="tf.Answer='土'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="310"  text="火"  exp="tf.Answer='火'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="380"  text="木"  exp="tf.Answer='木'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="水"  exp="tf.Answer='水'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="金"  exp="tf.Answer='金'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="土"  exp="tf.Answer='土'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="火"  exp="tf.Answer='火'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="木"  exp="tf.Answer='木'" storage="SkillGame.ks" target="*Kotae"  ]
 [wait time=3000]
 [jump target="*timeout"]
 [s]
@@ -80,7 +79,7 @@
 [eval exp="tf.MP=-1"]
 失敗[wt7]
 くぬぎは術の発動に失敗した[p]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [endif]
 
 [if exp="tf.MP >= tf.Cost"]
@@ -97,14 +96,14 @@
 [eval exp="tf.MP=-1"]
 失敗[p]
 くぬぎは術の発動に失敗した[p]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [s]
 
 *P_skill0
 集気法[p]
 [Calc_Status]
-[eval exp="f.P_AUR = f.P_AUR+10 , tf.P_ERO = tf.P_ERO-10"]][limit]
-[jump storage="battle.ks" target="*カードの実行"]
+[eval exp="tf.P_ACT = tf.P_ACT+10 , tf.P_ERO = tf.P_ERO-10"]][limit]
+[jump target="*術の終了"]
 [s]
 
 *P_skill1
@@ -120,7 +119,7 @@
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [s]
 
 *P_skill2
@@ -128,7 +127,7 @@
 #
 一度だけダメージを無効化する。（途中で衣服を失った場合は発動しない）[p]
 [eval exp="tf.P_Barrier=1"]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [s]
 
 *P_skill3
@@ -156,7 +155,7 @@
 [enemyname]の攻撃力と回避力が減少した（3ターン）[p]
 [endif]
 [triage]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [s]
 
 *P_skill4
@@ -165,7 +164,7 @@
 くぬぎは目にも留まらぬ速さで着衣した[p]
 [eval exp="tf.P_DRESS=2"]
 [chara_mod name="kunugi" face="default"]
-[jump storage="battle.ks" target="*カードの実行"]
+[jump target="*術の終了"]
 [s]
 
 *P_skill5
@@ -180,5 +179,12 @@
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
+[jump target="*術の終了"]
+[s]
+
+*術の終了
+[iscript]
+f.SkillSet.splice(0,1)
+[endscript]
 [jump storage="battle.ks" target="*カードの実行"]
 [s]
