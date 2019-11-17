@@ -48,7 +48,7 @@
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0 , tf.P_EXH=0"]
-[eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] "]
+[eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] , f.SkillSet=[]"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
@@ -145,6 +145,7 @@
 
 *P_phase_start
 ;プレーヤーターンの開始
+[eval exp="tf.P_AURtemp = f.P_AUR"]
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 
 *手札構築
@@ -158,22 +159,22 @@
 *手札選択
 ;今回の選択tf.Answerに選択した手札handのカードID（cardに紐づく絶対値）を登録、そのカードのactiveを０に
 残呼吸：[emb exp="tf.P_ACT"]
-[glink color="blue" size="20" x="260" width="150" y="100" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="170" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="240" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="310" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="100" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="170" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="240" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="310" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
 [if exp="tf.P_ACTmax>=5"]
-[glink color="blue" size="20" x="560" width="150" y="100" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="100" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
 [if exp="tf.P_ACTmax>=6"]
-[glink color="blue" size="20" x="560" width="150" y="170" text="&f.Cards[f.Hand[5]]['txt']" exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="170" text="&f.Cards[f.Hand[5]]['txt']" exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
 [if exp="tf.P_ACTmax>=7"]
-[glink color="blue" size="20" x="560" width="150" y="240" text="&f.Cards[f.Hand[6]]['txt']" exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="240" text="&f.Cards[f.Hand[6]]['txt']" exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
 [glink color="blue" size="20" x="560" width="150" y="310" text="戻る" exp="" target="*リセット" ]
 [s]
 
 *リセット
 ;カードの選択済みステータスactiveをリセット,選択済みf.selectedを空に
-[eval exp="tf.P_ACT = tf.P_ACTmax"][eval exp="tf.Set = 0"]
+[eval exp="tf.P_ACT = tf.P_ACTmax , f.P_AUR = tf.P_AURtemp ,tf.Set = 0"]
 [iscript]
 f.Cards[f.Hand[0]]['active']=1;
 f.Cards[f.Hand[1]]['active']=1;
@@ -187,8 +188,30 @@ f.Selected=[];
 [jump target="*手札選択"]
 [s]
 
+*スキル選択
+;忍術の場合利用する忍術を予約。リセット時は各種計算を開放
+[jump target="*P_skill_option" cond="tf.Answer<3"]
+[jump target="*場札追加" ]
+[s]
+*P_skill_option
+;プレイヤーのスキル選択
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2" cond="tf.P_DRESS>0"]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="衣変"  target="*P_skill_conf4" cond="tf.P_DRESS==0"]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="螺旋功"  target="*P_skill_conf5"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  exp="f.Cards[tf.Answer]['active']=1 " target="*手札選択"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="410"  text="集気法"  target="*P_attack_conf0" cond="f.P_AUR==0"]
+[s]
+*使用スキル登録
+;予約したスキルを配列に格納
+[iscript]
+f.SkillSet.push(tf.P_Skill_id);
+[endscript]
+[emb exp="f.P_Skill[f.SkillSet[0]]['name']"]を予約[p]
 *場札追加
 ;今回の選択answerを選択済みに登録、継続フラグcomb=1なら再選択
+[eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [iscript]
 f.Selected.push(tf.Answer);
 tf.Suite1=1 , tf.Suite2=2;
@@ -198,7 +221,7 @@ if(tf.Set>0){
 }
 [endscript]
 [if exp="tf.Suite1 == tf.Suite2"]
-[emb exp="f.Cards[f.Selected[0]]['suite']"]ボーナス獲得[p]
+[emb exp="f.Cards[f.Selected[tf.Set]]['suite']"]ボーナス獲得[p]
 [eval exp="tf.P_Cardb1 = tf.P_Cardb1 + 0.3"]
 [endif]
 [eval exp="tf.Set=tf.Set+1"]
@@ -235,223 +258,59 @@ tf.length = f.Deck.length;
 tf.Len=f.Selected.length;
 [endscript]
 [jump target="*攻撃終了" cond="tf.Len==0"]
-[jump target="*type1" cond="f.Cards[f.Selected[0]]['type']==1"]
-[jump target="*type2" cond="f.Cards[f.Selected[0]]['type']==2"]
-[jump target="*type3" cond="f.Cards[f.Selected[0]]['type']==3"]
-[jump target="*type4" cond="f.Cards[f.Selected[0]]['type']==4"]
-[jump target="*type5" cond="f.Cards[f.Selected[0]]['type']==5"]
-[jump target="*type6" cond="f.Cards[f.Selected[0]]['type']==6"]
-[jump target="*type7" cond="f.Cards[f.Selected[0]]['type']==7"]
-[s]
-
-*P_attack_select
-;プレイヤーの攻撃選択
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="攻撃"  target="*P_attack_option"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="忍術"  target="*P_skill_option"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="降参"  target="*P_surrender"  ]
-[s]
-
-*P_skill_surrender
-[GoSKB]
-[if exp="tf.GoSKB == 1"]
-#敵
-・・・よかろう[p]
-[jump target="*bochu"]
-[endif]
-#敵
-たわけ！！そんな見え透いた嘘に引っかかるか！！[p]
-[jump target="P_phase_start"]
-[s]
-
-*P_skill_option
-;プレイヤーのスキル選択
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="火炎"  target="*P_skill_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="空蝉"  target="*P_skill_conf2" cond="tf.P_DRESS>0"]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="衣変"  target="*P_skill_conf4" cond="tf.P_DRESS==0"]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="魅了"  target="*P_skill_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="螺旋功"  target="*P_skill_conf5"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="410"  text="集気法"  target="*P_attack_conf0" cond="f.P_AUR==0"]
+[jump storage="SkillGame.ks" target="*start" cond="f.Cards[f.Selected[0]]['type']==1"]
+[jump target="*P_attack_Type2" cond="f.Cards[f.Selected[0]]['type']==2"]
+[jump target="*P_attack_Type3" cond="f.Cards[f.Selected[0]]['type']==3"]
+[jump target="*P_attack_Type4" cond="f.Cards[f.Selected[0]]['type']==4"]
+[jump target="*P_attack_Type5" cond="f.Cards[f.Selected[0]]['type']==5"]
+[jump target="*P_attack_Type6" cond="f.Cards[f.Selected[0]]['type']==6"]
+[jump target="*P_attack_Type7" cond="f.Cards[f.Selected[0]]['type']==7"]
 [s]
 
 *P_skill_conf0
-集気法:気力+10,防御力上昇（１ターン）[r]
-気力0：印0：呼吸-1：手番継続[p]
+集気法:呼吸+1 , 欲情-10[r]
+気力0：印0：手番継続[p]
 [if exp="f.P_AUR < 60"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1" target="*P_skill0"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 0" target="*使用スキル登録" ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
-
-*P_skill0
-集気法[p]
-[Calc_Status]
-[eval exp="f.P_AUR = f.P_AUR+10 , tf.P_DURb1 = 1.3"]][limit]
-[jump target="*P_phase_start"]
-[s]
-
 *P_skill_conf1
 火炎:敵に必中で非物理ダメージ。火傷（100ダメージ）を３回付与[r]
-気力60：印4：呼吸-1：手番継続[p]
+気力60：印4[p]
 [if exp="f.P_AUR < 60"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 60 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill1'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 1 , f.P_AUR = f.P_AUR - 60" target="*使用スキル登録"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
-
-*P_skill1
-くぬぎの忍術・火炎[p]
-[Calc_Status]
-[eval exp="tf.HIT = 1000"]
-[eval exp="tf.HitRate = tf.HIT"]
-[call target="*E_Def_select"]
-[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 18 + tf.dice"]
-[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
-[quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
-[triage]
-[jump target="*P_phase_start"]
-[s]
-
 *P_skill_conf2
 空蝉：敵の攻撃被弾時に一度だけダメージを無効化する。代わりに衣服を失う。衣服を着ていないと使えない[r]
-気力50：印4：呼吸-1：手番継続[p]
+気力50：印4[p]
 [if exp="f.P_AUR < 50"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 50 , tf.MP=0 , tf.Cost=4 , tf.label='*P_skill2'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 2 , f.P_AUR = f.P_AUR - 50" target="*使用スキル登録"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
-
-*P_skill2
-くぬぎの忍術・空蝉[p]
-#
-一度だけダメージを無効化する。（途中で衣服を失った場合は発動しない）[p]
-[eval exp="tf.P_Barrier=1"]
-[jump target="*P_phase_start"]
-[s]
-
 *P_skill_conf3
-魅了：気力30：印3：呼吸-1：手番継続[p]
+魅了：敵の攻撃力と回避力を低下(３ターン)[r]
+気力30：印3[p]
 [if exp="f.P_AUR < 30"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 30 , tf.MP=0 , tf.Cost=3 , tf.label='*P_skill3'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 3 , f.P_AUR = f.P_AUR - 30" target="*使用スキル登録"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
-
-*P_skill3
-[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
-くぬぎの忍術・魅了[p]
-[image layer=3 page=back storage="CUT/部分拡大.png"][trans layer=3 time=1000]
-[freeimage layer=2 page=back][trans layer=2 time=500][wt]
-#くぬぎ
-あはぁん[p]
-#
-くぬぎは胸を寄せながら、胸元をはだけて見せた[p]
-[freeimage layer=3 time=500][wt]
-[Calc_Status]
-;感情は確定で上昇、上昇幅は抵抗値次第
-[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-[enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
-
-;デバフは抵抗判定、魅力VS理性と感情
-[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.TAG < tf.dice"]
-;魅了による弱体化
-[enemyname]は前かがみになった[p]
-[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_AGI=0.7"]
-[enemyname]の攻撃力と回避力が減少した（3ターン）[p]
-[endif]
-[triage]
-[jump target="*P_phase_start"]
-[s]
-
 *P_skill_conf4
 衣変：失った衣装を復元します。どこから服が出てくるかは謎[r]
 気力20：印0：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 20"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 20 , tf.MP=0 , tf.Cost=3" target="*P_skill4"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 4 , f.P_AUR = f.P_AUR - 20" target="*使用スキル登録"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
 [s]
-
-*P_skill4
-くぬぎの忍術・早着替え[p]
-#
-くぬぎは目にも留まらぬ速さで着衣した[p]
-[eval exp="tf.P_DRESS=2"]
-[chara_mod name="kunugi" face="default"]
-[jump target="*P_phase_start"]
-[s]
-
 *P_skill_conf5
 [Calc_Status]
 [eval exp="tf.ACC = 0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 螺旋功:防御力無視・装甲貫通の非物理ダメージ[r]
-[Calc_HitRate]
 気力100：印5：呼吸-1：手番継続[p]
 [if exp="f.P_AUR < 100"]気力が足りない[p][jump target="*P_skill_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_ACT = tf.P_ACT - 1 , f.P_AUR = f.P_AUR - 100 , tf.MP=0 , tf.Cost=5 , tf.label='*P_skill5'" storage="SkillGame.ks" target="*game_start"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="決定"  exp="tf.P_Skill_id = 5 , f.P_AUR = f.P_AUR - 100" target="*使用スキル登録"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="戻る"  target="*P_skill_option"  ]
-[s]
-
-*P_skill5
-[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
-くぬぎの忍術・螺旋功[p]
-[freeimage layer=2 page=back][trans layer=2 time=500][wt]
-
-[call target="*E_Def_select"]
-[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 30 + tf.dice"]
-[eval exp="tf.Damage = Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
-[triage]
-[jump target="*P_phase_start"]
-[s]
-
-*P_attack_option
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="100"  text="拳　：呼吸-1【攻撃継続】"  target="*P_attack_conf1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="170"  text="蹴り　：呼吸-1【攻撃継続】"  target="*P_attack_conf2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="240"  text="回し蹴り　：呼吸-1【攻守交代】"  target="*P_attack_conf3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="310"  text="飛び道具　：呼吸-1【攻守交代】"  target="*P_attack_conf4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*P_attack_select"  ]
-[s]
-
-*P_attack_conf1
-[Calc_Status]
-[eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-拳：[Calc_HitRate]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack1"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
-[s]
-
-*P_attack_conf2
-[Calc_Status]
-[eval exp="tf.RATE = 7.5 , tf.ACC = 20 , tf.CRTrate = 1.0 , tf.comb=1"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-蹴り：[Calc_HitRate]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack2"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
-[s]
-
-*P_attack_conf3
-[Calc_Status]
-[eval exp="tf.RATE = 13.0 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-回し蹴り：[Calc_HitRate]
-[if exp="tf.P_ACT<2"]呼吸が足りない！！[p][jump target="*P_attack_option"][endif]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack3"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
-[s]
-
-*P_attack_conf4
-[Calc_Status]
-[eval exp="tf.RATE = 5.5 , tf.ACC = 40 , tf.CRTrate = 1.0 , tf.comb=0"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
-くない：[Calc_HitRate]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="決定"  target="*P_attack4"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_attack_option"  ]
 [s]
 
 *E_Def_select
@@ -469,10 +328,23 @@ tf.Len=f.Selected.length;
 [endif]
 [return]
 
-*P_attack1
-くぬぎの拳[p]
+*P_skill_surrender
+[GoSKB]
+[if exp="tf.GoSKB == 1"]
+#敵
+・・・よかろう[p]
+[jump target="*bochu"]
+[endif]
+#敵
+たわけ！！そんな見え透いた嘘に引っかかるか！！[p]
+[jump target="P_phase_start"]
+[s]
+*P_attack_Type2
+;拳
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+[eval exp="tf.RATE = 6.5 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
@@ -483,18 +355,21 @@ tf.Len=f.Selected.length;
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [eval exp="tf.E_DURd1 = tf.E_DURd1 - 0.25"][eval exp="tf.E_DURd1=0" cond="tf.E_DURd1 < 0"]
+[SelectedCardSplice]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
 [enemyname]の防御力低下[p]
-[jump target="*P_phase_start"]
+[jump target="*カードの実行"]
 [s]
 
-*P_attack2
-くぬぎの下段蹴り[p]
+*P_attack_Type3
+;下段蹴り
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+[eval exp="tf.RATE = 7.5 , tf.ACC = 30 , tf.CRTrate = 1.0 , tf.comb=1"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
@@ -505,18 +380,21 @@ tf.Len=f.Selected.length;
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [eval exp="tf.E_AGId1 = tf.E_AGId1 - 0.25"][eval exp="tf.E_AGId1=0" cond="tf.E_AGId1 < 0"]
+[SelectedCardSplice]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
 [enemyname]の回避が低下[p]
-[jump target="*P_phase_start"]
+[jump target="*カードの実行"]
 [s]
 
-*P_attack3
-くぬぎの回し蹴り[p]
+*P_attack_Type4
+;上段蹴り
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+[eval exp="tf.RATE = 10.0 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
@@ -526,17 +404,20 @@ tf.Len=f.Selected.length;
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
+[SelectedCardSplice]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
-[jump target="*E_phase_start"]
+[jump target="*カードの実行"]
 [s]
 
-*P_attack4
-くぬぎのくない[p]
+*P_attack_Type5
+;くない
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+[eval exp="tf.RATE = 6.5 , tf.ACC = 40 , tf.CRTrate = 1.0 , tf.comb=0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
@@ -547,33 +428,79 @@ tf.Len=f.Selected.length;
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [eval exp="tf.E_DEXd1 = tf.E_DEXd1 - 0.2" cond="tf.E_DEXd1 > 0"]
+[SelectedCardSplice]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[p]
 [triage]
 [enemyname]の命中が低下[p]
-[jump target="*E_phase_start"]
+[jump target="*カードの実行"]
+[s]
+
+*P_attack_Type6
+;回し蹴り
+[Calc_Status]
+[eval exp="tf.RATE = 10.0 , tf.ACC = 15 , tf.CRTrate = 1.5 , tf.comb=0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
+[call target="*E_Def_select"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
+[if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.5" cond="tf.dice <= f.P_LUK * 4 * tf.CRTrate"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
+[eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
+[SelectedCardSplice]
+[quake count=5 time=300 hmax=20]
+[if exp="tf.CRT>1"]会心の一撃[r][endif]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump target="*カードの実行"]
+[s]
+
+*P_attack_Type7
+;飛び蹴り
+[Calc_Status]
+[eval exp="tf.RATE = 13.0 , tf.ACC = 5 , tf.CRTrate = 2.0 , tf.comb=0"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
+くぬぎの[emb exp="f.Cards[f.Selected[0]]['name']"][Calc_HitRate]
+[call target="*E_Def_select"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_attack_miss" cond="tf.HIT < tf.dice"]
+[if exp="tf.E_AVD>0"][eval exp="tf.Max=99 , tf.Min=1"][dice][jump target="*E_avoid_success" cond="tf.E_AVD > tf.dice"][endif]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.5" cond="tf.dice <= f.P_LUK * 4 * tf.CRTrate"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
+[eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
+[SelectedCardSplice]
+[quake count=5 time=300 hmax=20]
+[if exp="tf.CRT>1"]会心の一撃[r][endif]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump target="*カードの実行"]
 [s]
 
 *P_attack_miss
 スカ！[p]
 くぬぎの攻撃は当たらなかった[p]
-[if exp="tf.comb > 0"]
-[jump target="*P_phase_start"]
-[else]
-[jump target="*E_phase_start"]
-[endif]
+[SelectedCardSplice]
+[jump target="*カードの実行"]
 [s]
 
 *E_avoid_success
 回避！[p]
 [enemyname]は攻撃を回避した[p]
-[if exp="tf.comb > 0"]
-[jump target="*P_phase_start"]
-[else]
-[jump target="*E_phase_start"]
-[endif]
+[SelectedCardSplice]
+[jump target="*カードの実行"]
 [s]
+
+*攻撃終了
+攻撃終了[p]
+;カードバフ解除
+[eval exp="tf.P_Cardb1 = 1.0"]
 
 *E_phase_start
 [show_status]
@@ -1007,15 +934,7 @@ tf.Len=f.Selected.length;
 [if exp="tf.Esc != 1"]
 [jump target="*mount_continue"]
 [endif]
-;ターンエンド処理
-[eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
-[eval exp="f.E_AUR = f.E_AUR + 10"]
-[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
-[Initialize_1Tbuff][Refresh_3Tbuff]
-;デバフと状態異常の回復
-[eval exp="tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
-[eval exp="tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1"]
-[jump target="*turn_start"]
+[jump target="*turn_end"]
 [s]
 
 *turn_end
@@ -1030,12 +949,47 @@ tf.Len=f.Selected.length;
 
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
 [eval exp="f.E_AUR = f.E_AUR + 10"]
-[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT"]
+[eval exp="tf.P_ACT = tf.P_ACTmax , tf.E_ACT = f.E_ACT , tf.Set = 0"]
 [Initialize_1Tbuff][Refresh_3Tbuff]
 ;デバフと状態異常の回復
 [eval exp="tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1"]
 [eval exp="tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1"]
+
+*再構築
+;ターン終了処理１（山札がある場合）
+[iscript]
+tf.length = f.Deck.length;
+[endscript]
+[eval exp="f.Cards[f.Hand[0]]['active']=1"]
+[eval exp="f.Cards[f.Hand[1]]['active']=1"]
+[eval exp="f.Cards[f.Hand[2]]['active']=1"]
+[eval exp="f.Cards[f.Hand[3]]['active']=1"]
+[eval exp="f.Cards[f.Hand[4]]['active']=1" cond="tf.P_ACTmax>=5"]
+[eval exp="f.Cards[f.Hand[5]]['active']=1" cond="tf.P_ACTmax>=6"]
+[eval exp="f.Cards[f.Hand[6]]['active']=1" cond="tf.P_ACTmax>=7"]
+
+[if exp="tf.length < tf.P_ACTmax"][jump target="*山札再構築"]
+[elsif exp="tf.length < 1"][jump target="*山札再構築"]
+[else][eval exp="f.Selected=[]"][jump target="*turn_start"][endif]
+[s]
+
+*山札再構築
+;ターン終了処理２（山札がなくなった場合）リシャッフル
+[iscript]
+for(var i = f.Cemetery.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.Cemetery[i];
+    f.Cemetery[i] = f.Cemetery[r];
+    f.Cemetery[r] = tmp;
+}
+f.temp=[];
+f.temp = f.Deck.concat(f.Cemetery);
+f.Deck = f.temp;
+f.Cemetery=[];
+[endscript]
+;山札：[emb exp="f.Deck"][r]
 [jump target="*turn_start"]
+[s]
 
 
 *game_lose

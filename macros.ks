@@ -616,6 +616,17 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [endmacro]
 
 [macro name="Initialize_Cards"]
+;術の設定
+[iscript]
+f.P_Skill=[
+{id:0 , name:"集気法" , aura:0 , MP:0 , cost:0 , label:"*P_skill0"},
+{id:1 , name:"火炎" , aura:60 , MP:0 , cost:3 , label:"*P_skill1"},
+{id:2 , name:"空蝉" , aura:50 , MP:0 , cost:3 , label:"*P_skill2"},
+{id:3 , name:"魅了" , aura:30 , MP:0 , cost:2 , label:"*P_skill3"},
+{id:4 , name:"衣変" , aura:20 , MP:0 , cost:2 , label:"*P_skill4"},
+{id:5 , name:"螺旋" , aura:100 , MP:0 , cost:4 , label:"*P_skill5"}
+];
+[endscript]
 ;カードの設定
 [iscript]
 f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -625,7 +636,7 @@ f.Cards=[
 {id:2,type:1,name:"忍術",suite:"炎",comb:1,active:1,txt:"炎・忍　術　"},
 {id:3,type:2,name:"拳",suite:"水",comb:1,active:1,txt:"水・拳　　　"},
 {id:4,type:2,name:"拳",suite:"風",comb:1,active:1,txt:"風・拳　　　"},
-{id:5,type:2,name:"拳",suite:"炎",comb:1,active:1,txt:"岩・拳　　　"},
+{id:5,type:2,name:"拳",suite:"炎",comb:1,active:1,txt:"炎・拳　　　"},
 {id:6,type:3,name:"下段蹴り",suite:"水",comb:1,active:1,txt:"水・下段蹴り"},
 {id:7,type:3,name:"下段蹴り",suite:"風",comb:1,active:1,txt:"風・下段蹴り"},
 {id:8,type:3,name:"下段蹴り",suite:"炎",comb:1,active:1,txt:"炎・下段蹴り"},
@@ -654,9 +665,15 @@ for(var i = f.Deck.length - 1; i >= 0; i--){
 [endscript]
 [endmacro]
 
+[macro name="SelectedCardSplice"]
+[iscript]
+f.Selected.splice(0,1)
+[endscript]
+[endmacro]
+
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-命中率[emb exp="tf.HitRate"]％[p]
+(命中率[emb exp="tf.HitRate"]％)[p]
 [endmacro]
 
 ;絶頂判定

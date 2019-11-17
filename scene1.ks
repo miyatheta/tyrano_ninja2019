@@ -23,7 +23,7 @@
 [chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
 [chara_face name="kunugi" face="nude" storage="chara/kunugi/battle_stand_nude.png"]
 [chara_mod name="kunugi" face="default"]
-
+[chara_show  name="kunugi" left=0 top=50 ]
 
 
 *incubation
@@ -52,7 +52,7 @@
 *easy-1
 ;高火力。一発。萬子
 [eval exp="tf.E_name='大砲魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30+5 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-10 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30+5 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-10 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -69,7 +69,7 @@
 *easy-2
 ;高命中。HPを削るのが役割。索子
 [eval exp="tf.E_name='削り魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30-5 , f.E_DUR=30-10 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30-5 , f.E_DUR=30-10 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -86,7 +86,7 @@
 *easy-3
 ;高耐久。ターン数を稼ぐのが役割。風牌
 [eval exp="tf.E_name='時間稼'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30-10 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-8 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30-10 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-8 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
 [eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
@@ -102,7 +102,7 @@
 *easy-4
 ;セクハラ攻撃主体。筒子
 [eval exp="tf.E_name='痴漢魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=24 , f.E_DEX=32-5 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=24 , f.E_DEX=32-5 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35-5"]
 ;スキル1
 [eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
 [eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*挑発' , tf.E_skill23='*気合'"]
@@ -129,7 +129,7 @@
 *normal-1
 ;高火力。一発。萬子
 [eval exp="tf.E_name='大砲魔2'"]
-[eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
+[eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -143,7 +143,7 @@
 *normal-2
 ;高命中。HPを削るのが役割。索子
 [eval exp="tf.E_name='削り魔2'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -157,7 +157,7 @@
 *normal-3
 ;高耐久。ターン数を稼ぐのが役割。風牌
 [eval exp="tf.E_name='時間稼 2'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 32"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 32"]
 ;スキル1
 [eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
 [eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
@@ -171,7 +171,7 @@
 *normal-4
 ;セクハラ。筒子
 [eval exp="tf.E_name='痴漢魔2'"]
-[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
+[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
 ;スキル1
 [eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
 [eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*奇声' , tf.E_skill23='*気合'"]
@@ -185,7 +185,7 @@
 *normal-5
 ;特殊。三元牌
 [eval exp="tf.E_name='呪術者2'"]
-[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
+[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
 ;スキル1
 [eval exp="tf.E_skill11='*吸収' , tf.E_skill12='*煙幕' , tf.E_skill13='*毒霧'"]
 [eval exp="tf.E_skill21='*挑発' , tf.E_skill22='*毒霧' , tf.E_skill23='*煙幕'"]
@@ -210,7 +210,7 @@
 *hard-1
 ;高火力。一発。萬子
 [eval exp="tf.E_name='大砲魔3'"]
-[eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
+[eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -224,7 +224,7 @@
 *hard-2
 ;高命中。HPを削るのが役割。索子
 [eval exp="tf.E_name='削り魔3'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
@@ -238,7 +238,7 @@
 *hard-3
 ;高耐久。ターン数を稼ぐのが役割。風牌
 [eval exp="tf.E_name='時間稼 3'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 32"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 32"]
 ;スキル1
 [eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
 [eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
@@ -252,7 +252,7 @@
 *hard-4
 ;セクハラ。筒子
 [eval exp="tf.E_name='痴漢魔3'"]
-[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
+[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
 ;スキル1
 [eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
 [eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*奇声' , tf.E_skill23='*気合'"]
@@ -266,7 +266,7 @@
 *hard-5
 ;特殊。三元牌
 [eval exp="tf.E_name='呪術者3'"]
-[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=5 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
+[eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=28 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
 ;スキル1
 [eval exp="tf.E_skill11='*吸収' , tf.E_skill12='*煙幕' , tf.E_skill13='*毒霧'"]
 [eval exp="tf.E_skill21='*挑発' , tf.E_skill22='*毒霧' , tf.E_skill23='*煙幕'"]

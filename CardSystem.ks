@@ -200,6 +200,7 @@ f.Selected.splice(0,1)
 [if exp="tf.dice>0"][jump target="*防御選択"][endif]
 
 *再構築
+;ターン終了処理１（山札がある場合）
 [iscript]
 tf.length = f.Deck.length;
 [endscript]

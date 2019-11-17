@@ -1,4 +1,10 @@
-*game_start
+*start
+[eval exp="tf.label = f.P_Skill[f.SkillSet[0]]['label']"]
+[eval exp="tf.Cost = f.P_Skill[f.SkillSet[0]]['cost']"]
+[eval exp="tf.MP = f.P_Skill[f.SkillSet[0]]['MP']"]
+[SelectedCardSplice]
+
+*Question
 [emb exp="tf.MP"]/[emb exp="tf.Cost"][r]
 [eval exp="tf.Max=99 ,tf.Min=0"][dice]
 [if exp="tf.dice>66"][jump target="*Q1"]
@@ -74,14 +80,14 @@
 [eval exp="tf.MP=-1"]
 失敗[wt7]
 くぬぎは術の発動に失敗した[p]
-[jump storage="battle.ks" target="*P_phase_start"]
+[jump storage="battle.ks" target="*カードの実行"]
 [endif]
 
 [if exp="tf.MP >= tf.Cost"]
 術の発動[p]
-[jump storage="battle.ks" target="&tf.label"]
+[jump target="&tf.label"]
 [else]
-[jump target="*game_start"]
+[jump target="*Question"]
 [endif]
 [s]
 
@@ -91,5 +97,88 @@
 [eval exp="tf.MP=-1"]
 失敗[p]
 くぬぎは術の発動に失敗した[p]
-[jump storage="battle.ks" target="*P_phase_start"]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill0
+集気法[p]
+[Calc_Status]
+[eval exp="f.P_AUR = f.P_AUR+10 , tf.P_ERO = tf.P_ERO-10"]][limit]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill1
+くぬぎの忍術・火炎[p]
+[Calc_Status]
+[eval exp="tf.HIT = 1000"]
+[eval exp="tf.HitRate = tf.HIT"]
+[call target="*E_Def_select"]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 18 + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill2
+くぬぎの忍術・空蝉[p]
+#
+一度だけダメージを無効化する。（途中で衣服を失った場合は発動しない）[p]
+[eval exp="tf.P_Barrier=1"]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill3
+[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
+くぬぎの忍術・魅了[p]
+[image layer=3 page=back storage="CUT/部分拡大.png"][trans layer=3 time=1000]
+[freeimage layer=2 page=back][trans layer=2 time=500][wt]
+#くぬぎ
+あはぁん[p]
+#
+くぬぎは胸を寄せながら、胸元をはだけて見せた[p]
+[freeimage layer=3 time=500][wt]
+[Calc_Status]
+;感情は確定で上昇、上昇幅は抵抗値次第
+[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
+[enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
+
+;デバフは抵抗判定、魅力VS理性と感情
+[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.TAG < tf.dice"]
+;魅了による弱体化
+[enemyname]は前かがみになった[p]
+[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_AGI=0.7"]
+[enemyname]の攻撃力と回避力が減少した（3ターン）[p]
+[endif]
+[triage]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill4
+くぬぎの忍術・早着替え[p]
+#
+くぬぎは目にも留まらぬ速さで着衣した[p]
+[eval exp="tf.P_DRESS=2"]
+[chara_mod name="kunugi" face="default"]
+[jump storage="battle.ks" target="*カードの実行"]
+[s]
+
+*P_skill5
+[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
+くぬぎの忍術・螺旋功[p]
+[freeimage layer=2 page=back][trans layer=2 time=500][wt]
+[call target="*E_Def_select"]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 30 + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[triage]
+[jump storage="battle.ks" target="*カードの実行"]
 [s]
