@@ -56,7 +56,7 @@ f.Cards=[
 [endscript]
 
 *シャッフルスタート
-[eval exp="tf.set=0 , f.P_ACTmax=7 , tf.P_ACT=7 , f.Selected=[] ,f.Cemetery=[]"]
+[eval exp="tf.set=0 , f.P_ACTmax=7 , tf.P_ACT=7 , f.Selected=[] , f.Cemetery=[] "]
 [iscript]
 for(var i = f.Deck.length - 1; i >= 0; i--){
     var r = Math.floor(Math.random() * (i + 1));
@@ -92,7 +92,7 @@ for(var i = f.Deck.length - 1; i >= 0; i--){
 
 *リセット
 ;カードの選択済みステータスactiveをリセット,選択済みf.selectedを空に
-[eval exp="tf.P_ACT = f.P_ACTmax"]
+[eval exp="tf.P_ACT = f.P_ACTmax"][eval exp="tf.set = 0"]
 [iscript]
 f.Cards[f.Hand[0]]['active']=1;
 f.Cards[f.Hand[1]]['active']=1;
@@ -110,7 +110,17 @@ f.Selected=[];
 ;今回の選択answerを選択済みに登録、継続フラグcomb=1なら再選択
 [iscript]
 f.Selected.push(tf.Answer);
+tf.Suite1=1 , tf.Suite2=2;
+if(tf.set>0){
+  tf.Suite1 = f.Cards[f.Selected[tf.set]]['suite'];
+  tf.Suite2 = f.Cards[f.Selected[tf.set-1]]['suite'];
+}
 [endscript]
+[if exp="tf.Suite1 == tf.Suite2"]
+[emb exp="f.Cards[f.Selected[0]]['suite']"]ボーナス獲得[p]
+[eval exp="tf.P_Cardb1 = tf.P_Cardb1 + 0.3"]
+[endif]
+[eval exp="tf.set=tf.set+1"]
 [if exp="f.Cards[tf.Answer]['comb'] == 1"][jump target="*再選択"]
 [else][jump target="*選択終了"][endif]
 [s]
@@ -251,7 +261,6 @@ f.Cemetery=[];
 山札：[emb exp="f.Deck"][r]
 [jump target="*手札構築"]
 [s]
-
 
 
 

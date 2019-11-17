@@ -555,7 +555,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [endmacro]
 
 [macro name="Calc_Status"]
-[eval exp="tf.P_STR = f.P_STR * tf.P_STRd3 * tf.P_STRd1 * tf.P_STRb3 * tf.P_STRb1 "]
+[eval exp="tf.P_STR = f.P_STR * tf.P_STRd3 * tf.P_STRd1 * tf.P_STRb3 * tf.P_STRb1 * tf.P_Cardb1"]
 [eval exp="tf.P_DUR = f.P_DUR * tf.P_DURd3 * tf.P_DURd1 * tf.P_DURb3 * tf.P_DURb1 "]
 [eval exp="tf.P_AGI = f.P_AGI * tf.P_AGId3 * tf.P_AGId1 * tf.P_AGIb3 * tf.P_AGIb1 "]
 [eval exp="tf.P_DEX = f.P_DEX * tf.P_DEXd3 * tf.P_DEXd1 * tf.P_DEXb3 * tf.P_DEXb1 "]
@@ -572,7 +572,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 
 [macro name="Initialize_1Tbuff"]
 [eval exp="tf.P_STRd1=1 , tf.P_DURd1=1 , tf.P_AGId1=1 , tf.P_DEXd1=1 , tf.P_POWd1=1 , tf.P_APPd1=1"]
-[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_POWb1=1 , tf.P_APPb1=1 , tf.P_DefSKBb1=1"]
+[eval exp="tf.P_STRb1=1 , tf.P_DURb1=1 , tf.P_AGIb1=1 , tf.P_DEXb1=1 , tf.P_POWb1=1 , tf.P_APPb1=1 , tf.P_DefSKBb1=1 , tf.P_Cardb1=1"]
 [eval exp="tf.E_STRd1=1 , tf.E_DURd1=1 , tf.E_AGId1=1 , tf.E_DEXd1=1 , tf.E_POWd1=1 , tf.E_APPd1=1"]
 [eval exp="tf.E_STRb1=1 , tf.E_DURb1=1 , tf.E_AGIb1=1 , tf.E_DEXb1=1 , tf.E_POWb1=1 , tf.E_APPb1=1"]
 [endmacro]
