@@ -615,6 +615,45 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_AGI=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
+[macro name="Initialize_Cards"]
+;カードの設定
+[iscript]
+f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+f.Cards=[
+{id:0,type:1,name:"忍術",suite:"水",comb:1,active:1,txt:"水・忍　術　"},
+{id:1,type:1,name:"忍術",suite:"風",comb:1,active:1,txt:"風・忍　術　"},
+{id:2,type:1,name:"忍術",suite:"炎",comb:1,active:1,txt:"炎・忍　術　"},
+{id:3,type:2,name:"拳",suite:"水",comb:1,active:1,txt:"水・拳　　　"},
+{id:4,type:2,name:"拳",suite:"風",comb:1,active:1,txt:"風・拳　　　"},
+{id:5,type:2,name:"拳",suite:"炎",comb:1,active:1,txt:"岩・拳　　　"},
+{id:6,type:3,name:"下段蹴り",suite:"水",comb:1,active:1,txt:"水・下段蹴り"},
+{id:7,type:3,name:"下段蹴り",suite:"風",comb:1,active:1,txt:"風・下段蹴り"},
+{id:8,type:3,name:"下段蹴り",suite:"炎",comb:1,active:1,txt:"炎・下段蹴り"},
+{id:9,type:4,name:"上段蹴り",suite:"水",comb:1,active:1,txt:"水・上段蹴り"},
+{id:10,type:4,name:"上段蹴り",suite:"風",comb:1,active:1,txt:"風・上段蹴り"},
+{id:11,type:4,name:"上段蹴り",suite:"炎",comb:1,active:1,txt:"炎・上段蹴り"},
+{id:12,type:5,name:"くない",suite:"水",comb:0,active:1,txt:"水・くない　"},
+{id:13,type:5,name:"くない",suite:"風",comb:0,active:1,txt:"風・くない　"},
+{id:14,type:5,name:"くない",suite:"炎",comb:0,active:1,txt:"炎・くない　"},
+{id:15,type:6,name:"回し蹴り",suite:"水",comb:0,active:1,txt:"水・回し蹴り"},
+{id:16,type:6,name:"回し蹴り",suite:"風",comb:0,active:1,txt:"風・回し蹴り"},
+{id:17,type:6,name:"回し蹴り",suite:"炎",comb:0,active:1,txt:"炎・回し蹴り"},
+{id:18,type:7,name:"飛び蹴り",suite:"水",comb:0,active:1,txt:"水・飛び蹴り"},
+{id:19,type:7,name:"飛び蹴り",suite:"風",comb:0,active:1,txt:"風・飛び蹴り"},
+{id:20,type:7,name:"飛び蹴り",suite:"炎",comb:0,active:1,txt:"炎・飛び蹴り"}
+];
+[endscript]
+;初回シャッフル
+[iscript]
+for(var i = f.Deck.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.Deck[i];
+    f.Deck[i] = f.Deck[r];
+    f.Deck[r] = tmp;
+}
+[endscript]
+[endmacro]
+
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 命中率[emb exp="tf.HitRate"]％[p]

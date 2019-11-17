@@ -12,7 +12,6 @@
 ;文字が表示される領域を調整
 [position layer=message0 page=fore margint="45" marginl="50" marginr="70" marginb="60"]
 
-
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
 
@@ -25,6 +24,13 @@
 ;このゲームで登場するキャラクターを宣言
 [chara_new  name="gouza"  storage="chara/gouza/pr_gouza.png" jname="豪座" ]
 
+[chara_show  name="gouza" width=300 left=1000 top=50 wait="true"]
+[anim name="gouza" opacity=0 time=1]
+[anim name="gouza" left=750 top=50 time=1]
+[anim name="gouza" opacity=255 left=550 top=50 time=300 anim="true" effect="jswing" ]
+#
+戦闘を開始します[p]
+
 [macro name="triage"]
 [jump target="*game_lose" cond="tf.P_HP <= 0"]
 [jump target="*game_lose" cond="f.P_EXH >= 100"]
@@ -36,20 +42,13 @@
 [if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
 体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
 敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
-[endnowait]
-[cm]
+[endnowait][cm]
 [endmacro]
-
-#
-[chara_show  name="gouza" width=300 left=1000 top=50 wait="true"]
-[anim name="gouza" opacity=0 time=1]
-[anim name="gouza" left=750 top=50 time=1]
-[anim name="gouza" opacity=255 left=550 top=50 time=300 anim="true" effect="jswing" ]
-戦闘を開始します[p]
 
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0 , tf.P_EXH=0"]
+[eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] "]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
@@ -67,6 +66,7 @@
 ;性的指向の設定
 [Initialize_1Tbuff]
 [Initialize_3Tbuff]
+[Initialize_Cards]
 
 *Initialize_BudStatus
 ;状態異常の初期値設定
@@ -146,6 +146,103 @@
 *P_phase_start
 ;プレーヤーターンの開始
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
+
+*手札構築
+[eval exp="tf.P_ACT = tf.P_ACTmax"]
+;並び替えたデッキ（山札）から手札に補充
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5],f.Deck[6]]" cond="tf.P_ACTmax>=7"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4],f.Deck[5]]" cond="tf.P_ACTmax==6"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]" cond="tf.P_ACTmax==5"]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3]]" cond="tf.P_ACTmax==4"]
+
+*手札選択
+;今回の選択tf.Answerに選択した手札handのカードID（cardに紐づく絶対値）を登録、そのカードのactiveを０に
+残呼吸：[emb exp="tf.P_ACT"]
+[glink color="blue" size="20" x="260" width="150" y="100" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="170" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="240" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="310" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
+[if exp="tf.P_ACTmax>=5"]
+[glink color="blue" size="20" x="560" width="150" y="100" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
+[if exp="tf.P_ACTmax>=6"]
+[glink color="blue" size="20" x="560" width="150" y="170" text="&f.Cards[f.Hand[5]]['txt']" exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
+[if exp="tf.P_ACTmax>=7"]
+[glink color="blue" size="20" x="560" width="150" y="240" text="&f.Cards[f.Hand[6]]['txt']" exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*場札追加" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="310" text="戻る" exp="" target="*リセット" ]
+[s]
+
+*リセット
+;カードの選択済みステータスactiveをリセット,選択済みf.selectedを空に
+[eval exp="tf.P_ACT = tf.P_ACTmax"][eval exp="tf.Set = 0"]
+[iscript]
+f.Cards[f.Hand[0]]['active']=1;
+f.Cards[f.Hand[1]]['active']=1;
+f.Cards[f.Hand[2]]['active']=1;
+f.Cards[f.Hand[3]]['active']=1;
+f.Cards[f.Hand[4]]['active']=1;
+f.Cards[f.Hand[5]]['active']=1;
+f.Cards[f.Hand[6]]['active']=1;
+f.Selected=[];
+[endscript]
+[jump target="*手札選択"]
+[s]
+
+*場札追加
+;今回の選択answerを選択済みに登録、継続フラグcomb=1なら再選択
+[iscript]
+f.Selected.push(tf.Answer);
+tf.Suite1=1 , tf.Suite2=2;
+if(tf.Set>0){
+  tf.Suite1 = f.Cards[f.Selected[tf.Set]]['suite'];
+  tf.Suite2 = f.Cards[f.Selected[tf.Set-1]]['suite'];
+}
+[endscript]
+[if exp="tf.Suite1 == tf.Suite2"]
+[emb exp="f.Cards[f.Selected[0]]['suite']"]ボーナス獲得[p]
+[eval exp="tf.P_Cardb1 = tf.P_Cardb1 + 0.3"]
+[endif]
+[eval exp="tf.Set=tf.Set+1"]
+[if exp="f.Cards[tf.Answer]['comb'] == 1"][jump target="*再選択"]
+[else][jump target="*選択終了"][endif]
+[s]
+
+*再選択
+[jump target="*手札選択"]
+[s]
+
+*選択終了
+;墓地f.cemetaryに今回の手札を追加。山札からも今回の手札を削除。
+;演出としては選ばれたカードのみ表面表示。それ以外は裏面表示（＝中身はこの時点でどうでも良くなる）
+[iscript]
+f.temp=[];
+f.temp = f.Cemetery.concat(f.Hand);
+f.Cemetery = f.temp;
+f.Deck.splice(0,tf.P_ACTmax);
+tf.length = f.Deck.length;
+[endscript]
+;選択済：[emb exp="f.Selected"][r]残山札：[emb exp="f.Deck"][r]墓地：[emb exp="f.Cemetery"][p]
+;アクティベートされたカード枚数でACTを算出
+;実際には行動実行時に減算するので不要
+[eval exp="tf.dice=3"]
+
+*カードの実行
+;選択したカードを1枚目から実行する
+;それぞれのカードのtypeを元に攻撃のconfにjump
+;カード実行後は先頭のカードを削除してここに戻す
+;選択済みカードが無くなったら攻撃終了
+残呼吸：[emb exp="tf.P_ACT"][p]
+[iscript]
+tf.Len=f.Selected.length;
+[endscript]
+[jump target="*攻撃終了" cond="tf.Len==0"]
+[jump target="*type1" cond="f.Cards[f.Selected[0]]['type']==1"]
+[jump target="*type2" cond="f.Cards[f.Selected[0]]['type']==2"]
+[jump target="*type3" cond="f.Cards[f.Selected[0]]['type']==3"]
+[jump target="*type4" cond="f.Cards[f.Selected[0]]['type']==4"]
+[jump target="*type5" cond="f.Cards[f.Selected[0]]['type']==5"]
+[jump target="*type6" cond="f.Cards[f.Selected[0]]['type']==6"]
+[jump target="*type7" cond="f.Cards[f.Selected[0]]['type']==7"]
+[s]
 
 *P_attack_select
 ;プレイヤーの攻撃選択
