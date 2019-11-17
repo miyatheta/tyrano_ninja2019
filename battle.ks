@@ -55,7 +55,7 @@
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 ;永続バフ
-[eval exp="tf.P_SENboost=1"]
+[eval exp="f.P_SENboost=1"]
 ;サイズの設定
 [eval exp="tf.Max=20 , tf.Min=0"][dice][eval exp="tf.E_SIZ = tf.dice"]
 [eval exp="tf.Max=5 , tf.Min=1"][dice][eval exp="tf.E_LUK = tf.dice"]
@@ -70,7 +70,7 @@
 
 *Initialize_BudStatus
 ;状態異常の初期値設定
-[eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0"]
+[eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1"]
 
 [eval exp="tf.E_scald = 0"]
@@ -88,6 +88,7 @@
 [endif]
 
 *turn_start
+[show_status]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
 ;状態異常のカウント・治癒
@@ -144,7 +145,6 @@
 
 *P_phase_start
 ;プレーヤーターンの開始
-[show_status]
 [jump target="*ikigire" cond="tf.P_ACT <= 0"]
 
 *P_attack_select
@@ -240,11 +240,15 @@
 [s]
 
 *P_skill3
+[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
 くぬぎの忍術・魅了[p]
+[image layer=3 page=back storage="CUT/部分拡大.png"][trans layer=3 time=1000]
+[freeimage layer=2 page=back][trans layer=2 time=500][wt]
 #くぬぎ
 あはぁん[p]
 #
 くぬぎは胸を寄せながら、胸元をはだけて見せた[p]
+[freeimage layer=3 time=500][wt]
 [Calc_Status]
 ;感情は確定で上昇、上昇幅は抵抗値次第
 [eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
@@ -293,7 +297,10 @@
 [s]
 
 *P_skill5
+[image layer=2 page=back top=150 storage="CUT/顔アップ.png"][trans layer=2 time=2000][wt]
 くぬぎの忍術・螺旋功[p]
+[freeimage layer=2 page=back][trans layer=2 time=500][wt]
+
 [call target="*E_Def_select"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][eval exp="tf.ATP = (tf.P_POW * tf.OrgaPOWb + tf.ArousPOWb) * 30 + tf.dice"]
@@ -555,7 +562,7 @@
 [jump target="*P_Barrier" cond="tf.P_Barrier>0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[MAZO][Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*E_phase_end"]
 [s]
 
@@ -574,7 +581,7 @@
 [jump target="*P_Barrier" cond="tf.P_Barrier>0"]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[MAZO][Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
 
@@ -840,7 +847,7 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
-[Orgasm][SANcheck]
+[Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -850,7 +857,7 @@
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
-[Orgasm][SANcheck]
+[Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -871,7 +878,7 @@
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[MAZO][Orgasm][SANcheck]
+[MAZO][Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -916,12 +923,12 @@
 
 *turn_end
 ターン終了[p]
-[if exp="f.P_PARASITE > 0"]
+[if exp="f.P_PARASITE > 0"][eval exp="tf.damage = 3 * f.P_PARASITE"]
 くぬぎの膣内で蟲が淫毒を吐いた[p]
-「んっ！」
-この戦闘中のくぬぎの感度が上昇[p]
-[eval exp="tf.P_SENboost = tf.P_SENboost + (0.1 * f.P_PARASITE)"]
-[eval exp="f.P_PARASITE_count = f.P_PARASITE_count + 1"]
+「んっ！」[p]
+この戦闘中のくぬぎの欲情度が[emb exp="tf.damage"]上昇[p]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.damage"]
+[eval exp="f.P_PARASITE_count = f.P_PARASITE_count + 1"][limit]
 [endif]
 
 [eval exp="f.P_AUR = f.P_AUR + tf.P_ACT * 10"][eval exp="f.P_AUR=100" cond="f.P_AUR>100"]
@@ -946,7 +953,7 @@
 #くぬぎ
 きゃあ！！[p]
 #
-[enemyname]下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
+[enemyname]は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump target="*bochu"]
 [endif]
@@ -992,7 +999,7 @@
 くぬぎの怯えた表情と潤んだ瞳に敵は舌なめずりをしながら手を伸ばした[p]
 「へへっ、お楽しみはこれからだぜ」[p]
 「いやあああああああっ！！」[p]
-[jump storage="prison.ks" target="*start"]
+[jump target="*bochu"]
 [s]
 
 *bochu

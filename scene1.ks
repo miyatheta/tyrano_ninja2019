@@ -24,13 +24,11 @@
 [chara_face name="kunugi" face="nude" storage="chara/kunugi/battle_stand_nude.png"]
 [chara_mod name="kunugi" face="default"]
 
-[chara_show  name="kunugi" left=0 top=50 ]
-
 *incubation
 ;蟲の孵化イベント
-[if exp="f.P_PARASITE_count > 20"]
-[chara_hide name="kunugi"]
-[jump storage="incubation.ks" target="*start"]
+[if exp="f.P_PARASITE_count > 19"]
+[chara_hide name="kunugi"][wt7]
+[jump storage="incubation.ks" target="*start" cond="f.P_PARASITE_count == 20"]
 [endif]
 
 *route_select

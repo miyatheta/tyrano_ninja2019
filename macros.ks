@@ -531,7 +531,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 ;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
 [eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * tf.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [endmacro]
 
 [macro name="limit"]
@@ -645,14 +645,14 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [macro name="SANcheck"]
 ;理性喪失判定
 [eval exp="tf.Max=tf.Kaikan , tf.Min=0"][dice]
-[if exp="tf.Orga == 4  && tf.dice >= tf.P_SAN"]
+[if exp="tf.Orga == 4  && tf.dice >= tf.P_SAN && f.Insanity==0"]
 [eval exp="tf.Max=3 , tf.Min=1"][dice]
 絶頂によりくぬぎの理性が[emb exp="tf.dice"]減少[p]
 [eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
 [endif]
 ;発狂判定
 [if exp="5 < f.P_SAN - tf.P_SAN"]
-[jump target="*Orga_end"]
+[eval exp="f.Insanity=1"]
 [endif]
 [eval exp="tf.Kaikan = 0 , tf.Yokujo = 0"]
 [endmacro]
@@ -672,7 +672,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 ;欲情＝敵の性技技能値は無関係
 [eval exp="tf.Yokujo = Math.floor(10 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値は無関係
-[eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * tf.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]

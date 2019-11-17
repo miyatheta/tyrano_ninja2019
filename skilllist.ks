@@ -36,7 +36,7 @@
 *視姦
 「視姦」[p]
 敵の命中が上昇(１ターン)。この戦闘中、くぬぎの感度が増幅[p]
-[eval exp="tf.E_DEXb1 = 1.3"][eval exp="tf.P_SENboost = tf.P_SENboost + 0.2"]
+[eval exp="tf.E_DEXb1 = 1.3"][eval exp="f.P_SENboost = f.P_SENboost + 0.2"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 

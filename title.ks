@@ -6,6 +6,7 @@
 @wait time = 200
 @call storage="macros.ks" target="*マクロ"
 
+
 *start
 
 [button x=550 y=50 graphic="title/button_start.png" target="gamestart"]
