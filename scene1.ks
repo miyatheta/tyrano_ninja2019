@@ -110,7 +110,7 @@
 [eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*組付' , tf.E_skill43='*挑発'"]
 [eval exp="tf.E_skill51='*挑発' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
 ;スキル2
-[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*怪奇剣'"]
+[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
 ;攻撃
 [eval exp="tf.E_attack_1='切りつけ' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.E_attack_2='めった切り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
@@ -179,7 +179,7 @@
 [eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*組付' , tf.E_skill43='*奇声'"]
 [eval exp="tf.E_skill51='*奇声' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
 ;スキル2
-[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*怪奇剣'"]
+[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
 @jump storage="battle.ks"
 
 *normal-5
@@ -260,7 +260,7 @@
 [eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*組付' , tf.E_skill43='*奇声'"]
 [eval exp="tf.E_skill51='*奇声' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
 ;スキル2
-[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*怪奇剣'"]
+[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
 @jump storage="battle.ks"
 
 *hard-5

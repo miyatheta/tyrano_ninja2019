@@ -544,6 +544,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="f.P_LUK = 5" cond="f.P_LUK > 5"]
 [eval exp="f.P_LUK = 0" cond="f.P_LUK < 0"]
 [eval exp="tf.P_ERO = 999" cond="tf.P_ERO > 999"]
+[eval exp="tf.P_ERO = 0" cond="tf.P_ERO < 0"]
 [eval exp="tf.E_ERO = 999" cond="tf.E_ERO > 999"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
 [eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]

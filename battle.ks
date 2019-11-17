@@ -72,8 +72,7 @@
 ;状態異常の初期値設定
 [eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1"]
-
-[eval exp="tf.E_scald = 0"]
+[eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 ;疲労の反映
 [if exp="f.P_EXH >89"]疲労（重度）[p][eval exp="tf.P_AGI=tf.P_AGI-20 , tf.P_ACTmax=tf.P_ACTmax-2"]
@@ -107,10 +106,8 @@
 くぬぎの興奮が収まった[p]
 [eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
 [endif]
-;火傷
-
-;デバフ
-[if exp="tf.P_AGId3_count > 0"][eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1"][endif]
+;スタン
+[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
 
 *E_skill_select
 ;敵のスキル(３の倍数+1のターンのみ実行)
@@ -653,7 +650,7 @@ if(tf.atk>0){
 [Calc_Status]
 [eval exp="tf.P_Cardb1 = 1"]
 [eval exp="tf.mount_turn=0 , tf.Esc=0"][limit]
-[eval exp="tf.Mount = 50 + Math.floor(tf.E_BND * tf.E_charm_STR - tf.P_STR * tf.ArousSTRd) * 5"]
+[eval exp="tf.Mount = 50 + Math.floor(tf.E_BND - tf.P_STR * tf.ArousSTRd) * 5"]
 
 *P_mount_phase
 [eval exp="tf.mount_turn = tf.mount_turn + 1"]

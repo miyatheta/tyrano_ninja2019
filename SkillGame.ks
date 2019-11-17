@@ -4,7 +4,7 @@
 [eval exp="tf.MP = f.P_Skill[f.SkillSet[0]]['MP']"]
 
 *Question
-[emb exp="tf.MP"]/[emb exp="tf.Cost"][r]
+[emb exp="tf.MP"]/[emb exp="tf.Cost"][p]
 [eval exp="tf.Max=99 ,tf.Min=0"][dice]
 [if exp="tf.dice>66"][jump target="*Q1"]
 [elsif exp="tf.dice>33"][jump target="*Q2"]
@@ -41,11 +41,11 @@
 [endif]
 
 [emb exp="tf.Sample"]を選べ
-[glink  color="blue"  size="20"  x="260"  width="400"  y="100"  text="子"  exp="tf.Answer='子'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="170"  text="丑"  exp="tf.Answer='丑'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="240"  text="寅"  exp="tf.Answer='寅'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="310"  text="卯"  exp="tf.Answer='卯'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="380"  text="辰"  exp="tf.Answer='辰'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="子"  exp="tf.Answer='子'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="丑"  exp="tf.Answer='丑'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="寅"  exp="tf.Answer='寅'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="卯"  exp="tf.Answer='卯'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="辰"  exp="tf.Answer='辰'" storage="SkillGame.ks" target="*Kotae"  ]
 [wait time=3000]
 [jump target="*timeout"]
 [s]
@@ -60,11 +60,11 @@
 [endif]
 
 [emb exp="tf.Sample"]を選べ
-[glink  color="blue"  size="20"  x="260"  width="400"  y="100"  text="赤"  exp="tf.Answer='赤'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="170"  text="黒"  exp="tf.Answer='黒'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="240"  text="黄"  exp="tf.Answer='黄'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="310"  text="白"  exp="tf.Answer='白'" storage="SkillGame.ks" target="*Kotae"  ]
-[glink  color="blue"  size="20"  x="260"  width="400"  y="380"  text="青"  exp="tf.Answer='青'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="赤"  exp="tf.Answer='赤'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="黒"  exp="tf.Answer='黒'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="黄"  exp="tf.Answer='黄'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="310"  text="白"  exp="tf.Answer='白'" storage="SkillGame.ks" target="*Kotae"  ]
+[glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="青"  exp="tf.Answer='青'" storage="SkillGame.ks" target="*Kotae"  ]
 [wait time=3000]
 [jump target="*timeout"]
 [s]
@@ -102,7 +102,7 @@
 *P_skill0
 集気法[p]
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT+10 , tf.P_ERO = tf.P_ERO-10"]][limit]
+[eval exp="tf.P_ACT = tf.P_ACT+1 , tf.P_ERO = tf.P_ERO-10"][limit]
 [jump target="*術の終了"]
 [s]
 
@@ -138,21 +138,23 @@
 #くぬぎ
 あはぁん[p]
 #
-くぬぎは胸を寄せながら、胸元をはだけて見せた[p]
+くぬぎは胸を抱き寄せて見せた[p]
 [freeimage layer=3 time=500][wt]
 [Calc_Status]
 ;感情は確定で上昇、上昇幅は抵抗値次第
 [eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
 [enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
-
-;デバフは抵抗判定、魅力VS理性と感情
-[eval exp="tf.TAG = 50 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.TAG < tf.dice"]
 ;魅了による弱体化
 [enemyname]は前かがみになった[p]
-[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_AGI=0.7"]
+[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.7 ,tf.E_charm_AGI=0.6"]
 [enemyname]の攻撃力と回避力が減少した（3ターン）[p]
+;スタンは抵抗判定、魅力VS理性と感情
+[eval exp="tf.TAG = 100 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.TAG < tf.dice"]
+;魅了によるスタン
+[eval exp="tf.E_stan=1"]
+[enemyname]は行動不能になった（1ターン）[p]
 [endif]
 [triage]
 [jump target="*術の終了"]
@@ -181,6 +183,21 @@
 [triage]
 [jump target="*術の終了"]
 [s]
+
+*E_Def_select
+[Calc_Status]
+[eval exp="tf.Max=9 , tf.Min=0"][dice]
+[if exp="tf.dice>tf.E_ACT-1"]
+;防御
+[eval exp="tf.E_AVD=0 , tf.E_GRD=1.5 , tf.E_ACT=tf.E_ACT-0"]
+[enemyname]:防御[r]
+[else]
+;回避
+[eval exp="tf.E_AVD = Math.floor(tf.E_AGI * tf.E_charm_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
+[eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.E_AVD)/10)"][limit]
+[enemyname]回避：[emb exp="tf.AvoidRate"]％[r]
+[endif]
+[return]
 
 *術の終了
 [iscript]
