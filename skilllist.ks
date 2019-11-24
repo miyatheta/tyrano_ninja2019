@@ -5,6 +5,13 @@
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
+*沈静化
+「沈静化」[p]
+敵の欲情が減少[p]
+[eval exp="tf.E_ERO = tf.E_ERO - 20"][limit]
+[jump storage="battle.ks" target="*P_phase_start"]
+[s]
+
 *全力
 「全力」[p]
 敵の物理攻撃力が上昇[p]
@@ -12,8 +19,8 @@
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
-*捨て身
-「捨て身」[p]
+*激怒
+「激怒」[p]
 敵の物理攻撃力が上昇、耐久力が減少（1ターン）[p]
 [eval exp="tf.E_STRb1 = 1.5 ,tf.E_DURb1 = 0.7"]
 [jump storage="battle.ks" target="*P_phase_start"]
@@ -94,23 +101,6 @@
 くぬぎの命中が低下[p]
 [eval exp="tf.P_DEXd1 = 0.7"]
 [jump storage="battle.ks" target="*P_phase_start"]
-[s]
-
-*組付
-組付[p]
-[Calc_Status]
-[eval exp="tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
-[Calc_HitRate]
-;命中：[emb exp="tf.HitRate"]％[p]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.HIT > tf.dice"]
-くぬぎは敵に組み付かれた[p]
-[jump storage="battle.ks" target="*mount_start"]
-[else]
-くぬぎは敵の組付を躱した[p]
-[jump storage="battle.ks" target="*P_phase_start"]
-[endif]
 [s]
 
 *媚薬
@@ -230,7 +220,7 @@
 [jump storage="battle.ks" target="*E_attack_select"]
 [s]
 
-*組付B
+*組付A
 組付[p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 0 , tf.E_ATK='*E_attack_1'"]
@@ -247,7 +237,7 @@
 [endif]
 [s]
 
-*強化組付
+*組付B
 組付[p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = 0 , tf.ACC = 40 , tf.E_ATK='*E_attack_1'"]
@@ -267,7 +257,7 @@
 *気迫
 「気迫」[p]
 敵に気圧されたくぬぎの呼吸が１減少[p]
-[eval exp="tf.P_ACT = tf.P_ACT - 1 , f.E_ACT = f.E_ACT - 1"]
+[eval exp="tf.P_ACT = tf.P_ACT - 1 , tf.E_ACT = tf.E_ACT - 1"]
 [eval exp="f.E_AUR = f.E_AUR - 10"]
 [limit]
 [jump storage="battle.ks"  target="*ikigire" cond="tf.P_ACT <= 0"]
@@ -278,9 +268,8 @@
 *轟爆斧
 「轟爆斧」[p]
 大上段から敵の薙刀が叩きつけられた[p]
-[eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
-[eval exp="tf.ATP = 7.0 * tf.E_STR * tf.E_charm_STR "]
+[eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -295,9 +284,8 @@
 *旋風棍
 「旋風棍」[p]
 唸りを上げて敵の棍が乱れ打ちを放った[p]
-[eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
-[eval exp="tf.ATP = 7.0 * tf.E_STR * tf.E_charm_STR "]
+[eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -313,9 +301,8 @@
 *青龍拳
 「青龍拳」[p]
 うねるような軌跡を描いて拳撃が襲いかかった[p]
-[eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
-[eval exp="tf.ATP = 7.0 * tf.E_STR * tf.E_charm_STR "]
+[eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -331,9 +318,8 @@
 *つむじ切り
 「つむじ切り」[p]
 それまでとは打って変わった俊敏な踏み込みから斬撃が放たれた[p]
-[eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
-[eval exp="tf.ATP = 6.0 * tf.E_STR * tf.E_charm_STR "]
+[eval exp="tf.ATP = 9.0 * tf.E_STR * tf.E_charm_STR "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [quake count=5 time=300 hmax=20]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
@@ -349,7 +335,6 @@
 *波動A
 「波動・裂波」[p]
 不可視の力がくぬぎの身体を弾き飛ばした[p]
-[eval exp="f.E_AUR = f.E_AUR - 50 , f.E_ACT = f.E_ACT - 1"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 30.0 * tf.E_POW * tf.E_charm_STR "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]

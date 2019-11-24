@@ -4,7 +4,7 @@
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
 ;腕力＞攻撃力
-[eval exp="f.P_STR=24"]
+[eval exp="f.P_STR=23"]
 ;耐久＞防御力
 [eval exp="f.P_DUR=23"]
 ;敏捷＞回避

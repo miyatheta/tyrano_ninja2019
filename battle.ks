@@ -41,13 +41,13 @@
 [nowait]
 [if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
 体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
-敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][l]
+敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][p]
 [endnowait][cm]
 [endmacro]
 
 ;ステータスのインストール
 *Initialize
-[eval exp="tf.Turn=0 , tf.P_EXH=0"]
+[eval exp="tf.Turn=0"]
 [eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] , f.SkillSet=[]"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
@@ -87,7 +87,8 @@
 [endif]
 
 *turn_start
-[show_status]
+;[show_status]
+[WriteStatus]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
 ;状態異常のカウント・治癒
@@ -110,30 +111,11 @@
 [if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
 
 *E_skill_select
-;敵のスキル(３の倍数+1のターンのみ実行)
-[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
-[jump target="*E_skill_play"]
-[endif]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 ;コンボルート選定
-[if exp="tf.dice >= 80"]
-[eval exp="tf.E_skill_A=tf.E_skill11 , tf.E_skill_B=tf.E_skill12 , tf.E_skill_C=tf.E_skill13"]
-[elsif exp="tf.dice >= 60"]
-[eval exp="tf.E_skill_A=tf.E_skill21 , tf.E_skill_B=tf.E_skill22 , tf.E_skill_C=tf.E_skill23"]
-[else exp="tf.dice >= 40"]
-[eval exp="tf.E_skill_A=tf.E_skill31 , tf.E_skill_B=tf.E_skill32 , tf.E_skill_C=tf.E_skill33"]
-[else exp="tf.dice >= 20"]
-[eval exp="tf.E_skill_A=tf.E_skill41 , tf.E_skill_B=tf.E_skill42 , tf.E_skill_C=tf.E_skill43"]
-[else exp="tf.dice >= 0"]
-[eval exp="tf.E_skill_A=tf.E_skill51 , tf.E_skill_B=tf.E_skill52 , tf.E_skill_C=tf.E_skill53"]
-[endif]
-[jump target="*E_skill_play"]
-[s]
-
-*E_skill_play
-[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
+[if exp="tf.dice >= 60"]
 [jump storage="skilllist.ks" target="&tf.E_skill_A"]
-[elsif exp="tf.sho = tf.Turn % 3 , tf.sho!=2"]
+[elsif exp="tf.dice >= 25"]
 [jump storage="skilllist.ks" target="&tf.E_skill_B"]
 [else]
 [jump storage="skilllist.ks" target="&tf.E_skill_C"]
@@ -143,7 +125,7 @@
 *P_phase_start
 ;プレーヤーターンの開始
 [eval exp="tf.P_AURtemp = f.P_AUR"]
-[jump target="*ikigire" cond="tf.P_ACT <= 0"]
+;[jump target="*ikigire" cond="tf.P_ACT <= 0"]
 
 *手札構築
 [eval exp="tf.P_ACT = tf.P_ACTmax"]
@@ -155,17 +137,19 @@
 
 *手札選択
 ;今回の選択tf.Answerに選択した手札handのカードID（cardに紐づく絶対値）を登録、そのカードのactiveを０に
-残呼吸：[emb exp="tf.P_ACT"]
-[glink color="blue" size="20" x="260" width="150" y="100" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="170" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="240" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
-[glink color="blue" size="20" x="260" width="150" y="310" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
+;[show_status]
+[jump target="*選択終了" cond="tf.P_ACT <= 0 "]
+[wait time="10"]
+[glink color="blue" size="20" x="260" width="150" y="100" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'] , f.Cards[f.Hand[0]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[0]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="170" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'] , f.Cards[f.Hand[1]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[1]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="240" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'] , f.Cards[f.Hand[2]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[2]]['active']==1"]
+[glink color="blue" size="20" x="260" width="150" y="310" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'] , f.Cards[f.Hand[3]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[3]]['active']==1"]
 [if exp="tf.P_ACTmax>=5"]
-[glink color="blue" size="20" x="560" width="150" y="100" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="100" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'] , f.Cards[f.Hand[4]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[4]]['active']==1"][endif]
 [if exp="tf.P_ACTmax>=6"]
-[glink color="blue" size="20" x="560" width="150" y="170" text="&f.Cards[f.Hand[5]]['txt']" exp="tf.Answer=f.Cards[f.Hand[5]]['id'],f.Cards[f.Hand[5]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="170" text="&f.Cards[f.Hand[5]]['txt']" exp="tf.Answer=f.Cards[f.Hand[5]]['id'] , f.Cards[f.Hand[5]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[5]]['active']==1"][endif]
 [if exp="tf.P_ACTmax>=7"]
-[glink color="blue" size="20" x="560" width="150" y="240" text="&f.Cards[f.Hand[6]]['txt']" exp="tf.Answer=f.Cards[f.Hand[6]]['id'],f.Cards[f.Hand[6]]['active']=0 " target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
+[glink color="blue" size="20" x="560" width="150" y="240" text="&f.Cards[f.Hand[6]]['txt']" exp="tf.Answer=f.Cards[f.Hand[6]]['id'] , f.Cards[f.Hand[6]]['active']=0 , tf.P_ACT=tf.P_ACT-1" target="*スキル選択" cond="tf.Answer=f.Cards[f.Hand[6]]['active']==1"][endif]
 [glink color="blue" size="20" x="560" width="150" y="310" text="戻る" exp="" target="*リセット" ]
 [s]
 
@@ -185,6 +169,7 @@
 
 *スキル選択
 ;忍術の場合利用する忍術を予約。リセット時は各種計算を開放
+[WriteStatus]
 [jump target="*P_skill_option" cond="tf.Answer<3"]
 [jump target="*場札追加" ]
 [s]
@@ -196,7 +181,7 @@
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="220"  text="衣変"  target="*P_skill_conf4" cond="tf.P_DRESS==0"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="280"  text="魅了"  target="*P_skill_conf3"  ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="340"  text="螺旋功"  target="*P_skill_conf5"  ]
-[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="400"  text="戻る"  exp="f.Cards[tf.Answer]['active']=1 " target="*手札選択"  ]
+[glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="400"  y="400"  text="戻る"  exp="f.Cards[tf.Answer]['active']=1 , tf.P_ACT=tf.P_ACT+1" target="*手札選択"]
 [s]
 *使用スキル登録
 ;予約したスキルを配列に格納
@@ -206,7 +191,7 @@ f.SkillSet.push(tf.P_Skill_id);
 ;[emb exp="f.P_Skill[f.SkillSet[0]]['name']"]を予約[p]
 *場札追加
 ;今回の選択answerを選択済みに登録、継続フラグcomb=1なら再選択
-[eval exp="tf.P_ACT = tf.P_ACT - 1"]
+;[eval exp="tf.P_ACT = tf.P_ACT - 1"]
 [iscript]
 f.Selected.push(tf.Answer);
 tf.Suite1=1 , tf.Suite2=2;
@@ -326,12 +311,14 @@ if(tf.atk>0){
 [if exp="tf.dice>tf.E_ACT-1"]
 ;防御
 [eval exp="tf.E_AVD=0 , tf.E_GRD=1.5 , tf.E_ACT=tf.E_ACT-0"]
-[enemyname]:防御[r]
+[enemyname]:防御[p]
+[WriteStatus]
 [else]
 ;回避
 [eval exp="tf.E_AVD = Math.floor(tf.E_AGI * tf.E_charm_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
 [eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.E_AVD)/10)"][limit]
-[enemyname]回避：[emb exp="tf.AvoidRate"]％[r]
+[enemyname]回避：[emb exp="tf.AvoidRate"]％[p]
+[WriteStatus]
 [endif]
 [return]
 
@@ -349,7 +336,7 @@ if(tf.atk>0){
 *P_attack_Type2
 ;拳
 [Calc_Status]
-[eval exp="tf.RATE = 5.0 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
+[eval exp="tf.RATE = 5.5 , tf.ACC = 30 , tf.CRTrate = 1.2 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 くぬぎの[emb exp="f.Cards[f.Selected[tf.atk]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
@@ -369,7 +356,7 @@ if(tf.atk>0){
 *P_attack_Type3
 ;下段蹴り
 [Calc_Status]
-[eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.0 , tf.comb=1"]
+[eval exp="tf.RATE = 6.0 , tf.ACC = 25 , tf.CRTrate = 1.0 , tf.comb=1"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 くぬぎの[emb exp="f.Cards[f.Selected[tf.atk]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
@@ -389,7 +376,7 @@ if(tf.atk>0){
 *P_attack_Type4
 ;上段蹴り
 [Calc_Status]
-[eval exp="tf.RATE = 7.0 , tf.ACC = 20 , tf.CRTrate = 1.2 , tf.comb=0"]
+[eval exp="tf.RATE = 6.5 , tf.ACC = 20 , tf.CRTrate = 1.2 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 くぬぎの[emb exp="f.Cards[f.Selected[tf.atk]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
@@ -426,7 +413,7 @@ if(tf.atk>0){
 *P_attack_Type6
 ;回し蹴り
 [Calc_Status]
-[eval exp="tf.RATE = 8.0 , tf.ACC = 15 , tf.CRTrate = 1.5 , tf.comb=0"]
+[eval exp="tf.RATE = 7.0 , tf.ACC = 15 , tf.CRTrate = 1.5 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 くぬぎの[emb exp="f.Cards[f.Selected[tf.atk]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
@@ -444,7 +431,7 @@ if(tf.atk>0){
 *P_attack_Type7
 ;飛び蹴り
 [Calc_Status]
-[eval exp="tf.RATE = 10.0 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
+[eval exp="tf.RATE = 8.5 , tf.ACC = 0 , tf.CRTrate = 1.5 , tf.comb=0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI * tf.E_charm_AGI)"]
 くぬぎの[emb exp="f.Cards[f.Selected[tf.atk]]['name']"][Calc_HitRate]
 [call target="*E_Def_select"]
@@ -479,29 +466,39 @@ if(tf.atk>0){
 [eval exp="tf.P_Cardb1 = 1.0"]
 
 *E_phase_start
-[show_status]
-[jump target="*ikigire" cond="tf.P_ACT <= 0"]
+;[show_status]
+[WriteStatus]
+;[jump target="*ikigire" cond="tf.P_ACT <= 0"]
 [enemyname]の攻撃[p]
 
-*E_skill_select2
-[if exp="f.E_AUR>=50 && tf.dice>0"]
-[jump storage="skilllist.ks" target="&tf.E_skill63"]
-[endif]
-
-[eval exp="tf.max=9 , tf.Min=0"][dice]
-[if exp="f.E_AUR>0 && tf.dice>7"]
-[jump storage="skilllist.ks" target="&tf.E_skill61"]
-[endif]
-
+*E_attack_select
+;特殊
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="f.E_AUR>=10 && tf.dice>6"]
 [jump storage="skilllist.ks" target="&tf.E_skill62"]
 [endif]
+;チャージ完了で技をかならず使う
+[if exp="f.E_AUR>=50 && tf.dice>0"]
+[enemyname]の[enemy_attack_ex][p]
+[Calc_Status]
+[eval exp="f.E_AUR = f.E_AUR - 50 , tf.E_ACT = tf.E_ACT - 1"]
+[eval exp="tf.RATE = tf.E_ATKex_rate , tf.ACC = tf.E_ATKex_acc , tf.CRTrate = tf.E_ATKex_crt , tf.E_ATK='*E_attack_ex'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+[endif]
+;組付（敵によって発生率が異なる）
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="f.E_AUR>0 && tf.dice>tf.E_ATKmt_rate"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.ACC = tf.E_ATKmt_acc , tf.CRTrate = tf.E_ATKmt_crt , tf.E_ATK='*E_attack_mt'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+[endif]
 
-*E_attack_select
 [eval exp="tf.max=9 , tf.Min=0"][dice]
 [if exp="tf.dice>4"]
-[enemyname]の[enemy_attack1][p]
+[enemyname]の[enemy_attack_1][p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK1_rate , tf.ACC = tf.E_ATK1_acc , tf.CRTrate = tf.E_ATK1_crt , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
@@ -509,7 +506,7 @@ if(tf.atk>0){
 [jump target="*P_Def_select"]
 
 [else]
-[enemyname]の[enemy_attack2][p]
+[enemyname]の[enemy_attack_2][p]
 [Calc_Status]
 [eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK2_rate , tf.ACC = tf.E_ATK2_acc , tf.CRTrate = tf.E_ATK2_crt , tf.E_ATK='*E_attack_2'"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
@@ -531,6 +528,7 @@ if(tf.atk>0){
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="回避"  target="*P_DEF_1" ]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="240"  text="戻る"  target="*P_Def_select"  ]
 [s]
+
 *P_DEF_conf2
 [eval exp="tf.P_AVD=0 , tf.P_GRD=1.5"]
 [glink  color="blue"  storage="battle.ks"  size="20"  x="360"  width="160"  y="170"  text="防御"  target="*P_DEF_2"  ]
@@ -540,15 +538,17 @@ if(tf.atk>0){
 *P_DEF_1
 ;回避
 [eval exp="tf.P_ACT=tf.P_ACT-1"]
+[WriteStatus]
 [jump target="&tf.E_ATK"][s]
 
 *P_DEF_2
 ;防御
 [eval exp="tf.P_ACT=tf.P_ACT-0"]
+[WriteStatus]
 [jump target="&tf.E_ATK"][s]
 
 *E_attack_1
-[enemyname]の[enemy_attack1][p]
+[enemyname]の[enemy_attack_1][p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
@@ -567,7 +567,7 @@ if(tf.atk>0){
 [s]
 
 *E_attack_2
-[enemyname]の[enemy_attack2][p]
+[enemyname]の[enemy_attack_2][p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
@@ -584,6 +584,23 @@ if(tf.atk>0){
 [MAZO][Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
 [if exp="tf.E_ACT>0"][jump target="*E_phase_start"][else][jump target="*turn_end"][endif]
 [s]
+
+*E_attack_mt
+[enemyname]の[enemy_attack_mt][p]
+[Calc_Status]
+[eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
+[if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
+[jump storage="skilllist.ks" target="&tf.E_skill61"]
+[s]
+
+*E_attack_ex
+[enemyname]の[enemy_attack_ex][p]
+[Calc_Status]
+[eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*E_attack_miss" cond="tf.HIT < tf.dice"]
+[if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump target="*P_avoid_success" cond="tf.P_AVD > tf.dice"][endif]
+[jump storage="skilllist.ks" target="&tf.E_skill63"]
+[s]
+
 
 *E_attack_miss
 スカ！[p]
@@ -621,7 +638,7 @@ if(tf.atk>0){
 
 [eval exp="tf.Max=9 , tf.Min=0"][dice]
 [if exp="tf.E_ACT>1"]
-[jump target="*ikigire" cond="tf.P_ACT <= 0"]
+;[jump target="*ikigire" cond="tf.P_ACT <= 0"]
 [jump target="*E_phase_start"]
 
 [elsif exp="tf.E_ACT==1 && tf.dice>4"]
@@ -654,6 +671,7 @@ if(tf.atk>0){
 [eval exp="tf.mount_turn = tf.mount_turn + 1"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 拘束[emb exp="tf.mount_turn"]ターン目[r]
+[WriteStatus]
 ;拘束力[emb exp="tf.Mount"][p]
 
 [if exp="tf.Orga==4 && tf.dice>49"]
@@ -666,6 +684,7 @@ if(tf.atk>0){
 くぬぎは絶頂の余韻から抜け出せない(呼吸-1)[p]
 [eval exp="tf.OrgaStan = 0"]
 [eval exp="tf.Orga = tf.Orga-1 , tf.P_ACT = tf.P_ACT-1"]
+[WriteStatus]
 
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
 くぬぎは絶頂から抜け出した[p]
@@ -678,7 +697,8 @@ if(tf.atk>0){
 [eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 ,tf.ArousSEXd =1"]
 [endif]
 
-[show_status]
+;[show_status]
+[WriteStatus]
 [jump target="*P_mount_select"]
 [s]
 
@@ -696,7 +716,6 @@ if(tf.atk>0){
 [jump target="*P_mount_select"]
 [endif]
 
-[eval exp="tf.P_ACT = tf.P_ACT-1"]
 くぬぎは暴れた[p]
 [Calc_Status]
 [quake count=5 time=300 hmax=20]
@@ -717,7 +736,7 @@ if(tf.atk>0){
 *P_mount_option2
 くぬぎは息を整えた[p]
 このターンのくぬぎは快感への抵抗力が上昇[p]
-[eval exp="tf.P_ACT = tf.P_ACTmax , tf.P_DefSKBb1 = 0.5"][limit]
+[eval exp="tf.P_ACT = tf.P_ACT + 1 , tf.P_DefSKBb1 = 0.5"][limit]
 [jump target="*E_mount_select"]
 [s]
 
@@ -727,7 +746,6 @@ if(tf.atk>0){
 [jump target="*P_mount_select"]
 [endif]
 
-[eval exp="tf.P_ACT = tf.P_ACT-1"]
 くぬぎは自ら身体を[enemyname]に押し付けた[p]
 [Calc_Status]
 ;感情は確定で上昇、上昇幅は抵抗値次第
@@ -848,7 +866,7 @@ if(tf.atk>0){
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
-[Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
+[Orgasm][SANcheck][WriteStatus][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -858,7 +876,7 @@ if(tf.atk>0){
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 ;絶頂判定＆正気度判定
-[Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
+[Orgasm][SANcheck][WriteStatus][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -867,6 +885,7 @@ if(tf.atk>0){
 [quake count=3 time=300 hmax=30]
 くぬぎの呼吸が１減少[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 1"][limit]
+[WriteStatus]
 [if exp="tf.P_ACT == 0"][jump target="*Remount"][endif]
 [jump target="*mount_end"]
 [s]
@@ -879,7 +898,7 @@ if(tf.atk>0){
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [triage]
-[MAZO][Orgasm][SANcheck][jump target="*Orga_end" cond="f.Insanity>0"]
+[MAZO][Orgasm][SANcheck][WriteStatus][jump target="*Orga_end" cond="f.Insanity>0"]
 [jump target="*mount_end"]
 [s]
 
@@ -908,6 +927,7 @@ if(tf.atk>0){
 ;セクハラ抵抗力をリセット
 [eval exp="tf.P_DefSKBb1=1"]
 ;拘束継続
+[WriteStatus]
 [if exp="tf.Esc != 1"]
 [jump target="*mount_continue"]
 [endif]
@@ -915,7 +935,9 @@ if(tf.atk>0){
 [s]
 
 *turn_end
-ターン終了[p]
+ターン終了
+;[show_status]
+[WriteStatus]
 [if exp="f.P_PARASITE > 0"][eval exp="tf.damage = 3 * f.P_PARASITE"]
 くぬぎの膣内で蟲が淫毒を吐いた[p]
 「んっ！」[p]
@@ -970,6 +992,7 @@ f.Cemetery=[];
 
 
 *game_lose
+[WriteStatus]
 [if exp="f.P_EXH >= 100"]
 疲労のためにくぬぎは立ち上がれなくなった[p]
 [endif]
@@ -997,6 +1020,7 @@ f.Cemetery=[];
 [s]
 
 *game_win
+[WriteStatus]
 [chara_hide name="gouza"]
 戦闘に勝利した。[p]
 [if exp="tf.Orga>0"]
@@ -1011,6 +1035,7 @@ f.Cemetery=[];
 [eval exp="tf.Temp = tf.Turn * 3 , f.P_EXH = f.P_EXH + tf.Temp"][limit]
 [eval exp="f.P_EXH = 99" cond="f.P_EXH >= 100"]
 疲労度が[emb exp="tf.Temp"]上昇した[p]
+[WriteStatus]
 [chara_hide name="kunugi"]
 [jump storage="scene1.ks"]
 [s]
@@ -1027,11 +1052,13 @@ f.Cemetery=[];
 くぬぎの怯えた表情と潤んだ瞳に敵は舌なめずりをしながら手を伸ばした[p]
 「へへっ、お楽しみはこれからだぜ」[p]
 「いやあああああああっ！！」[p]
+[WriteStatus]
 [jump target="*bochu"]
 [s]
 
 *bochu
 [eval exp="f.P_HP = tf.P_HP ,f.P_ERO = tf.P_ERO , f.P_SAN = tf.P_SAN"][limit]
+[WriteStatus]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump storage="bochu.ks" target="*start"]
 [s]

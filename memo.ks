@@ -341,6 +341,82 @@ k.淫乱　歓喜の表情＋瞳にハートマーク
 　　　男女の交合により魔力を生成することを研究している
 
 NEXT:
-ボーナスの獲得ポイントが間違っている
-選択中はメッセージ表示のみ実行時に行う
-実際のバフの付与は
+息切れ要らなくない？：行動回数の多さが強みに反映できていない。カード式になったので狙って息切れができない。【要検討】
+スタンの実装
+追跡者：房中を避けて撤退を繰り返していると遭遇率が上昇
+残りHPでスキル変化：激怒、生殖本能
+敵スキル１をランダム実行に
+攻撃を複数パターン化
+
+*E_skill_select
+;敵のスキル(３の倍数+1のターンのみ実行)
+[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
+[jump target="*E_skill_play"]
+[endif]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+;コンボルート選定
+[if exp="tf.dice >= 60"]
+[eval exp="tf.E_skill_A=tf.E_skill11 , tf.E_skill_B=tf.E_skill12 , tf.E_skill_C=tf.E_skill13"]
+[elsif exp="tf.dice >= 30"]
+[eval exp="tf.E_skill_A=tf.E_skill21 , tf.E_skill_B=tf.E_skill22 , tf.E_skill_C=tf.E_skill23"]
+[else exp="tf.dice >= 0"]
+[eval exp="tf.E_skill_A=tf.E_skill51 , tf.E_skill_B=tf.E_skill52 , tf.E_skill_C=tf.E_skill53"]
+[endif]
+[jump target="*E_skill_play"]
+[s]
+
+*E_skill_play
+[if exp="tf.sho = tf.Turn % 3 , tf.sho!=1"]
+[jump storage="skilllist.ks" target="&tf.E_skill_A"]
+[elsif exp="tf.sho = tf.Turn % 3 , tf.sho!=2"]
+[jump storage="skilllist.ks" target="&tf.E_skill_B"]
+[else]
+[jump storage="skilllist.ks" target="&tf.E_skill_C"]
+[endif]
+[s]
+
+
+*E_attack_select
+;特殊
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="f.E_AUR>=10 && tf.dice>6"]
+[jump storage="skilllist.ks" target="&tf.E_skill62"]
+[endif]
+;チャージ完了で技をかならず使う
+[if exp="f.E_AUR>=50 && tf.dice>0"]
+[enemyname]の[enemy_attack_ex][p]
+[Calc_Status]
+[eval exp="f.E_AUR = f.E_AUR - 50 , tf.E_ACT = tf.E_ACT - 1"]
+[eval exp="tf.RATE = tf.E_ATKex_rate , tf.ACC = tf.E_ATKex_acc , tf.CRTrate = tf.E_ATKex_crt , tf.E_ATK='*E_attack_ex'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+[endif]
+
+;組付（敵によって発生率が異なる）
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="f.E_AUR>0 && tf.dice>tf.E_ATKmt_rate"]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.ACC = tf.E_ATKmt_acc , tf.CRTrate = tf.E_ATKmt_crt , tf.E_ATK='*E_attack_mt'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+[endif]
+
+[eval exp="tf.max=9 , tf.Min=0"][dice]
+[if exp="tf.dice>4"]
+[enemyname]の[enemy_attack_1][p]
+[Calc_Status]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK1_rate , tf.ACC = tf.E_ATK1_acc , tf.CRTrate = tf.E_ATK1_crt , tf.E_ATK='*E_attack_1'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+
+[else]
+[enemyname]の[enemy_attack_2][p]
+[Calc_Status]
+[eval exp="tf.E_ACT=tf.E_ACT-1 , tf.RATE = tf.E_ATK2_rate , tf.ACC = tf.E_ATK2_acc , tf.CRTrate = tf.E_ATK2_crt , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.HIT = Math.floor(tf.ACC + tf.E_DEX * 3 - tf.P_AGI * tf.ArousAGId)"]
+[Calc_HitRate]
+[jump target="*P_Def_select"]
+[endif]
+[s]

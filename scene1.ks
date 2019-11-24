@@ -36,8 +36,8 @@
 *route_select
 ルートを選びます[p]
 [glink  color="blue"  size="20"  x="360"  width="400"  y="100"  text="かんたん"  target="*easy"  ]
-[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="ふつう"  target="*normal"  ]
-[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="むずかしい"  target="*hard"  ]
+;[glink  color="blue"  size="20"  x="360"  width="400"  y="170"  text="ふつう"  target="*normal"  ]
+;[glink  color="blue"  size="20"  x="360"  width="400"  y="240"  text="むずかしい"  target="*hard"  ]
 [s]
 
 *easy
@@ -49,71 +49,62 @@
 [glink  color="blue"  size="20"  x="360"  width="400"  y="380"  text="戻る"  target="*start"  ]
 [s]
 
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=30 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28 "]
+
 *easy-1
 ;高火力。一発。萬子
 [eval exp="tf.E_name='大砲魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30+5 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-10 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=30 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28 "]
 ;スキル1
-[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
-[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
-[eval exp="tf.E_skill31='*全力' , tf.E_skill32='*捨て身' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*捨て身'"]
-[eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
-;スキル2
-[eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
+[eval exp="tf.E_skill_A='*全力' , tf.E_skill_B='*集中' , tf.E_skill_C='*激怒'"]
 ;攻撃
+[eval exp="tf.E_skill62='*気迫' "]
 [eval exp="tf.E_attack_1='薙ぎ払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.E_attack_2='大根斬り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 1.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
+[eval exp="tf.E_attack_ex='大根斬り' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*轟爆斧'"]
 @jump storage="battle.ks"
 
 *easy-2
 ;高命中。HPを削るのが役割。索子
 [eval exp="tf.E_name='削り魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30-5 , f.E_DUR=30-10 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=30 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28 "]
 ;スキル1
-[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
-[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
-[eval exp="tf.E_skill31='*気合' , tf.E_skill32='*見切り' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*見切り'"]
-[eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*気合'"]
-;スキル2
-[eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*旋風棍'"]
+[eval exp="tf.E_skill_A='*集中' , tf.E_skill_B='*見切り' , tf.E_skill_C='*気合'"]
 ;攻撃
+[eval exp="tf.E_skill62='*気迫' "]
 [eval exp="tf.E_attack_1='打ち払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.E_attack_2='乱れ突き' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 0.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
+[eval exp="tf.E_attack_ex='旋風棍' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*旋風棍'"]
 @jump storage="battle.ks"
 
 *easy-3
 ;高耐久。ターン数を稼ぐのが役割。風牌
 [eval exp="tf.E_name='時間稼'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30-10 , f.E_DUR=30-5 , f.E_AGI=23-5 , f.E_DEX=32-8 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=30 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28 "]
 ;スキル1
-[eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
-[eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
-[eval exp="tf.E_skill31='*剛体' , tf.E_skill32='*気合' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*剛体' , tf.E_skill42='*組付' , tf.E_skill43='*気合'"]
-[eval exp="tf.E_skill51='*剛体' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
-;スキル2
-[eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*青龍拳'"]
+[eval exp="tf.E_skill_A='*剛体' , tf.E_skill_B='*全力' , tf.E_skill_C='*気合'"]
+;攻撃
+[eval exp="tf.E_skill62='*気迫' "]
 [eval exp="tf.E_attack_1='正拳' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.E_attack_2='飛び蹴り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 1.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
+[eval exp="tf.E_attack_ex='青龍拳' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*青龍拳'"]
 @jump storage="battle.ks"
 
 *easy-4
 ;セクハラ攻撃主体。筒子
 [eval exp="tf.E_name='痴漢魔'"]
-[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25+5 , f.E_AGI=24 , f.E_DEX=32-5 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35-5"]
+[eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=30 , f.E_AGI=23 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28 "]
 ;スキル1
-[eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
-[eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*挑発' , tf.E_skill23='*気合'"]
-[eval exp="tf.E_skill31='*挑発' , tf.E_skill32='*視姦' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*組付' , tf.E_skill43='*挑発'"]
-[eval exp="tf.E_skill51='*挑発' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
-;スキル2
-[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
+[eval exp="tf.E_skill_A='*視姦' , tf.E_skill_B='*挑発' , tf.E_skill_C='*気合'"]
 ;攻撃
+[eval exp="tf.E_skill62='*剥ぎ取り' "]
 [eval exp="tf.E_attack_1='切りつけ' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
 [eval exp="tf.E_attack_2='めった切り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
+[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 2.0 , tf.E_ATKmt_acc = 50 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付B'"]
+[eval exp="tf.E_attack_ex='つむじ切り' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*つむじ切り'"]
 @jump storage="battle.ks"
 
 *normal
@@ -131,11 +122,11 @@
 [eval exp="tf.E_name='大砲魔2'"]
 [eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
 ;スキル1
-[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
-[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
-[eval exp="tf.E_skill31='*全力' , tf.E_skill32='*捨て身' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*捨て身'"]
-[eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
+[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*全力' , tf.E_skill13='*激怒'"]
+[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*沈静化'"]
+[eval exp="tf.E_skill31='*全力' , tf.E_skill32='*激怒' , tf.E_skill33='*気合'"]
+[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*気合' , tf.E_skill43='*激怒'"]
+[eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*沈静化'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
 @jump storage="battle.ks"
@@ -146,9 +137,9 @@
 [eval exp="f.E_HP=2000 , f.E_STR=30 , f.E_DUR=25 , f.E_AGI=22 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 25"]
 ;スキル1
 [eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*見切り'"]
-[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
-[eval exp="tf.E_skill31='*気合' , tf.E_skill32='*見切り' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*見切り'"]
+[eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*沈静化'"]
+[eval exp="tf.E_skill31='*気合' , tf.E_skill32='*見切り' , tf.E_skill33='*全力'"]
+[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*見切り' , tf.E_skill43='*沈静化'"]
 [eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*気合'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*旋風棍'"]
@@ -161,11 +152,11 @@
 ;スキル1
 [eval exp="tf.E_skill11='*剛体' , tf.E_skill12='*集中' , tf.E_skill13='*全力'"]
 [eval exp="tf.E_skill21='*気合' , tf.E_skill22='*全力' , tf.E_skill23='*剛体'"]
-[eval exp="tf.E_skill31='*剛体' , tf.E_skill32='*気合' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*剛体' , tf.E_skill42='*組付' , tf.E_skill43='*気合'"]
+[eval exp="tf.E_skill31='*剛体' , tf.E_skill32='*気合' , tf.E_skill33='*沈静化'"]
+[eval exp="tf.E_skill41='*剛体' , tf.E_skill42='*沈静化' , tf.E_skill43='*気合'"]
 [eval exp="tf.E_skill51='*剛体' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
 ;スキル2
-[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*気迫' , tf.E_skill63='*青龍拳'"]
+[eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*気迫' , tf.E_skill63='*青龍拳'"]
 @jump storage="battle.ks"
 
 *normal-4
@@ -173,13 +164,13 @@
 [eval exp="tf.E_name='痴漢魔2'"]
 [eval exp="f.E_HP=2000 , f.E_STR=28 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=32 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=30 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 35"]
 ;スキル1
-[eval exp="tf.E_skill11='*気合' , tf.E_skill12='組付' , tf.E_skill13='*視姦'"]
-[eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*奇声' , tf.E_skill23='*気合'"]
-[eval exp="tf.E_skill31='*奇声' , tf.E_skill32='*視姦' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*組付' , tf.E_skill43='*奇声'"]
-[eval exp="tf.E_skill51='*奇声' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
+[eval exp="tf.E_skill11='*気合' , tf.E_skill12='沈静化' , tf.E_skill13='*視姦'"]
+[eval exp="tf.E_skill21='*視姦' , tf.E_skill22='*挑発' , tf.E_skill23='*気合'"]
+[eval exp="tf.E_skill31='*挑発' , tf.E_skill32='*視姦' , tf.E_skill33='*沈静化'"]
+[eval exp="tf.E_skill41='*視姦' , tf.E_skill42='*沈静化' , tf.E_skill43='*挑発'"]
+[eval exp="tf.E_skill51='*挑発' , tf.E_skill52='*視姦' , tf.E_skill53='*視姦'"]
 ;スキル2
-[eval exp="tf.E_skill61='*強化組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
+[eval exp="tf.E_skill61='*組付B' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*つむじ切り'"]
 @jump storage="battle.ks"
 
 *normal-5
@@ -189,8 +180,8 @@
 ;スキル1
 [eval exp="tf.E_skill11='*吸収' , tf.E_skill12='*煙幕' , tf.E_skill13='*毒霧'"]
 [eval exp="tf.E_skill21='*挑発' , tf.E_skill22='*毒霧' , tf.E_skill23='*煙幕'"]
-[eval exp="tf.E_skill31='*吸収' , tf.E_skill32='*挑発' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*挑発' , tf.E_skill42='*組付' , tf.E_skill43='*毒霧'"]
+[eval exp="tf.E_skill31='*吸収' , tf.E_skill32='*挑発' , tf.E_skill33='*沈静化'"]
+[eval exp="tf.E_skill41='*挑発' , tf.E_skill42='*沈静化' , tf.E_skill43='*毒霧'"]
 [eval exp="tf.E_skill51='*毒霧' , tf.E_skill52='*挑発' , tf.E_skill53='*毒霧'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付' , tf.E_skill62='*剥ぎ取り' , tf.E_skill63='*波動A'"]
@@ -212,10 +203,10 @@
 [eval exp="tf.E_name='大砲魔3'"]
 [eval exp="f.E_HP=2000 , f.E_STR=35 , f.E_DUR=25 , f.E_AGI=18 , f.E_DEX=24 , f.E_LUK=5 , f.E_POW=5 , f.E_APP=7 , f.E_ACT=4 , f.E_AUR=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=30 , f.E_SEX=18 , f.E_BND = 28"]
 ;スキル1
-[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*捨て身'"]
+[eval exp="tf.E_skill11='*集中' , tf.E_skill12='*集中' , tf.E_skill13='*激怒'"]
 [eval exp="tf.E_skill21='*全力' , tf.E_skill22='*集中' , tf.E_skill23='*全力'"]
-[eval exp="tf.E_skill31='*全力' , tf.E_skill32='*捨て身' , tf.E_skill33='*組付'"]
-[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*捨て身'"]
+[eval exp="tf.E_skill31='*全力' , tf.E_skill32='*激怒' , tf.E_skill33='*組付'"]
+[eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*激怒'"]
 [eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
 ;スキル2
 [eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]

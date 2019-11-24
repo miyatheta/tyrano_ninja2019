@@ -301,6 +301,7 @@
 くぬぎの体力が回復した。[p]
 くぬぎの疲労が減少した。[p]
 くぬぎの欲情度が減少した。[p]
+[jump storage="scene1.ks" target="*start"]
 [s]
 
 *bochu001_lose
