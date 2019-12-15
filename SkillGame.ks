@@ -194,7 +194,7 @@
 [else]
 ;回避
 [eval exp="tf.E_AVD = Math.floor(tf.E_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
-[eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.E_AVD)/10)"][limit]
+[eval exp="tf.AvoidRate = 100 - (tf.HIT - tf.E_AVD)"][limit]
 [enemyname]回避：[emb exp="tf.AvoidRate"]％[r]
 [endif]
 [return]
