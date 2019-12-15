@@ -58,11 +58,17 @@
 ;スキル1
 [eval exp="tf.E_skill_A='*全力' , tf.E_skill_B='*集中' , tf.E_skill_C='*激怒'"]
 ;攻撃
-[eval exp="tf.E_skill62='*気迫' "]
-[eval exp="tf.E_attack_1='薙ぎ払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.E_attack_2='大根斬り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 1.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
-[eval exp="tf.E_attack_ex='大根斬り' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*轟爆斧'"]
+[eval exp="tf.E_Attack11='*E_通常攻撃1' , tf.E_Attack12='*E_通常攻撃2' , tf.E_Attack13='*E_特殊攻撃1' , tf.E_Attack14='*E_組付攻撃' , tf.E_Attack15='*E_通常攻撃1' "]
+[eval exp="tf.E_Attack21='*E_通常攻撃2' , tf.E_Attack22='*E_通常攻撃1' , tf.E_Attack23='*E_組付攻撃' , tf.E_Attack24='*E_特殊攻撃1' , tf.E_Attack25='*E_通常攻撃2' "]
+[eval exp="tf.E_Attack31='*E_通常攻撃1' , tf.E_Attack32='*E_通常攻撃2' , tf.E_Attack33='*E_組付攻撃' , tf.E_Attack34='*E_特殊攻撃1' , tf.E_Attack35='*E_組付攻撃' "]
+[eval exp="tf.E_Attack41='*E_特殊攻撃1' , tf.E_Attack42='*E_通常攻撃2' , tf.E_Attack43='*E_通常攻撃1' , tf.E_Attack44='*E_組付攻撃' , tf.E_Attack45='*E_特殊攻撃1' "]
+[eval exp="tf.E_Attack51='*E_通常攻撃2' , tf.E_Attack52='*E_組付攻撃' , tf.E_Attack53='*E_通常攻撃2' , tf.E_Attack54='*E_通常攻撃1' , tf.E_Attack55='*E_通常攻撃1' "]
+
+[eval exp="tf.E_特殊攻撃1='*気迫' "]
+[eval exp="tf.E_組付攻撃='*組付' , tf.E_組付攻撃_rate = 1.0 , tf.E_組付攻撃_acc = 30 , tf.E_組付攻撃_crt = 1 "]
+[eval exp="tf.E_通常攻撃1='*薙ぎ払い' , tf.E_通常攻撃1_name = '薙ぎ払い' , tf.E_通常攻撃1_rate = 5.0 , tf.E_通常攻撃1_acc = 30 , tf.E_通常攻撃1_crt = 1 "]
+[eval exp="tf.E_通常攻撃2='*斬り落とし' , tf.E_通常攻撃2_name = '斬り落とし' , tf.E_通常攻撃2_rate = 8.5 , tf.E_通常攻撃2_acc = 0 , tf.E_通常攻撃2_crt = 1 "]
+[eval exp="tf.E_必殺攻撃='*大木断' , tf.E_必殺攻撃_name = '大木断' , tf.E_必殺攻撃_rate = 8.5 , tf.E_必殺攻撃_acc = 50 , tf.E_必殺攻撃_crt = 1 "]
 @jump storage="battle.ks"
 
 *easy-2
@@ -72,11 +78,17 @@
 ;スキル1
 [eval exp="tf.E_skill_A='*集中' , tf.E_skill_B='*見切り' , tf.E_skill_C='*気合'"]
 ;攻撃
-[eval exp="tf.E_skill62='*気迫' "]
-[eval exp="tf.E_attack_1='打ち払い' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.E_attack_2='乱れ突き' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 0.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
-[eval exp="tf.E_attack_ex='旋風棍' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*旋風棍'"]
+[eval exp="tf.E_Attack11='*E_通常攻撃1' , tf.E_Attack12='*E_特殊攻撃1' , tf.E_Attack13='*E_通常攻撃2' , tf.E_Attack14='*E_組付攻撃' , tf.E_Attack15='*E_通常攻撃1' "]
+[eval exp="tf.E_Attack21='*E_通常攻撃2' , tf.E_Attack22='*E_通常攻撃1' , tf.E_Attack23='*E_組付攻撃' , tf.E_Attack24='*E_特殊攻撃1' , tf.E_Attack25='*E_通常攻撃2' "]
+[eval exp="tf.E_Attack31='*E_通常攻撃1' , tf.E_Attack32='*E_組付攻撃' , tf.E_Attack33='*E_通常攻撃2' , tf.E_Attack34='*E_特殊攻撃1' , tf.E_Attack35='*E_組付攻撃' "]
+[eval exp="tf.E_Attack41='*E_特殊攻撃1' , tf.E_Attack42='*E_通常攻撃2' , tf.E_Attack43='*E_通常攻撃1' , tf.E_Attack44='*E_組付攻撃' , tf.E_Attack45='*E_特殊攻撃1' "]
+[eval exp="tf.E_Attack51='*E_特殊攻撃1' , tf.E_Attack52='*E_通常攻撃1' , tf.E_Attack53='*E_通常攻撃1' , tf.E_Attack54='*E_通常攻撃2' , tf.E_Attack55='*E_通常攻撃1' "]
+
+[eval exp="tf.E_特殊攻撃1='*気迫' "]
+[eval exp="tf.E_組付攻撃='*組付' , tf.E_組付攻撃_rate = 1.0 , tf.E_組付攻撃_acc = 30 , tf.E_組付攻撃_crt = 1 "]
+[eval exp="tf.E_通常攻撃1='*打ち払い' , tf.E_通常攻撃1_name = '打ち払い' , tf.E_通常攻撃1_rate = 5.0 , tf.E_通常攻撃1_acc = 30 , tf.E_通常攻撃1_crt = 1 "]
+[eval exp="tf.E_通常攻撃2='*乱れ突き' , tf.E_通常攻撃2_name = '乱れ突き' , tf.E_通常攻撃2_rate = 8.5 , tf.E_通常攻撃2_acc = 0 , tf.E_通常攻撃2_crt = 1 "]
+[eval exp="tf.E_必殺攻撃='*旋風棍' , tf.E_必殺攻撃_name = '旋風棍' , tf.E_必殺攻撃_rate = 8.5 , tf.E_必殺攻撃_acc = 50 , tf.E_必殺攻撃_crt = 1 "]
 @jump storage="battle.ks"
 
 *easy-3
@@ -86,11 +98,17 @@
 ;スキル1
 [eval exp="tf.E_skill_A='*剛体' , tf.E_skill_B='*全力' , tf.E_skill_C='*気合'"]
 ;攻撃
-[eval exp="tf.E_skill62='*気迫' "]
-[eval exp="tf.E_attack_1='正拳' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.E_attack_2='飛び蹴り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 1.0 , tf.E_ATKmt_acc = 30 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付A'"]
-[eval exp="tf.E_attack_ex='青龍拳' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*青龍拳'"]
+[eval exp="tf.E_Attack11='*E_通常攻撃1' , tf.E_Attack12='*E_特殊攻撃1' , tf.E_Attack13='*E_通常攻撃2' , tf.E_Attack14='*E_組付攻撃' , tf.E_Attack15='*E_通常攻撃1' "]
+[eval exp="tf.E_Attack21='*E_通常攻撃2' , tf.E_Attack22='*E_通常攻撃1' , tf.E_Attack23='*E_組付攻撃' , tf.E_Attack24='*E_特殊攻撃1' , tf.E_Attack25='*E_通常攻撃2' "]
+[eval exp="tf.E_Attack31='*E_通常攻撃1' , tf.E_Attack32='*E_組付攻撃' , tf.E_Attack33='*E_通常攻撃2' , tf.E_Attack34='*E_特殊攻撃1' , tf.E_Attack35='*E_組付攻撃' "]
+[eval exp="tf.E_Attack41='*E_特殊攻撃1' , tf.E_Attack42='*E_通常攻撃2' , tf.E_Attack43='*E_通常攻撃1' , tf.E_Attack44='*E_組付攻撃' , tf.E_Attack45='*E_特殊攻撃1' "]
+[eval exp="tf.E_Attack51='*E_特殊攻撃1' , tf.E_Attack52='*E_通常攻撃1' , tf.E_Attack53='*E_通常攻撃1' , tf.E_Attack54='*E_通常攻撃2' , tf.E_Attack55='*E_通常攻撃1' "]
+
+[eval exp="tf.E_特殊攻撃1='*気迫' "]
+[eval exp="tf.E_組付攻撃='*組付' , tf.E_組付攻撃_rate = 1.0 , tf.E_組付攻撃_acc = 30 , tf.E_組付攻撃_crt = 1 "]
+[eval exp="tf.E_通常攻撃1='*正拳突き' , tf.E_通常攻撃1_name = '正拳突き' , tf.E_通常攻撃1_rate = 5.0 , tf.E_通常攻撃1_acc = 30 , tf.E_通常攻撃1_crt = 1 "]
+[eval exp="tf.E_通常攻撃2='*飛び蹴り' , tf.E_通常攻撃2_name = '飛び蹴り' , tf.E_通常攻撃2_rate = 8.5 , tf.E_通常攻撃2_acc = 0 , tf.E_通常攻撃2_crt = 1 "]
+[eval exp="tf.E_必殺攻撃='*青龍拳' , tf.E_必殺攻撃_name = '青龍拳' , tf.E_必殺攻撃_rate = 8.5 , tf.E_必殺攻撃_acc = 50 , tf.E_必殺攻撃_crt = 1 "]
 @jump storage="battle.ks"
 
 *easy-4
@@ -100,11 +118,17 @@
 ;スキル1
 [eval exp="tf.E_skill_A='*視姦' , tf.E_skill_B='*挑発' , tf.E_skill_C='*気合'"]
 ;攻撃
-[eval exp="tf.E_skill62='*剥ぎ取り' "]
-[eval exp="tf.E_attack_1='切りつけ' , tf.E_ATK1_rate = 5.0 , tf.E_ATK1_acc = 30 , tf.E_ATK1_crt = 1 , tf.E_ATK='*E_attack_1'"]
-[eval exp="tf.E_attack_2='めった切り' , tf.E_ATK2_rate = 8.5 , tf.E_ATK2_acc = 0 , tf.E_ATK2_crt = 1 , tf.E_ATK='*E_attack_2'"]
-[eval exp="tf.E_attack_mt='組付' , tf.E_ATKmt_rate = 2.0 , tf.E_ATKmt_acc = 50 , tf.E_ATKmt_crt = 1 , tf.E_ATK='*E_attack_mt' , tf.E_skill61='*組付B'"]
-[eval exp="tf.E_attack_ex='つむじ切り' , tf.E_ATKex_rate = 8.5 , tf.E_ATKex_acc = 50 , tf.E_ATKex_crt = 1 , tf.E_ATK='*E_attack_ex' , tf.E_skill63='*つむじ切り'"]
+[eval exp="tf.E_Attack11='*E_通常攻撃1' , tf.E_Attack12='*E_組付攻撃' , tf.E_Attack13='*E_通常攻撃2' , tf.E_Attack14='*E_組付攻撃' , tf.E_Attack15='*E_通常攻撃1' "]
+[eval exp="tf.E_Attack21='*E_通常攻撃2' , tf.E_Attack22='*E_組付攻撃' , tf.E_Attack23='*E_特殊攻撃1' , tf.E_Attack24='*E_通常攻撃1' , tf.E_Attack25='*E_通常攻撃2' "]
+[eval exp="tf.E_Attack31='*E_特殊攻撃1' , tf.E_Attack32='*E_組付攻撃' , tf.E_Attack33='*E_通常攻撃1' , tf.E_Attack34='*E_通常攻撃2' , tf.E_Attack35='*E_組付攻撃' "]
+[eval exp="tf.E_Attack41='*E_組付攻撃' , tf.E_Attack42='*E_通常攻撃1' , tf.E_Attack43='*E_通常攻撃2' , tf.E_Attack44='*E_組付攻撃' , tf.E_Attack45='*E_特殊攻撃1' "]
+[eval exp="tf.E_Attack51='*E_組付攻撃' , tf.E_Attack52='*E_通常攻撃2' , tf.E_Attack53='*E_組付攻撃' , tf.E_Attack54='*E_通常攻撃2' , tf.E_Attack55='*E_通常攻撃1' "]
+
+[eval exp="tf.E_特殊攻撃1='*剥ぎ取り' "]
+[eval exp="tf.E_組付攻撃='*組付' , tf.E_組付攻撃_rate = 1.0 , tf.E_組付攻撃_acc = 30 , tf.E_組付攻撃_crt = 1 "]
+[eval exp="tf.E_通常攻撃1='*切りつけ' , tf.E_通常攻撃1_name = '切りつけ' , tf.E_通常攻撃1_rate = 5.0 , tf.E_通常攻撃1_acc = 30 , tf.E_通常攻撃1_crt = 1 "]
+[eval exp="tf.E_通常攻撃2='*めった切り' , tf.E_通常攻撃2_name = 'めった切り' , tf.E_通常攻撃2_rate = 8.5 , tf.E_通常攻撃2_acc = 0 , tf.E_通常攻撃2_crt = 1 "]
+[eval exp="tf.E_必殺攻撃='*つむじ切り' , tf.E_必殺攻撃_name = 'つむじ切り' , tf.E_必殺攻撃_rate = 8.5 , tf.E_必殺攻撃_acc = 50 , tf.E_必殺攻撃_crt = 1 "]
 @jump storage="battle.ks"
 
 *normal
@@ -128,7 +152,7 @@
 [eval exp="tf.E_skill41='*集中' , tf.E_skill42='*気合' , tf.E_skill43='*激怒'"]
 [eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*沈静化'"]
 ;スキル2
-[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
+[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*大木断'"]
 @jump storage="battle.ks"
 
 *normal-2
@@ -209,7 +233,7 @@
 [eval exp="tf.E_skill41='*集中' , tf.E_skill42='*組付' , tf.E_skill43='*激怒'"]
 [eval exp="tf.E_skill51='*全力' , tf.E_skill52='*集中' , tf.E_skill53='*全力'"]
 ;スキル2
-[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*轟爆斧'"]
+[eval exp="tf.E_skill61='*組付' , tf.E_skill62='*気迫' , tf.E_skill63='*大木断'"]
 @jump storage="battle.ks"
 
 *hard-2

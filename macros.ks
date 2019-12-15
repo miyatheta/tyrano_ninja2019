@@ -631,7 +631,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.E_STRb3=1 , tf.E_DURb3=1 , tf.E_AGIb3=1 , tf.E_DEXb3=1 , tf.E_POWb3=1 , tf.E_APPb3=1"]
 [eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_APPb3_count=1"]
 
-[eval exp="tf.E_charm_STR=1 , tf.E_charm_AGI=1 "]
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 "]
 [eval exp="tf.E_charm_count=1 "]
 [endmacro]
 
@@ -653,7 +653,7 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=1 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
 [eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=1 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
 [eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=1 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
-[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_AGI=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
 [macro name="Initialize_Cards"]
@@ -681,12 +681,12 @@ f.Cards=[
 {id:6,type:3,name:"下段蹴り",suite:"水",comb:1,active:1,txt:"水・下段蹴り"},
 {id:7,type:3,name:"下段蹴り",suite:"風",comb:1,active:1,txt:"風・下段蹴り"},
 {id:8,type:3,name:"下段蹴り",suite:"炎",comb:1,active:1,txt:"炎・下段蹴り"},
-{id:9,type:4,name:"上段蹴り",suite:"水",comb:1,active:1,txt:"水・上段蹴り"},
-{id:10,type:4,name:"上段蹴り",suite:"風",comb:1,active:1,txt:"風・上段蹴り"},
-{id:11,type:4,name:"上段蹴り",suite:"炎",comb:1,active:1,txt:"炎・上段蹴り"},
-{id:12,type:5,name:"くない",suite:"水",comb:0,active:1,txt:"水・くない　"},
-{id:13,type:5,name:"くない",suite:"風",comb:0,active:1,txt:"風・くない　"},
-{id:14,type:5,name:"くない",suite:"炎",comb:0,active:1,txt:"炎・くない　"},
+{id:9,type:4,name:"くない",suite:"水",comb:1,active:1,txt:"水・くない　"},
+{id:10,type:4,name:"くない",suite:"風",comb:1,active:1,txt:"風・くない　"},
+{id:11,type:4,name:"くない",suite:"炎",comb:1,active:1,txt:"炎・くない　"},
+{id:12,type:5,name:"金的",suite:"水",comb:0,active:1,txt:"水・金　的　"},
+{id:13,type:5,name:"金的",suite:"風",comb:0,active:1,txt:"風・金　的　"},
+{id:14,type:5,name:"金的",suite:"炎",comb:0,active:1,txt:"炎・金　的　"},
 {id:15,type:6,name:"回し蹴り",suite:"水",comb:0,active:1,txt:"水・回し蹴り"},
 {id:16,type:6,name:"回し蹴り",suite:"風",comb:0,active:1,txt:"風・回し蹴り"},
 {id:17,type:6,name:"回し蹴り",suite:"炎",comb:0,active:1,txt:"炎・回し蹴り"},
@@ -718,7 +718,7 @@ f.Selected.splice(0,1)
 [endmacro]
 
 [macro name="Calc_Damage"]
-[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_GRD * 2)"]
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_charm_DUR * tf.E_GRD * 2)"]
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.P_LUK * 3 * tf.CRTrate"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]

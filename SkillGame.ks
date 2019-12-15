@@ -102,7 +102,7 @@
 *P_skill0
 集気法[p]
 [Calc_Status]
-[eval exp="tf.P_ACT = tf.P_ACT+1 "][limit]
+[eval exp="tf.P_AUR = tf.P_AUR + 10 "][limit]
 [jump target="*術の終了"]
 [s]
 
@@ -146,8 +146,8 @@
 [enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
 ;魅了による弱体化
 [enemyname]は前かがみになった[p]
-[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.7 ,tf.E_charm_AGI=0.6"]
-[enemyname]の攻撃力と回避力が減少した（3ターン）[p]
+[eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_DUR=0.7"]
+[enemyname]の攻撃力と防御力が減少した（3ターン）[p]
 ;スタンは抵抗判定、魅力VS理性と感情
 [eval exp="tf.TAG = 100 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -193,7 +193,7 @@
 [enemyname]:防御[r]
 [else]
 ;回避
-[eval exp="tf.E_AVD = Math.floor(tf.E_AGI * tf.E_charm_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
+[eval exp="tf.E_AVD = Math.floor(tf.E_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
 [eval exp="tf.AvoidRate = 100 - Math.floor(tf.HitRate/10 * (100 - tf.E_AVD)/10)"][limit]
 [enemyname]回避：[emb exp="tf.AvoidRate"]％[r]
 [endif]
