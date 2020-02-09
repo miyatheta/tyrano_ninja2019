@@ -94,8 +94,7 @@
 ;絶頂
 [eval exp="tf.Orga = tf.Orga - 1"]
 [if exp="tf.Orga > 0"]
-[eval exp="tf.P_ACT = tf.P_ACT - 1"][limit]
-くぬぎは絶頂の余韻から抜け出せないでいる!(呼吸-1)[p]
+くぬぎは絶頂の余韻から抜け出せないでいる![p]
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
 くぬぎは絶頂から抜け出した[p]
 [eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1"]
@@ -657,9 +656,9 @@ if(tf.atk>0){
 [jump target="*E_mount_select"]
 
 [elsif exp="tf.Orga>0"]
-くぬぎは絶頂の余韻から抜け出せない(呼吸-1)[p]
+くぬぎは絶頂の余韻から抜け出せない[p]
 [eval exp="tf.OrgaStan = 0"]
-[eval exp="tf.Orga = tf.Orga-1 , tf.P_ACT = tf.P_ACT-1"]
+[eval exp="tf.Orga = tf.Orga-1 "]
 [WriteStatus]
 
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]

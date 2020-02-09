@@ -173,7 +173,7 @@
 *組付
 [enemyname]の組付[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.AvoidRate>0 && tf.AvoidRate > tf.dice"]
+[if exp="tf.P_AVD>0 && tf.AvoidRate > tf.dice"]
 くぬぎは敵の組付を躱した[p]
 [jump storage="battle.ks" target="*E_phase_end"]
 [endif]
