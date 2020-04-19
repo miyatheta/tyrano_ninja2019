@@ -1,6 +1,6 @@
 ;一番最初に呼び出されるファイル
 
-[title name="ティラノスクリプト解説"]
+[title name="くのいち"]
 
 [stop_keyconfig]
 
