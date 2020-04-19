@@ -16,6 +16,15 @@
 [emb exp="f.Enemy.HN"]
 [endmacro]
 
+;レイヤー関係
+[macro name="ShowMsg"]
+[position layer=message0 visible=true]
+[endmacro]
+
+[macro name="HideMsg"]
+[position layer=message0 visible=false]
+[endmacro]
+
 ;数値関係
 [macro name="dice"]
 [iscript]
@@ -713,11 +722,11 @@ f.Selected.splice(0,1)
 [endmacro]
 
 [macro name="ShowCardList"]
-[glink color="&f.Cards[f.Hand[0]]['color']" size="20" width="20" x="400" y="250" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0" target="*手札一覧" ]
-[glink color="&f.Cards[f.Hand[1]]['color']" size="20" width="20" x="480" y="250" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0" target="*手札一覧" ]
-[glink color="&f.Cards[f.Hand[2]]['color']" size="20" width="20" x="560" y="250" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0" target="*手札一覧" ]
-[glink color="&f.Cards[f.Hand[3]]['color']" size="20" width="20" x="640" y="250" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0" target="*手札一覧" ]
-[glink color="&f.Cards[f.Hand[4]]['color']" size="20" width="20" x="720" y="250" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0" target="*手札一覧" ]
+[glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['id'],f.Cards[f.Hand[0]]['active']=0" target="&f.Cards[f.Hand[0]]['tag']" ]
+[glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['id'],f.Cards[f.Hand[1]]['active']=0" target="&f.Cards[f.Hand[1]]['tag']" ]
+[glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['id'],f.Cards[f.Hand[2]]['active']=0" target="&f.Cards[f.Hand[2]]['tag']" ]
+[glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['id'],f.Cards[f.Hand[3]]['active']=0" target="&f.Cards[f.Hand[3]]['tag']" ]
+[glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id'],f.Cards[f.Hand[4]]['active']=0" target="&f.Cards[f.Hand[4]]['tag']" ]
 [endmacro]
 
 [macro name="Calc_HitRate"]

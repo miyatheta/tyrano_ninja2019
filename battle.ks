@@ -6,29 +6,32 @@
 
 [bg storage="mori_yoru.jpg" time="100"]
 
+;プレイヤーのステータス欄
+[layopt layer="2" visible=true]
+[macro name="MiniStatus"]
+[ptext text="くぬぎ" layer="2" edge="0x000000" size=25 x=20 y=480 ]
+[ptext text="体力" layer="2" edge="0x000000" size=20 x=20 y=510 edge=][ptext name="HP" text="&tf.P_HP" layer="2" edge="0x000000" size=20 x=80 y=515 ]
+[ptext text="気力" layer="2" edge="0x000000" size=20 x=20 y=540 ][ptext name="AUR" text="&f.P_AUR" layer="2" edge="0x000000" size=20 x=40 y=545 ]
+[endmacro]
+
 ;メッセージウィンドウの設定
-[position layer="message0" left=20 top=420 width=920 height=200 page=fore visible=true]
+[position layer="message0" left=340 top=480 width=610 height=150 page=fore visible=true]
 
 ;文字が表示される領域を調整
-[position layer=message0 page=fore margint="10" marginl="50" marginr="70" marginb="0"]
+[position layer=message0 page=fore margint="10" marginl="10" marginr="10" marginb="0"]
 
 ;メッセージウィンドウの表示
 @layopt layer=message0 visible=true
 
-;キャラクターの名前が表示される文字領域
-[ptext name="chara_name_area" layer="message0" color="white" size=24 x=50 y=410]
-
-;上記で定義した領域がキャラクターの名前表示であることを宣言（これがないと#の部分でエラーになります）
-[chara_config ptext="chara_name_area"]
-
 ;このゲームで登場するキャラクターを宣言
 [chara_new  name="gouza"  storage="chara/gouza/pr_gouza.png" jname="豪座" ]
 
-[chara_show  name="gouza" width=300 left=1000 top=50 wait="true"]
+[chara_show  name="gouza" layer=1 width=300 left=1000 top=50 wait="true"]
 [anim name="gouza" opacity=0 time=1]
 [anim name="gouza" left=750 top=50 time=1]
-[anim name="gouza" opacity=255 left=550 top=50 time=300 anim="true" effect="jswing" ]
-#
+[anim name="gouza" opacity=255 left=600 top=50 time=300 anim="true" effect="jswing" ]
+
+
 戦闘を開始します[p]
 
 [macro name="triage"]
@@ -63,20 +66,21 @@
 [eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 *Initialize_Cards
-カードの配布[p]
 [iscript]
-f.Deck=[0,1,2,3,4,5,6,7,8,9];
+f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 f.OriginalCards=[
-{id:0,color:"black",value:1,active:1,txt:"忍"},
-{id:1,color:"red",value:1,active:1,txt:"壱"},
-{id:2,color:"red",value:2,active:1,txt:"弐"},
-{id:3,color:"red",value:3,active:1,txt:"参"},
-{id:4,color:"blue",value:1,active:1,txt:"壱"},
-{id:5,color:"blue",value:2,active:1,txt:"弐"},
-{id:6,color:"blue",value:3,active:1,txt:"参"},
-{id:7,color:"green",value:1,active:1,txt:"壱"},
-{id:8,color:"green",value:2,active:1,txt:"弐"},
-{id:9,color:"green",value:3,active:1,txt:"参"},
+{id:0,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{id:1,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{id:2,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{id:3,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{id:4,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{id:5,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{id:6,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{id:7,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{id:8,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{id:9,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{id:10,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{id:11,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
 ];
 [endscript]
 ;カードのディープコピー作成
@@ -85,6 +89,12 @@ f.OriginalCards=[
 [iscript]
 f.Cards = Object.create(f.OriginalCards);
 [endscript]
+
+[MiniStatus]
+
+*手番開始
+[glink text="手番開始" size="18" width="15" height="100" x="350" y="500" color="gray" target="*シャッフルスタート" ]
+[s]
 
 *シャッフルスタート
 [eval exp="tf.set=0 , tf.P_ACTmax=5 , f.Selected=[] ,f.Cemetery=[]"]
@@ -117,26 +127,22 @@ for(i = 4; i >= 0; i--){
 [endscript]
 
 *手札一覧
+[er]
 [ShowCardList]
 [iscript]
 f.Redtxt = "攻撃" + f.Red;
 f.Greentxt = "技能" + f.Green;
-f.Bluetxt = "気力" + f.Blue;
+f.Bluetxt = "忍術" + f.Blue;
 [endscript]
 
-[glink text="&f.Redtxt" size="20" width="50" x="420" y="320" color="red" target="*攻撃" ]
-[glink text="&f.Greentxt" size="20" width="50" x="550" y="320" color="green" target="*技能" ]
-[glink text="&f.Bluetxt" size="20" width="50" x="680" y="320" color="blue" target="*忍術" ]
-
-[glink text=" 攻　撃 " size="20" width="80" x="10" y="420" color="gray" target="*攻撃" ]
-[glink text=" 技　能 " size="20" width="80" x="10" y="470" color="gray" target="*技能" ]
-[glink text=" 忍　術 " size="20" width="80" x="10" y="520" color="gray" target="*忍術" ]
-[glink text="手番終了" size="20" width="80" x="10" y="570" color="gray" target="*守備" ]
+;[glink text="&f.Redtxt" size="15" width="60" x="320" y="480" color="gray" target="*攻撃" ]
+;[glink text="&f.Greentxt" size="15" width="60" x="320" y="520" color="gray" target="*技能" ]
+;[glink text="&f.Bluetxt" size="15" width="60" x="320" y="560" color="gray" target="*忍術" ]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*守備" ]
 [s]
 
 *攻撃
 [er]
-赤をコスト([emb exp="f.Red"])に攻撃を行います。[r]
 [if exp="f.Red<1"]コスト不足[jump target="*手札一覧"][endif]
 [if exp="f.Red>0"][link target="*攻撃１"]攻撃１[endlink][endif] [if exp="f.Red>1"][link target="*攻撃２"]攻撃２[endlink][endif][r]
 [if exp="f.Red>2"][link target="*攻撃３"]攻撃３[endlink][endif][r]
@@ -145,12 +151,10 @@ f.Bluetxt = "気力" + f.Blue;
 
 *技能
 [er]
-緑をコストにスキルを使います。[r]
 [if exp="f.Green<1"]コスト不足[jump target="*手札一覧"][endif]
 [if exp="f.Green>0"][link target="*スキル１"]スキル１命中[endlink][endif]　[if exp="f.Green>0"][link target="*スキル２"]スキル２会心[endlink][endif][r]
 [if exp="f.Green>0"][link target="*スキル３"]スキル３攻撃[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４防御[endlink][endif][r]
-[if exp="f.Green>1"][link target="*スキル５"]スキル５回避[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６必中[endlink][endif][r]
-[link target="*手札一覧"]戻る[endlink]
+[if exp="f.Green>1"][link target="*スキル５"]スキル５回避[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６必中[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
