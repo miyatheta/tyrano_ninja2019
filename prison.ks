@@ -2,7 +2,7 @@
 [clearfix]
 [bg  time="1000" method="slide"  storage="sample_prison.jpg" ]
 ;HPなどは表示しないが回復する
-[eval exp="f.P_HP = f.P_HPmax , f.P_EXH = 0 , f.P_AUR = 0 , f.P_ERO = 0"]
+[eval exp="f.P_HP = f.P_HPmax , f.P_EXH = 0 , f.P_MGP = 0 , f.P_ERO = 0"]
 [eval exp="f.P_PARASITE_count = 19" cond="f.P_PARASITE_count>19"]
 拷問です[p]
 さて、今日お主に施す拷問は・・・[p]

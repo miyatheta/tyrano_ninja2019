@@ -57,21 +57,21 @@
 *気合
 「気合」[p]
 敵の気力が上昇[p]
-[eval exp="f.E_AUR = f.E_AUR + 10"][limit]
+[eval exp="f.E_MGP = f.E_MGP + 10"][limit]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *奇声
 「奇声」[p]
 くぬぎの気力が減少[p]
-[eval exp="f.P_AUR = f.P_AUR - 20"][limit]
+[eval exp="f.P_MGP = f.P_MGP - 20"][limit]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *吸収
 「吸収」[p]
 くぬぎの気力が減少。敵の気力が上昇[p]
-[eval exp="f.E_AUR = f.E_AUR + 10"][eval exp="f.E_AUR = f.E_AUR + 10"][limit][limit]
+[eval exp="f.E_MGP = f.E_MGP + 10"][eval exp="f.E_MGP = f.E_MGP + 10"][limit][limit]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
@@ -186,7 +186,7 @@
 「気迫」[p]
 敵に気圧されたくぬぎの呼吸が１減少[p]
 [eval exp="tf.P_ACT = tf.P_ACT - 1 "]
-[eval exp="f.E_AUR = f.E_AUR - 10"]
+[eval exp="f.E_MGP = f.E_MGP - 10"]
 [limit]
 [jump storage="battle.ks"  target="*ikigire" cond="tf.P_ACT <= 0"]
 [if exp="tf.E_ACT>0"][jump storage="battle.ks" target="*E_phase_end"]
@@ -197,7 +197,7 @@
 *大木断
 「大木断」[p]
 大上段から薙刀が叩きつけられた[p]
-[eval exp="f.E_AUR = f.E_AUR - 50"]
+[eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR "]
@@ -254,7 +254,7 @@
 *旋風棍
 「旋風棍」[p]
 唸りを上げて敵の棍が乱れ打ちを放った[p]
-[eval exp="f.E_AUR = f.E_AUR - 50"]
+[eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR "]
@@ -312,7 +312,7 @@
 *青龍拳
 「青龍拳」[p]
 うねるような軌跡を描いて拳撃が襲いかかった[p]
-[eval exp="f.E_AUR = f.E_AUR - 50"]
+[eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -371,7 +371,7 @@
 *つむじ切り
 「つむじ切り」[p]
 それまでとは打って変わった俊敏な踏み込みから斬撃が放たれた[p]
-[eval exp="f.E_AUR = f.E_AUR - 50"]
+[eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 9.0 * tf.E_STR * tf.E_charm_STR "]
@@ -429,7 +429,7 @@
 *波動A
 「波動・裂波」[p]
 不可視の力がくぬぎの身体を弾き飛ばした[p]
-[eval exp="f.E_AUR = f.E_AUR - 50"]
+[eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
 [eval exp="tf.ATP = 30.0 * tf.E_POW * tf.E_charm_STR "]

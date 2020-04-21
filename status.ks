@@ -19,8 +19,8 @@
 [eval exp="f.P_APP=14"]
 ;呼吸＞行動回数
 [eval exp="f.P_ACT=7"]
-;気力＞MP
-[eval exp="f.P_AUR=0"]
+;気力＞SP
+[eval exp="f.P_MGP=0"]
 ;疲労(exhaustion)
 [eval exp="f.P_EXH=0"]
 ;欲情
@@ -54,8 +54,8 @@
 [eval exp="f.E_APP=7"]
 ;呼吸＞行動回数
 [eval exp="f.E_ACT=4"]
-;気力＞MP
-[eval exp="f.E_AUR=0"]
+;気力＞SP
+[eval exp="f.E_MGP=0"]
 ;疲労(exhaustion)
 [eval exp="f.E_EXH=0"]
 ;感情

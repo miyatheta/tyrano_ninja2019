@@ -1,10 +1,10 @@
 *start
 [eval exp="tf.label = f.P_Skill[f.SkillSet[0]]['label']"]
 [eval exp="tf.Cost = f.P_Skill[f.SkillSet[0]]['cost']"]
-[eval exp="tf.MP = f.P_Skill[f.SkillSet[0]]['MP']"]
+[eval exp="tf.SP = f.P_Skill[f.SkillSet[0]]['SP']"]
 
 *Question
-[emb exp="tf.MP"]/[emb exp="tf.Cost"][p]
+[emb exp="tf.SP"]/[emb exp="tf.Cost"][p]
 [eval exp="tf.Max=99 ,tf.Min=0"][dice]
 [if exp="tf.dice>66"][jump target="*Q1"]
 [elsif exp="tf.dice>33"][jump target="*Q2"]
@@ -73,16 +73,16 @@
 [wait_cancel]
 [if exp="tf.Sample == tf.Answer"]
 成功[wt5]
-[eval exp="tf.MP=tf.MP+1"]
+[eval exp="tf.SP=tf.SP+1"]
 
 [else]
-[eval exp="tf.MP=-1"]
+[eval exp="tf.SP=-1"]
 失敗[wt7]
 くぬぎは術の発動に失敗した[p]
 [jump target="*術の終了"]
 [endif]
 
-[if exp="tf.MP >= tf.Cost"]
+[if exp="tf.SP >= tf.Cost"]
 術の発動[p]
 [jump target="&tf.label"]
 [else]
@@ -93,7 +93,7 @@
 *timeout
 [cm]
 時間切れ[p]
-[eval exp="tf.MP=-1"]
+[eval exp="tf.SP=-1"]
 失敗[p]
 くぬぎは術の発動に失敗した[p]
 [jump target="*術の終了"]
@@ -102,7 +102,7 @@
 *P_skill0
 集気法[p]
 [Calc_Status]
-[eval exp="tf.P_AUR = tf.P_AUR + 10 "][limit]
+[eval exp="tf.P_MGP = tf.P_MGP + 10 "][limit]
 [jump target="*術の終了"]
 [s]
 

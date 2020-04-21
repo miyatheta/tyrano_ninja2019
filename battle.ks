@@ -6,14 +6,6 @@
 
 [bg storage="mori_yoru.jpg" time="100"]
 
-;プレイヤーのステータス欄
-[layopt layer="2" visible=true]
-[macro name="MiniStatus"]
-[ptext text="くぬぎ" layer="2" edge="0x000000" size=25 x=20 y=480 ]
-[ptext text="体力" layer="2" edge="0x000000" size=20 x=20 y=510 edge=][ptext name="HP" text="&tf.P_HP" layer="2" edge="0x000000" size=20 x=80 y=515 ]
-[ptext text="気力" layer="2" edge="0x000000" size=20 x=20 y=540 ][ptext name="AUR" text="&f.P_AUR" layer="2" edge="0x000000" size=20 x=40 y=545 ]
-[endmacro]
-
 ;メッセージウィンドウの設定
 [position layer="message0" left=340 top=480 width=610 height=150 page=fore visible=true]
 
@@ -43,18 +35,31 @@
 [macro name="show_status"]
 [nowait]
 [if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
-体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_AUR"]　呼吸[emb exp="tf.P_ACT"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
-敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_AUR"] 欲情[emb exp="tf.E_ERO"][p]
+体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_MGP"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
+敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_MGP"] 欲情[emb exp="tf.E_ERO"][p]
 [endnowait][cm]
+[endmacro]
+
+;プレイヤーのステータス欄
+[layopt layer="2" visible=true]
+[macro name="MiniStatus"]
+[iscript]
+tf.HPtxt = '体力：' + tf.P_HP , tf.MGPtxt = '気力：' + f.P_MGP , tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
+[endscript]
+[ptext text="くぬぎ" layer="2" edge="0x000000" size=25 x=20 y=480 ]
+[ptext name="HPtxt" text="&tf.HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
+[ptext name="MGPtxt" text="&tf.MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
+[ptext name="EROtxt" text="&tf.EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
+[ptext name="EXHtxt" text="&tf.EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 [endmacro]
 
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
 [eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] , f.SkillSet=[]"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT , f.P_AUR = f.P_AUR"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT"]
 [eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
-[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_AUR=0"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_MGP=0"]
 [eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 
 [Initialize_1Tbuff]
@@ -90,9 +95,10 @@ f.OriginalCards=[
 f.Cards = Object.create(f.OriginalCards);
 [endscript]
 
-[MiniStatus]
+
 
 *手番開始
+[MiniStatus]
 [glink text="手番開始" size="18" width="15" height="100" x="350" y="500" color="gray" target="*シャッフルスタート" ]
 [s]
 
@@ -138,12 +144,12 @@ f.Bluetxt = "忍術" + f.Blue;
 ;[glink text="&f.Redtxt" size="15" width="60" x="320" y="480" color="gray" target="*攻撃" ]
 ;[glink text="&f.Greentxt" size="15" width="60" x="320" y="520" color="gray" target="*技能" ]
 ;[glink text="&f.Bluetxt" size="15" width="60" x="320" y="560" color="gray" target="*忍術" ]
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*守備" ]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" ]
 [s]
 
 *攻撃
 [er]
-[if exp="f.Red<1"]コスト不足[jump target="*手札一覧"][endif]
+[if exp="f.Red<1"]コスト不足[p][jump target="*手札一覧"][endif]
 [if exp="f.Red>0"][link target="*攻撃１"]攻撃１[endlink][endif] [if exp="f.Red>1"][link target="*攻撃２"]攻撃２[endlink][endif][r]
 [if exp="f.Red>2"][link target="*攻撃３"]攻撃３[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
@@ -151,7 +157,7 @@ f.Bluetxt = "忍術" + f.Blue;
 
 *技能
 [er]
-[if exp="f.Green<1"]コスト不足[jump target="*手札一覧"][endif]
+[if exp="f.Green<1"]コスト不足[p][jump target="*手札一覧"][endif]
 [if exp="f.Green>0"][link target="*スキル１"]スキル１命中[endlink][endif]　[if exp="f.Green>0"][link target="*スキル２"]スキル２会心[endlink][endif][r]
 [if exp="f.Green>0"][link target="*スキル３"]スキル３攻撃[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４防御[endlink][endif][r]
 [if exp="f.Green>1"][link target="*スキル５"]スキル５回避[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６必中[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
@@ -170,6 +176,7 @@ f.Bluetxt = "忍術" + f.Blue;
 *攻撃１
 [er]
 敵に小ダメージ[r]
+[Calc_Status]
 [eval exp="f.Red = f.Red - 1"]
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.2"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
@@ -186,6 +193,7 @@ f.Bluetxt = "忍術" + f.Blue;
 *攻撃２
 [er]
 敵に中ダメージ[r]
+[Calc_Status]
 [eval exp="f.Red = f.Red - 2"]
 [eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.3"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
@@ -202,6 +210,7 @@ f.Bluetxt = "忍術" + f.Blue;
 *攻撃３
 [er]
 敵に大ダメージ[r]
+[Calc_Status]
 [eval exp="f.Red = f.Red - 3"]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
@@ -262,6 +271,53 @@ f.Bluetxt = "忍術" + f.Blue;
 [eval exp="tf.P_DEXb1=0.5"]
 [l][er]
 [jump target="*手札一覧"]
+
+*攻守交代
+[cm]
+[eval exp="f.P_MGP = f.P_MGP + f.Blue"]
+[MiniStatus]
+
+
+*敵攻撃パターン選択
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[jump target="*敵攻撃パターン1" cond="tf.dice<20"]
+[jump target="*敵攻撃パターン1" cond="tf.dice<40"]
+[jump target="*敵攻撃パターン1" cond="tf.dice<60"]
+[jump target="*敵攻撃パターン1" cond="tf.dice<80"]
+[jump target="*敵攻撃パターン1" cond="tf.dice<100"]
+[s]
+
+*敵攻撃パターン1
+[enemyname]の薙ぎ払い[p]
+[Calc_Status]
+;[eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
+;[if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
+[eval exp="tf.Max=99 , tf.Min=0 "][dice][eval exp="tf.CRT = 1" cond="tf.dice >= f.E_LUK * 4 * tf.CRTrate"]
+[eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
+[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[quake count=5 time=300 hmax=20]
+[if exp="tf.CRT>1"]会心の一撃[r][endif]
+くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[triage]
+[MAZO][Orgasm][SANcheck]
+[jump target="*ターン終了"]
+
+*敵攻撃パターン2
+
+*敵攻撃パターン3
+
+*敵攻撃パターン4
+
+*敵攻撃パターン5
+
+*敵攻撃パターン6
+
+
+*ターン終了
+[eval exp="f.P_EXH++"]
+[jump target="*手番開始"]
 
 *game_win
 勝利[s]

@@ -101,10 +101,10 @@ calcStatus(f.P_EROdigit,tf.P_ERO);
 f.E_EROdigit=[];
 calcStatus(f.E_EROdigit,tf.E_ERO);
 
-f.P_AURdigit=[];
-calcStatus(f.P_AURdigit,f.P_AUR);
-f.E_AURdigit=[];
-calcStatus(f.E_AURdigit,f.E_AUR);
+f.P_MGPdigit=[];
+calcStatus(f.P_MGPdigit,f.P_MGP);
+f.E_MGPdigit=[];
+calcStatus(f.E_MGPdigit,f.E_MGP);
 
 f.P_ACTdigit=[];
 calcStatus(f.P_ACTdigit,tf.P_ACT);
@@ -177,10 +177,10 @@ calcStatus(f.P_APPdigit,tf.P_APP);
 [image layer=1 storage="&f.P_HPdigit[4]" width="20" top="10" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="30" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[1]" width="20" top="30" left="95" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[2]" width="20" top="30" left="110" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[3]" width="20" top="30" left="135" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[4]" width="20" top="30" left="155" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[1]" width="20" top="30" left="95" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[2]" width="20" top="30" left="110" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[3]" width="20" top="30" left="135" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[4]" width="20" top="30" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/敏捷.png" width="75" top="30" left="290" visible="true"]
 [image layer=1 storage="&f.P_ACTdigit[2]" width="20" top="30" left="350" visible="true"]
@@ -220,10 +220,10 @@ calcStatus(f.P_APPdigit,tf.P_APP);
 [image layer=1 storage="&f.E_HPdigit[4]" width="20" top="10" left="830" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="850" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[1]" width="20" top="30" left="755" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[2]" width="20" top="30" left="780" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[3]" width="20" top="30" left="805" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[4]" width="20" top="30" left="830" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[1]" width="20" top="30" left="755" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[2]" width="20" top="30" left="780" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[3]" width="20" top="30" left="805" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[4]" width="20" top="30" left="830" visible="true"]
 
 [image layer=1 storage="UI/number/敏捷.png" width="75" top="30" left="550" visible="true"]
 [image layer=1 storage="&f.E_ACTdigit[1]" width="20" top="30" left="455" visible="true"]
@@ -403,10 +403,10 @@ calcStatus(f.P_APPdigit,tf.P_APP);
 [image layer=1 storage="&f.P_HPdigit[4]" width="20" top="10" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="30" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[1]" width="20" top="30" left="95" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[2]" width="20" top="30" left="110" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[3]" width="20" top="30" left="135" visible="true"]
-[image layer=1 storage="&f.P_AURdigit[4]" width="20" top="30" left="155" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[1]" width="20" top="30" left="95" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[2]" width="20" top="30" left="110" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[3]" width="20" top="30" left="135" visible="true"]
+[image layer=1 storage="&f.P_MGPdigit[4]" width="20" top="30" left="155" visible="true"]
 
 [image layer=1 storage="UI/number/敏捷.png" width="75" top="30" left="290" visible="true"]
 [image layer=1 storage="&f.P_ACTdigit[2]" width="20" top="30" left="350" visible="true"]
@@ -440,10 +440,10 @@ calcStatus(f.P_APPdigit,tf.P_APP);
 [image layer=1 storage="&f.E_HPdigit[4]" width="20" top="10" left="830" visible="true"]
 
 [image layer=1 storage="UI/number/気力.png" width="75" top="30" left="850" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[1]" width="20" top="30" left="755" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[2]" width="20" top="30" left="780" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[3]" width="20" top="30" left="805" visible="true"]
-[image layer=1 storage="&f.E_AURdigit[4]" width="20" top="30" left="830" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[1]" width="20" top="30" left="755" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[2]" width="20" top="30" left="780" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[3]" width="20" top="30" left="805" visible="true"]
+[image layer=1 storage="&f.E_MGPdigit[4]" width="20" top="30" left="830" visible="true"]
 
 [image layer=1 storage="UI/number/敏捷.png" width="75" top="30" left="550" visible="true"]
 [image layer=1 storage="&f.E_ACTdigit[1]" width="20" top="30" left="455" visible="true"]
@@ -586,9 +586,9 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
 [eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
 [eval exp="f.P_EXH = 100" cond="f.P_EXH > 100"]
-[eval exp="f.P_AUR = 100" cond="f.P_AUR > 100"]
-[eval exp="f.E_AUR = 100" cond="f.E_AUR > 100"]
-[eval exp="f.P_AUR = 0" cond="f.P_AUR < 0"]
+[eval exp="f.P_MGP = 100" cond="f.P_MGP > 100"]
+[eval exp="f.E_MGP = 100" cond="f.E_MGP > 100"]
+[eval exp="f.P_MGP = 0" cond="f.P_MGP < 0"]
 [eval exp="f.P_LUK = 5" cond="f.P_LUK > 5"]
 [eval exp="f.P_LUK = 0" cond="f.P_LUK < 0"]
 [eval exp="tf.P_ERO = 999" cond="tf.P_ERO > 999"]
@@ -605,19 +605,22 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [endmacro]
 
 [macro name="Calc_Status"]
-[eval exp="tf.P_STR = f.P_STR - tf.P_STRd3 - tf.P_STRd1 + tf.P_STRb3 + tf.P_STRb1 "]
-[eval exp="tf.P_DUR = f.P_DUR - tf.P_DURd3 - tf.P_DURd1 + tf.P_DURb3 + tf.P_DURb1 "]
-[eval exp="tf.P_AGI = f.P_AGI - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 "]
-[eval exp="tf.P_DEX = f.P_DEX - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 "]
-[eval exp="tf.P_POW = f.P_POW - tf.P_POWd3 - tf.P_POWd1 + tf.P_POWb3 + tf.P_POWb1 "]
-[eval exp="tf.P_APP = f.P_APP - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS)"]
+;evalだと括弧を計算順序が考慮しない
+[iscript]
+tf.P_STR = f.P_STR * ( 1 - tf.P_STRd3 - tf.P_STRd1 + tf.P_STRb3 + tf.P_STRb1 );
+tf.P_DUR = f.P_DUR * ( 1 - tf.P_DURd3 - tf.P_DURd1 + tf.P_DURb3 + tf.P_DURb1 );
+tf.P_AGI = f.P_AGI * ( 1 - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 );
+tf.P_DEX = f.P_DEX * ( 1 - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 );
+tf.P_POW = f.P_POW * ( 1 - tf.P_POWd3 - tf.P_POWd1 + tf.P_POWb3 + tf.P_POWb1 );
+tf.P_APP = f.P_APP * ( 1 - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS) );
 
-[eval exp="tf.E_STR = f.E_STR - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 "]
-[eval exp="tf.E_DUR = f.E_DUR - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 "]
-[eval exp="tf.E_AGI = f.E_AGI - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 "]
-[eval exp="tf.E_DEX = f.E_DEX - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 "]
-[eval exp="tf.E_POW = f.E_POW - tf.E_POWd3 - tf.E_POWd1 + tf.E_POWb3 + tf.E_POWb1 "]
-[eval exp="tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 "]
+tf.E_STR = f.E_STR * ( 1  - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 );
+tf.E_DUR = f.E_DUR * ( 1  - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 );
+tf.E_AGI = f.E_AGI * ( 1  - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 );
+tf.E_DEX = f.E_DEX * ( 1  - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 );
+tf.E_POW = f.E_POW * ( 1  - tf.E_POWd3 - tf.E_POWd1 + tf.E_POWb3 + tf.E_POWb1 );
+tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
+[endscript]
 [endmacro]
 
 [macro name="Initialize_1Tbuff"]
@@ -669,12 +672,12 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 ;術の設定
 [iscript]
 f.P_Skill=[
-{id:0 , name:"集気法" , aura:0 , MP:0 , cost:0 , label:"*P_skill0"},
-{id:1 , name:"火炎" , aura:60 , MP:0 , cost:3 , label:"*P_skill1"},
-{id:2 , name:"空蝉" , aura:50 , MP:0 , cost:3 , label:"*P_skill2"},
-{id:3 , name:"魅了" , aura:30 , MP:0 , cost:2 , label:"*P_skill3"},
-{id:4 , name:"衣変" , aura:20 , MP:0 , cost:2 , label:"*P_skill4"},
-{id:5 , name:"螺旋功" , aura:100 , MP:0 , cost:4 , label:"*P_skill5"}
+{id:0 , name:"集気法" , aura:0 , SP:0 , cost:0 , label:"*P_skill0"},
+{id:1 , name:"火炎" , aura:60 , SP:0 , cost:3 , label:"*P_skill1"},
+{id:2 , name:"空蝉" , aura:50 , SP:0 , cost:3 , label:"*P_skill2"},
+{id:3 , name:"魅了" , aura:30 , SP:0 , cost:2 , label:"*P_skill3"},
+{id:4 , name:"衣変" , aura:20 , SP:0 , cost:2 , label:"*P_skill4"},
+{id:5 , name:"螺旋功" , aura:100 , SP:0 , cost:4 , label:"*P_skill5"}
 ];
 [endscript]
 ;カードの設定
