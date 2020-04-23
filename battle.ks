@@ -170,7 +170,7 @@ f.Bluetxt = "忍術" + f.Blue;
 [if exp="f.Green<1"]コスト不足[p][jump target="*手札一覧"][endif]
 [if exp="f.Green>0"][link target="*スキル１"]スキル１命中[endlink][endif]　[if exp="f.Green>0"][link target="*スキル２"]スキル２会心[endlink][endif][r]
 [if exp="f.Green>0"][link target="*スキル３"]スキル３攻撃[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４防御[endlink][endif][r]
-[if exp="f.Green>1"][link target="*スキル５"]スキル５回避[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６必中[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
+[if exp="f.Green>1"][link target="*スキル５"]スキル５必中[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６修繕[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
@@ -191,13 +191,20 @@ f.Bluetxt = "忍術" + f.Blue;
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.2"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-;[jump target="*P_attack_miss" cond="tf.HitRate < tf.dice"]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
+[iscript]
+tf.cost=1;
+i=0;
+while(tf.cost>0){
+if(f.Cards[f.Hand[i]]['color']=="red"){f.Cards[f.Hand[i]]['active']=0 , tf.cost--};
+i++;
+}
+[endscript]
 [jump target="*手札一覧"]
 
 *攻撃２
@@ -301,16 +308,26 @@ f.Bluetxt = "忍術" + f.Blue;
 *敵攻撃パターン1
 [enemyname]の薙ぎ払い[p]
 [Calc_Status]
-;[eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
-;[if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
+[eval exp="tf.HIT=50"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
 [eval exp="tf.Max=99 , tf.Min=0 "][dice][eval exp="tf.CRT = 1" cond="tf.dice >= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.AvoidRate > tf.dice"]
+くぬぎは敵の攻撃を回避した[p]
+[elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
-[if exp="tf.CRT>1"]会心の一撃[r][endif]
+会心の一撃[r]
 くぬぎに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[else]
+[quake count=5 time=300 hmax=20]
+くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[endif]
+
 [triage]
 [MAZO][Orgasm][SANcheck]
 [jump target="*ターン終了"]
