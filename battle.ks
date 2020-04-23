@@ -95,7 +95,14 @@ f.OriginalCards=[
 f.Cards = Object.create(f.OriginalCards);
 [endscript]
 
-
+*敵攻撃パターン選択
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.dice<20"][eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
+[elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[else][eval exp="tf.enemy_attack_pattern=5"][eval exp="enemy_attack_pattern=4"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[endif]
 
 *手番開始
 [MiniStatus]
@@ -278,13 +285,12 @@ f.Bluetxt = "忍術" + f.Blue;
 [MiniStatus]
 
 
-*敵攻撃パターン選択
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[jump target="*敵攻撃パターン1" cond="tf.dice<20"]
-[jump target="*敵攻撃パターン1" cond="tf.dice<40"]
-[jump target="*敵攻撃パターン1" cond="tf.dice<60"]
-[jump target="*敵攻撃パターン1" cond="tf.dice<80"]
-[jump target="*敵攻撃パターン1" cond="tf.dice<100"]
+*敵攻撃パターン適用
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
 [s]
 
 *敵攻撃パターン1
