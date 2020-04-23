@@ -59,8 +59,7 @@ tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
-[eval exp="tf.Set=0 , f.Selected=[] , f.SkillSet=[]"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_MGP=0"]
 [eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
@@ -74,28 +73,24 @@ tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
 [eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 *Initialize_Cards
+;カードの情報を収めた連想(ハッシュ・辞書)配列(=オブジェクト)を収めた配列(多次元配列)を作成。
+;Deck=カードのidを並べたもの。
 [iscript]
-f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
-f.OriginalCards=[
-{id:0,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
-{id:1,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
-{id:2,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
-{id:3,color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
-{id:4,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
-{id:5,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
-{id:6,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
-{id:7,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
-{id:8,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
-{id:9,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
-{id:10,color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
-{id:11,color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+f.Cards=[
+{color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{color:"red",value:1,active:1,txt:"攻撃",tag:"*攻撃"},
+{color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術",tag:"*忍術"},
+{color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
 ];
-[endscript]
-;カードのディープコピー作成
-;連想配列では値がコピー元と共有されてしまうので、値を変更できるように完全なクローンを作成
-;OriginalCards=大本のカード。Cards=値を一時的に操作するカード。Deck=カードのidを並べたもの。
-[iscript]
-f.Cards = Object.create(f.OriginalCards);
+f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [endscript]
 
 *ターン開始
@@ -117,9 +112,7 @@ f.Cards = Object.create(f.OriginalCards);
 [s]
 
 *シャッフルスタート
-[eval exp="tf.set=0 , tf.P_ACTmax=5 , f.Selected=[] "]
-;Deckはシャッフルした山札（ただしカード自体ではなくカードのidの列。引き換え番号みたいなもの）
-;cemeteryは墓地＝使用済みカードidのプール。
+;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
 [iscript]
 for(i = f.Deck.length - 1; i >= 0; i--){
     var r = Math.floor(Math.random() * (i + 1));
@@ -177,6 +170,13 @@ f.Bluetxt = "忍術" + f.Blue;
 *忍術
 [er]
 青をコストに忍術を使います。
+[s]
+
+*疲労
+[er]
+疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
+息切れ発生時、疲労カードが３枚消えます[l][er]
+[jump target="*手札一覧"]
 [s]
 
 *手番終了
@@ -347,8 +347,14 @@ f.Bluetxt = "忍術" + f.Blue;
 
 
 *ターン終了
-[eval exp="f.P_EXH++"]
 [eval exp="tf.P_AVD=0"]
+[eval exp="f.P_EXH++"]
+;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
+;疲労カードの追加
+[iscript]
+f.Deck.push(f.Cards.length);
+f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
+[endscript]
 [jump target="*ターン開始"]
 
 *game_win

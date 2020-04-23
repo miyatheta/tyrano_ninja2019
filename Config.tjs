@@ -287,12 +287,12 @@
 
 // ◆ 文字の大きさ
 // デフォルトの文字の大きさ ( 高さ ) を pixel 単位で指定します。
-;defaultFontSize = 24;  // deffont タグの size 属性に相当
+;defaultFontSize = 20;  // deffont タグの size 属性に相当
 
 
 // ◆ 行間
 // 行間を pixel 単位で指定します。
-;defaultLineSpacing = 8; // defstyle タグの linespacing 属性に相当
+;defaultLineSpacing = 7; // defstyle タグの linespacing 属性に相当
 
 // ◆ 字間
 // 字間を pixel 単位で指定します。

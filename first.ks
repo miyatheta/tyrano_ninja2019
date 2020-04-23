@@ -16,6 +16,7 @@
 
 ;最初は右下のメニューボタンを非表示にする
 [hidemenubutton]
+[resetfont]　
 
 [macro name="dice"]
 [iscript]
