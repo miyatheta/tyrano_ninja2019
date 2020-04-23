@@ -59,7 +59,7 @@ tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
-[eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] , f.SkillSet=[]"]
+[eval exp="tf.Set=0 , f.Selected=[] , f.SkillSet=[]"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_MGP=0"]
@@ -93,10 +93,14 @@ f.OriginalCards=[
 [endscript]
 ;カードのディープコピー作成
 ;連想配列では値がコピー元と共有されてしまうので、値を変更できるように完全なクローンを作成
-;OriginalCards大本のカード。Cards値を一時的に操作するカード。Deckはカードのidを並べたもの。
+;OriginalCards=大本のカード。Cards=値を一時的に操作するカード。Deck=カードのidを並べたもの。
 [iscript]
 f.Cards = Object.create(f.OriginalCards);
 [endscript]
+
+*ターン開始
+[Initialize_1Tbuff]
+[Refresh_3Tbuff]
 
 *敵攻撃パターン選択
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -113,7 +117,7 @@ f.Cards = Object.create(f.OriginalCards);
 [s]
 
 *シャッフルスタート
-[eval exp="tf.set=0 , tf.P_ACTmax=5 , f.Selected=[] ,f.Cemetery=[]"]
+[eval exp="tf.set=0 , tf.P_ACTmax=5 , f.Selected=[] "]
 ;Deckはシャッフルした山札（ただしカード自体ではなくカードのidの列。引き換え番号みたいなもの）
 ;cemeteryは墓地＝使用済みカードidのプール。
 [iscript]
@@ -151,9 +155,6 @@ f.Greentxt = "技能" + f.Green;
 f.Bluetxt = "忍術" + f.Blue;
 [endscript]
 
-;[glink text="&f.Redtxt" size="15" width="60" x="320" y="480" color="gray" target="*攻撃" ]
-;[glink text="&f.Greentxt" size="15" width="60" x="320" y="520" color="gray" target="*技能" ]
-;[glink text="&f.Bluetxt" size="15" width="60" x="320" y="560" color="gray" target="*忍術" ]
 [glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" ]
 [s]
 
@@ -187,7 +188,7 @@ f.Bluetxt = "忍術" + f.Blue;
 [er]
 敵に小ダメージ[r]
 [Calc_Status]
-[eval exp="f.Red = f.Red - 1"]
+[eval exp="tf.Cost = 1 , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.2"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -197,11 +198,11 @@ f.Bluetxt = "忍術" + f.Blue;
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
+;コスト消費
 [iscript]
-tf.cost=1;
 i=0;
-while(tf.cost>0){
-if(f.Cards[f.Hand[i]]['color']=="red"){f.Cards[f.Hand[i]]['active']=0 , tf.cost--};
+while(tf.Cost>0){
+if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
 i++;
 }
 [endscript]
@@ -211,7 +212,7 @@ i++;
 [er]
 敵に中ダメージ[r]
 [Calc_Status]
-[eval exp="f.Red = f.Red - 2"]
+[eval exp="tf.Cost = 2 , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.3"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -222,23 +223,38 @@ i++;
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
+;コスト消費
+[iscript]
+i=0;
+while(tf.Cost>0){
+if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
+i++;
+}
+[endscript]
 [jump target="*手札一覧"]
 
 *攻撃３
 [er]
 敵に大ダメージ[r]
 [Calc_Status]
-[eval exp="f.Red = f.Red - 3"]
+[eval exp="tf.Cost = 3 , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-;[jump target="*P_attack_miss" cond="tf.HitRate < tf.dice"]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [if exp="tf.CRT>1"]会心の一撃[r][endif]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
+;コスト消費
+[iscript]
+i=0;
+while(tf.Cost>0){
+if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
+i++;
+}
+[endscript]
 [jump target="*手札一覧"]
 
 *スキル１
@@ -294,6 +310,10 @@ i++;
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
+;カードのアクティベート
+[iscript]
+for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
+[endscript]
 [MiniStatus]
 
 
@@ -346,7 +366,7 @@ i++;
 *ターン終了
 [eval exp="f.P_EXH++"]
 [eval exp="tf.P_AVD=0"]
-[jump target="*手番開始"]
+[jump target="*ターン開始"]
 
 *game_win
 勝利[s]
