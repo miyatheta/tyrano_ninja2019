@@ -13,7 +13,7 @@
 [eval exp="f.P_DEX=30"]
 ;幸運＞乱数の幅
 [eval exp="f.P_LUK=5"]
-;精神力＞術の威力
+;精神力＞快感への耐性
 [eval exp="f.P_POW=15"]
 ;魅力
 [eval exp="f.P_APP=14"]

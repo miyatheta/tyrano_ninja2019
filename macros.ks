@@ -732,6 +732,24 @@ f.Selected.splice(0,1)
 [glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['id']" cond="f.Cards[f.Hand[4]]['active']>0" target="&f.Cards[f.Hand[4]]['tag']" ]
 [endmacro]
 
+[macro name="DeActivate"]
+;コスト消費
+[iscript]
+i=0;
+while(tf.Cost>0){
+if(f.Cards[f.Hand[i]]['color']==tf.Type && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
+i++;
+}
+[endscript]
+[endmacro]
+
+[macro name="ReActivate"]
+;カードのアクティベート
+[iscript]
+for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
+[endscript]
+[endmacro]
+
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 (命中率[emb exp="tf.HitRate"]％)[r]
@@ -739,7 +757,7 @@ f.Selected.splice(0,1)
 
 [macro name="Calc_Damage"]
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_charm_DUR * 2)"]
-[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.P_LUK * f.P_LUKb * 3 * tf.CRTrate"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]

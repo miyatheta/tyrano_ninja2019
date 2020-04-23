@@ -170,8 +170,8 @@ f.Bluetxt = "忍術" + f.Blue;
 [er]
 [if exp="f.Green<1"]コスト不足[p][jump target="*手札一覧"][endif]
 [if exp="f.Green>0"][link target="*スキル１"]スキル１命中[endlink][endif]　[if exp="f.Green>0"][link target="*スキル２"]スキル２会心[endlink][endif][r]
-[if exp="f.Green>0"][link target="*スキル３"]スキル３攻撃[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４防御[endlink][endif][r]
-[if exp="f.Green>1"][link target="*スキル５"]スキル５必中[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６修繕[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
+[if exp="f.Green>0"][link target="*スキル３"]スキル３防御[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４忍耐[endlink][endif][r]
+[if exp="f.Green>1"][link target="*スキル５"]スキル５修繕[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６反撃[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
@@ -188,7 +188,7 @@ f.Bluetxt = "忍術" + f.Blue;
 [er]
 敵に小ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 1 , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.2"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -198,21 +198,14 @@ f.Bluetxt = "忍術" + f.Blue;
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
-;コスト消費
-[iscript]
-i=0;
-while(tf.Cost>0){
-if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
-i++;
-}
-[endscript]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *攻撃２
 [er]
 敵に中ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 2 , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.3"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -223,21 +216,14 @@ i++;
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
-;コスト消費
-[iscript]
-i=0;
-while(tf.Cost>0){
-if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
-i++;
-}
-[endscript]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *攻撃３
 [er]
 敵に大ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 3 , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -247,73 +233,70 @@ i++;
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
 [triage]
 [l][er]
-;コスト消費
-[iscript]
-i=0;
-while(tf.Cost>0){
-if(f.Cards[f.Hand[i]]['color']=="red" && f.Cards[f.Hand[i]]['active']>0 ){f.Cards[f.Hand[i]]['active']=0 , tf.Cost--};
-i++;
-}
-[endscript]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *スキル１
 [er]
 命中率が上昇
-[eval exp="f.Green = f.Green - 1"]
-[eval exp="tf.P_DEXb1=0.3"]
+[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_DEXb1 = tf.P_DEXb1 + 0.3"]
 [l][er]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *スキル２
 [er]
 会心の一撃発生率上昇
-[eval exp="f.Green = f.Green - 1"]
-[eval exp="tf.P_LUKb1=0.3"]
+[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_LUKb1 = tf.P_LUKb1 + 0.3"]
 [l][er]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *スキル３
 [er]
-攻撃力が上昇
-[eval exp="f.Green = f.Green - 1"]
-[eval exp="tf.P_STRb1=0.3"]
+防御力が上昇
+[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_DURb1=0.3"]
 [l][er]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *スキル４
 [er]
-防御力が上昇
-[eval exp="f.Green = f.Green - 1"]
-[eval exp="tf.P_DURb1=0.3"]
+快感への耐性が大幅に上昇
+[eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_POWb1=0.5"]
 [l][er]
+[DeActivate]
 [jump target="*手札一覧"]
 
 *スキル５
 [er]
-命中が大幅に上昇
-[eval exp="f.Green = f.Green - 2"]
-[eval exp="tf.P_DEXb1=0.5"]
-[l][er]
+#
+くぬぎは目にも留まらぬ速さで着衣した[l][er]
+[eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_DRESS=2"]
+[chara_mod name="kunugi" face="default"]
+[DeActivate]
 [jump target="*手札一覧"]
+[s]
 
 *スキル６
 [er]
-#
-くぬぎは目にも留まらぬ速さで着衣した[p]
-[eval exp="tf.P_DRESS=2"]
-[chara_mod name="kunugi" face="default"]
+カウンター
+[eval exp="tf.Cost = 3 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
+[eval exp="tf.P_STRb1=0.3"]
+[l][er]
+[DeActivate]
 [jump target="*手札一覧"]
-[s]
 
 *攻守交代
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
-;カードのアクティベート
-[iscript]
-for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
-[endscript]
+[ReActivate]
 [MiniStatus]
 
 
@@ -328,12 +311,12 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 *敵攻撃パターン1
 [enemyname]の薙ぎ払い[p]
 [Calc_Status]
-[eval exp="tf.HIT=50"]
+[eval exp="tf.HIT=30"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
 [eval exp="tf.Max=99 , tf.Min=0 "][dice][eval exp="tf.CRT = 1" cond="tf.dice >= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
+[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.AvoidRate > tf.dice"]
 くぬぎは敵の攻撃を回避した[p]
