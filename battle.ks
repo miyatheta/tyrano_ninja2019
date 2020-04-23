@@ -23,38 +23,7 @@
 [anim name="gouza" left=750 top=50 time=1]
 [anim name="gouza" opacity=255 left=600 top=50 time=300 anim="true" effect="jswing" ]
 
-
 戦闘を開始します[p]
-
-[macro name="triage"]
-[jump target="*game_lose" cond="tf.P_HP <= 0"]
-[jump target="*game_lose" cond="f.P_EXH >= 100"]
-[jump target="*game_win" cond="tf.E_HP <= 0"]
-[endmacro]
-
-[macro name="show_status"]
-[nowait]
-[if exp="tf.Mount>0"][else]ターン[emb exp="tf.Turn"][r][endif]
-体力[emb exp="tf.P_HP"]　気力[emb exp="f.P_MGP"]　欲情[emb exp="tf.P_ERO"]　疲労度[emb exp="f.P_EXH"][r]
-敵体力[emb exp="tf.E_HP"] 敵気力[emb exp="f.E_MGP"] 欲情[emb exp="tf.E_ERO"][p]
-[endnowait][cm]
-[endmacro]
-
-;プレイヤーのステータス欄
-[layopt layer="2" visible=true]
-[macro name="MiniStatus"]
-[iscript]
-tf.HPtxt = '体力：' + tf.P_HP ;
-tf.MGPtxt = '気力：' + f.P_MGP , tf.AVDtxt = '回避：+' + tf.P_AVD ;
-tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
-[endscript]
-[ptext text="くぬぎ" layer="2" edge="0x000000" size=25 x=20 y=480 ]
-[ptext name="HPtxt" text="&tf.HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
-[ptext name="MGPtxt" text="&tf.MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
-[ptext name="AVDtxt" text="&tf.AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
-[ptext name="EROtxt" text="&tf.EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
-[ptext name="EXHtxt" text="&tf.EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
-[endmacro]
 
 ;ステータスのインストール
 *Initialize
@@ -127,7 +96,7 @@ for(i = f.Deck.length - 1; i >= 0; i--){
 [ShowCardList]
 ;各色の数値を計算
 [iscript]
-f.Red=0,f.Green=0,f.Blue=0;
+f.Red=0,f.Green=0,f.Blue=0,f.black=0;
 for(i = 4; i >= 0; i--){
   if(f.Cards[f.Hand[i]]['color'] == "red"){f.Red += f.Cards[f.Hand[i]]['value'];}
 }
@@ -137,23 +106,22 @@ for(i = 4; i >= 0; i--){
 for(i = 4; i >= 0; i--){
   if(f.Cards[f.Hand[i]]['color'] == "blue"){f.Blue += f.Cards[f.Hand[i]]['value'];}
 }
+for(i = 4; i >= 0; i--){
+  if(f.Cards[f.Hand[i]]['color'] == "black"){f.black += f.Cards[f.Hand[i]]['value'];}
+}
 [endscript]
 
 *手札一覧
 [er]
 [ShowCardList]
-[iscript]
-f.Redtxt = "攻撃" + f.Red;
-f.Greentxt = "技能" + f.Green;
-f.Bluetxt = "忍術" + f.Blue;
-[endscript]
-
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" ]
+[if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
+[glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red<=0"]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="f.Red<=0"]
 [s]
 
 *攻撃
 [er]
-[if exp="f.Red<1"]コスト不足[p][jump target="*手札一覧"][endif]
+[if exp="f.Red<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
 [if exp="f.Red>0"][link target="*攻撃１"]攻撃１[endlink][endif] [if exp="f.Red>1"][link target="*攻撃２"]攻撃２[endlink][endif][r]
 [if exp="f.Red>2"][link target="*攻撃３"]攻撃３[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
@@ -161,22 +129,32 @@ f.Bluetxt = "忍術" + f.Blue;
 
 *技能
 [er]
-[if exp="f.Green<1"]コスト不足[p][jump target="*手札一覧"][endif]
-[if exp="f.Green>0"][link target="*スキル１"]スキル１命中[endlink][endif]　[if exp="f.Green>0"][link target="*スキル２"]スキル２会心[endlink][endif][r]
-[if exp="f.Green>0"][link target="*スキル３"]スキル３防御[endlink][endif]　[if exp="f.Green>0"][link target="*スキル４"]スキル４忍耐[endlink][endif][r]
-[if exp="f.Green>1"][link target="*スキル５"]スキル５修繕[endlink][endif]　[if exp="f.Green>1"][link target="*スキル６"]スキル６反撃[endlink][endif]　[link target="*手札一覧"]戻る[endlink][r]
+[if exp="f.Green<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル１"]スキル１命中[endlink][endif]　
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル２"]スキル２会心[endlink][endif][r]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル３"]スキル３防御[endlink][endif]　
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル４"]スキル４忍耐[endlink][endif][r]
+[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル５"]スキル５修繕[endlink][endif]　
+[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル６"]スキル６反撃[endlink][endif][r]
+[link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
 [er]
 青をコストに忍術を使います。
+[if exp="f.Blue<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術１"]忍術１火遁（気力10）[endlink][endif]　
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術２"]忍術２変わり身（気力5）[endlink][endif][r]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術３"]忍術３魅了（気力5）[endlink][endif]　
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術４"]忍術４衣替え（気力3）[endlink][endif][r]
+[link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *疲労
 [er]
 疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
 息切れ発生時、疲労カードが３枚消えます[l][er]
-[jump target="*手札一覧"]
+[jump storage="battle.ks" target="*手札一覧"]
 [s]
 
 *手番終了
@@ -189,35 +167,61 @@ f.Bluetxt = "忍術" + f.Blue;
 敵に小ダメージ[r]
 [Calc_Status]
 [eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
-[eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 1.2"]
+[eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 0.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
+
+[if exp="tf.AvoidRate > tf.dice"]
+敵はなずなの攻撃を回避した[p]
+
+[elsif exp="tf.CRT>1"]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[if exp="tf.CRT>1"]会心の一撃[r][endif]
+会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
-[triage]
+
+[else]
+[Calc_Damage]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[endif]
+
+[Triage]
 [l][er]
 [DeActivate]
-[jump target="*手札一覧"]
+[jump storage="battle.ks" target="*手札一覧"]
 
 *攻撃２
 [er]
 敵に中ダメージ[r]
 [Calc_Status]
 [eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
-[eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.3"]
+[eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-;[jump target="*P_attack_miss" cond="tf.HitRate < tf.dice"]
+
+[if exp="tf.AvoidRate > tf.dice"]
+敵はなずなの攻撃を回避した[p]
+
+[elsif exp="tf.CRT>1"]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[if exp="tf.CRT>1"]会心の一撃[r][endif]
+会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
-[triage]
+
+[else]
+[Calc_Damage]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[endif]
+
+
+[Triage]
 [l][er]
 [DeActivate]
-[jump target="*手札一覧"]
+[jump storage="battle.ks" target="*手札一覧"]
 
 *攻撃３
 [er]
@@ -226,71 +230,37 @@ f.Bluetxt = "忍術" + f.Blue;
 [eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
+[eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
+
+[if exp="tf.AvoidRate > tf.dice"]
+敵はなずなの攻撃を回避した[p]
+
+[elsif exp="tf.CRT>1"]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[if exp="tf.CRT>1"]会心の一撃[r][endif]
+会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
-[triage]
+
+[else]
+[Calc_Damage]
+[quake count=5 time=300 hmax=20]
+[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[endif]
+
+[Triage]
 [l][er]
 [DeActivate]
-[jump target="*手札一覧"]
-
-*スキル１
-[er]
-命中率が上昇
-[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_DEXb1 = tf.P_DEXb1 + 0.3"]
-[l][er]
-[DeActivate]
-[jump target="*手札一覧"]
-
-*スキル２
-[er]
-会心の一撃発生率上昇
-[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_LUKb1 = tf.P_LUKb1 + 0.3"]
-[l][er]
-[DeActivate]
-[jump target="*手札一覧"]
-
-*スキル３
-[er]
-防御力が上昇
-[eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_DURb1=0.3"]
-[l][er]
-[DeActivate]
-[jump target="*手札一覧"]
-
-*スキル４
-[er]
-快感への耐性が大幅に上昇
-[eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_POWb1=0.5"]
-[l][er]
-[DeActivate]
-[jump target="*手札一覧"]
-
-*スキル５
-[er]
-#
-くぬぎは目にも留まらぬ速さで着衣した[l][er]
-[eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_DRESS=2"]
-[chara_mod name="kunugi" face="default"]
-[DeActivate]
-[jump target="*手札一覧"]
+[jump storage="battle.ks" target="*手札一覧"]
 [s]
 
-*スキル６
-[er]
-カウンター
-[eval exp="tf.Cost = 3 , tf.Type='green' , f.Green = f.Green - tf.Cost"]
-[eval exp="tf.P_STRb1=0.3"]
-[l][er]
-[DeActivate]
-[jump target="*手札一覧"]
+
+*息切れ
+[cm]
+なずな は息切れをした！[r]
+この手番は行動ができない！[p]
+[eval exp="f.P_EXH = f.P_EXH - 3"]
+;くみつき判定
 
 *攻守交代
 [cm]
@@ -319,19 +289,19 @@ f.Bluetxt = "忍術" + f.Blue;
 [eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.AvoidRate > tf.dice"]
-くぬぎは敵の攻撃を回避した[p]
+なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
-くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+なずなに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [else]
 [quake count=5 time=300 hmax=20]
-くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+なずなに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [endif]
 
-[triage]
+[Triage]
 [MAZO][Orgasm][SANcheck]
 [jump target="*ターン終了"]
 
@@ -356,10 +326,3 @@ f.Deck.push(f.Cards.length);
 f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endscript]
 [jump target="*ターン開始"]
-
-*game_win
-勝利[s]
-
-
-*game_lose
-敗北[s]

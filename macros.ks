@@ -668,60 +668,27 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
-[macro name="Initialize_Cards"]
-;術の設定
-[iscript]
-f.P_Skill=[
-{id:0 , name:"集気法" , aura:0 , SP:0 , cost:0 , label:"*P_skill0"},
-{id:1 , name:"火炎" , aura:60 , SP:0 , cost:3 , label:"*P_skill1"},
-{id:2 , name:"空蝉" , aura:50 , SP:0 , cost:3 , label:"*P_skill2"},
-{id:3 , name:"魅了" , aura:30 , SP:0 , cost:2 , label:"*P_skill3"},
-{id:4 , name:"衣変" , aura:20 , SP:0 , cost:2 , label:"*P_skill4"},
-{id:5 , name:"螺旋功" , aura:100 , SP:0 , cost:4 , label:"*P_skill5"}
-];
-[endscript]
-;カードの設定
-[iscript]
-f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-f.Cards=[
-{id:0,type:1,name:"忍術",suite:"水",comb:1,active:1,txt:"水・忍　術　"},
-{id:1,type:1,name:"忍術",suite:"風",comb:1,active:1,txt:"風・忍　術　"},
-{id:2,type:1,name:"忍術",suite:"炎",comb:1,active:1,txt:"炎・忍　術　"},
-{id:3,type:2,name:"拳",suite:"水",comb:1,active:1,txt:"水・拳　　　"},
-{id:4,type:2,name:"拳",suite:"風",comb:1,active:1,txt:"風・拳　　　"},
-{id:5,type:2,name:"拳",suite:"炎",comb:1,active:1,txt:"炎・拳　　　"},
-{id:6,type:3,name:"下段蹴り",suite:"水",comb:1,active:1,txt:"水・下段蹴り"},
-{id:7,type:3,name:"下段蹴り",suite:"風",comb:1,active:1,txt:"風・下段蹴り"},
-{id:8,type:3,name:"下段蹴り",suite:"炎",comb:1,active:1,txt:"炎・下段蹴り"},
-{id:9,type:4,name:"くない",suite:"水",comb:1,active:1,txt:"水・くない　"},
-{id:10,type:4,name:"くない",suite:"風",comb:1,active:1,txt:"風・くない　"},
-{id:11,type:4,name:"くない",suite:"炎",comb:1,active:1,txt:"炎・くない　"},
-{id:12,type:5,name:"金的",suite:"水",comb:0,active:1,txt:"水・金　的　"},
-{id:13,type:5,name:"金的",suite:"風",comb:0,active:1,txt:"風・金　的　"},
-{id:14,type:5,name:"金的",suite:"炎",comb:0,active:1,txt:"炎・金　的　"},
-{id:15,type:6,name:"回し蹴り",suite:"水",comb:0,active:1,txt:"水・回し蹴り"},
-{id:16,type:6,name:"回し蹴り",suite:"風",comb:0,active:1,txt:"風・回し蹴り"},
-{id:17,type:6,name:"回し蹴り",suite:"炎",comb:0,active:1,txt:"炎・回し蹴り"},
-{id:18,type:7,name:"飛び蹴り",suite:"水",comb:0,active:1,txt:"水・飛び蹴り"},
-{id:19,type:7,name:"飛び蹴り",suite:"風",comb:0,active:1,txt:"風・飛び蹴り"},
-{id:20,type:7,name:"飛び蹴り",suite:"炎",comb:0,active:1,txt:"炎・飛び蹴り"}
-];
-[endscript]
-;初回シャッフル
-[iscript]
-for(var i = f.Deck.length - 1; i >= 0; i--){
-    var r = Math.floor(Math.random() * (i + 1));
-    var tmp = f.Deck[i];
-    f.Deck[i] = f.Deck[r];
-    f.Deck[r] = tmp;
-}
-[endscript]
-[endmacro]
 
 [macro name="SelectedCardSplice"]
 [iscript]
 f.Selected.splice(0,1)
 [endscript]
+[endmacro]
+
+;プレイヤーのステータス欄
+[macro name="MiniStatus"]
+[layopt layer="2" visible=true]
+[iscript]
+tf.HPtxt = '体力：' + tf.P_HP ;
+tf.MGPtxt = '気力：' + f.P_MGP , tf.AVDtxt = '回避：+' + tf.P_AVD ;
+tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
+[endscript]
+[ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=480 ]
+[ptext name="HPtxt" text="&tf.HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
+[ptext name="MGPtxt" text="&tf.MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
+[ptext name="AVDtxt" text="&tf.AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
+[ptext name="EROtxt" text="&tf.EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
+[ptext name="EXHtxt" text="&tf.EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 [endmacro]
 
 [macro name="ShowCardList"]
@@ -764,24 +731,31 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endmacro]
 
+;勝敗判定
+[macro name="Triage"]
+[jump storage="battle-Triage.ks" target="*game_lose" cond="tf.P_HP <= 0"]
+[jump storage="battle-Triage.ks" target="*game_lose" cond="f.P_EXH >= 100"]
+[jump storage="battle-Triage.ks" target="*game_win" cond="tf.E_HP <= 0"]
+[endmacro]
+
 ;絶頂判定
 [macro name="Orgasm"]
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
-くぬぎは興奮状態になった[p]
+なずなは興奮状態になった[p]
 [eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
 [endif]
 
 [if exp="tf.Kaikan > 99 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは絶頂した[p]
+なずなは絶頂した[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 
 [elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
-くぬぎは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
+なずなは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 [endif]
 [endmacro]
@@ -791,7 +765,7 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [eval exp="tf.Max=tf.Kaikan , tf.Min=0"][dice]
 [if exp="tf.Orga == 4  && tf.dice >= tf.P_SAN && f.Insanity==0"]
 [eval exp="tf.dice=1"]
-絶頂によりくぬぎの理性が[emb exp="tf.dice"]減少[p]
+絶頂によりなずなの理性が[emb exp="tf.dice"]減少[p]
 [eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
 [endif]
 ;発狂判定
@@ -806,7 +780,7 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [eval exp="tf.E_HP = tf.E_HP - 100"][limit]
 火傷で[enemyname]の体力が100減少[p]
 [eval exp="tf.E_scald = tf.E_scald - 1"]
-[triage]
+[Triage]
 [endif]
 [endmacro]
 
@@ -818,18 +792,18 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 ;快感＝敵の性技技能値は無関係
 [eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
 [endmacro]
 
 [macro name="Dress"]
 [if exp="tf.P_DRESS > 1"]
 [eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
-くぬぎは下着姿になった[p]くぬぎの色気が上昇した[p]
+なずなは下着姿になった[p]なずなの色気が上昇した[p]
 [chara_mod name="kunugi" face="seminude"]
 [elsif exp="tf.P_DRESS > 0"]
 [eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
-くぬぎは一糸まとわぬ姿になった[p]くぬぎの色気が上昇した[p]
+なずなは一糸まとわぬ姿になった[p]なずなの色気が上昇した[p]
 [chara_mod name="kunugi" face="nude"]
 [endif]
 [endmacro]

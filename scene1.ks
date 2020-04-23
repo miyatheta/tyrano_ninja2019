@@ -18,7 +18,7 @@
 [chara_config pos_mode="false"]
 
 ;このゲームで登場するキャラクターを宣言
-[chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="くぬぎ"  ]
+[chara_new  name="kunugi" storage="chara/kunugi/battle_stand.png" jname="なずな"  ]
 ;キャラクターの表情登録
 [chara_face name="kunugi" face="seminude" storage="chara/kunugi/battle_stand_seminude.png"]
 [chara_face name="kunugi" face="nude" storage="chara/kunugi/battle_stand_nude.png"]
