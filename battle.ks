@@ -44,11 +44,14 @@
 [layopt layer="2" visible=true]
 [macro name="MiniStatus"]
 [iscript]
-tf.HPtxt = '体力：' + tf.P_HP , tf.MGPtxt = '気力：' + f.P_MGP , tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
+tf.HPtxt = '体力：' + tf.P_HP ;
+tf.MGPtxt = '気力：' + f.P_MGP , tf.AVDtxt = '回避：+' + tf.P_AVD ;
+tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
 [endscript]
 [ptext text="くぬぎ" layer="2" edge="0x000000" size=25 x=20 y=480 ]
 [ptext name="HPtxt" text="&tf.HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
 [ptext name="MGPtxt" text="&tf.MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
+[ptext name="AVDtxt" text="&tf.AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
 [ptext name="EROtxt" text="&tf.EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
 [ptext name="EXHtxt" text="&tf.EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 [endmacro]
@@ -58,9 +61,9 @@ tf.HPtxt = '体力：' + tf.P_HP , tf.MGPtxt = '気力：' + f.P_MGP , tf.EROtxt
 [eval exp="tf.Turn=0"]
 [eval exp="tf.Set=0 , f.Selected=[] , f.Cemetery=[] , f.SkillSet=[]"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP , tf.P_ACTmax=f.P_ACT"]
-[eval exp="tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
+[eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_MGP=0"]
-[eval exp="tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
+[eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 
 [Initialize_1Tbuff]
 [Initialize_3Tbuff]
@@ -265,32 +268,34 @@ f.Bluetxt = "忍術" + f.Blue;
 
 *スキル５
 [er]
-回避が大幅に上昇
-[eval exp="f.Green = f.Green - 2"]
-[eval exp="tf.P_AGIb1=0.5"]
-[l][er]
-[jump target="*手札一覧"]
-
-*スキル６
-[er]
 命中が大幅に上昇
 [eval exp="f.Green = f.Green - 2"]
 [eval exp="tf.P_DEXb1=0.5"]
 [l][er]
 [jump target="*手札一覧"]
 
+*スキル６
+[er]
+#
+くぬぎは目にも留まらぬ速さで着衣した[p]
+[eval exp="tf.P_DRESS=2"]
+[chara_mod name="kunugi" face="default"]
+[jump target="*手札一覧"]
+[s]
+
 *攻守交代
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
+[eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
 [MiniStatus]
 
 
 *敵攻撃パターン適用
 [jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==2"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==3"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==4"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==5"]
 [s]
 
 *敵攻撃パターン1
@@ -323,6 +328,7 @@ f.Bluetxt = "忍術" + f.Blue;
 
 *ターン終了
 [eval exp="f.P_EXH++"]
+[eval exp="tf.P_AVD=0"]
 [jump target="*手番開始"]
 
 *game_win

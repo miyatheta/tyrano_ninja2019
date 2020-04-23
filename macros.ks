@@ -804,4 +804,16 @@ f.Selected.splice(0,1)
 [endif]
 [endmacro]
 
+[macro name="Dress"]
+[if exp="tf.P_DRESS > 1"]
+[eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
+くぬぎは下着姿になった[p]くぬぎの色気が上昇した[p]
+[chara_mod name="kunugi" face="seminude"]
+[elsif exp="tf.P_DRESS > 0"]
+[eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
+くぬぎは一糸まとわぬ姿になった[p]くぬぎの色気が上昇した[p]
+[chara_mod name="kunugi" face="nude"]
+[endif]
+[endmacro]
+
 [return]
