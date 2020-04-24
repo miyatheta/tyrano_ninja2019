@@ -668,13 +668,6 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
-
-[macro name="SelectedCardSplice"]
-[iscript]
-f.Selected.splice(0,1)
-[endscript]
-[endmacro]
-
 ;プレイヤーのステータス欄
 [macro name="MiniStatus"]
 [layopt layer="2" visible=true]
@@ -717,6 +710,21 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [endscript]
 [endmacro]
 
+[macro name="Ikigire"]
+;息切れ時の疲労カード削除
+[iscript]
+i=0;
+n=3;
+while(tf.Cost>0){
+if(f.Cards[f.Hand[i]]['color']=="black"){
+  f.Cards.splice(f.Hand[i],1);
+  n--;
+};
+i++;
+}
+[endscript]
+[endmacro]
+
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 (命中率[emb exp="tf.HitRate"]％)[r]
@@ -728,7 +736,6 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
 [eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endmacro]
 
 ;勝敗判定

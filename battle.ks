@@ -37,7 +37,7 @@
 [Initialize_3Tbuff]
 *Initialize_BadStatus
 ;状態異常の初期値設定
-[eval exp="tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
+[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1"]
 [eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
@@ -171,20 +171,20 @@ for(i = 4; i >= 0; i--){
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-
+[Calc_Damage]
 [if exp="tf.AvoidRate > tf.dice"]
 敵はなずなの攻撃を回避した[p]
 
 [elsif exp="tf.CRT>1"]
-[Calc_Damage]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
-[Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
 [Triage]
@@ -259,7 +259,10 @@ for(i = 4; i >= 0; i--){
 [cm]
 なずな は息切れをした！[r]
 この手番は行動ができない！[p]
+[Ikigire]
 [eval exp="f.P_EXH = f.P_EXH - 3"]
+[eval exp="tf.P_Stan = 1"]
+[MiniStatus]
 ;くみつき判定
 
 *攻守交代
@@ -283,12 +286,12 @@ for(i = 4; i >= 0; i--){
 [Calc_Status]
 [eval exp="tf.HIT=30"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
-[eval exp="tf.Max=99 , tf.Min=0 "][dice][eval exp="tf.CRT = 1" cond="tf.dice >= f.E_LUK * 4 * tf.CRTrate"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 10 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.AvoidRate > tf.dice"]
+[if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
@@ -307,6 +310,7 @@ for(i = 4; i >= 0; i--){
 
 *敵攻撃パターン2
 
+
 *敵攻撃パターン3
 
 *敵攻撃パターン4
@@ -319,6 +323,8 @@ for(i = 4; i >= 0; i--){
 *ターン終了
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
+;バッドステータスのターン短縮
+[eval exp="f.P_Stan = 0"]
 ;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
 ;疲労カードの追加
 [iscript]
