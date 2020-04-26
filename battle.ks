@@ -85,15 +85,8 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 ;スタン
 [if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
 
-
 *敵攻撃パターン選択
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice<20"][eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
-[else][eval exp="tf.enemy_attack_pattern=5"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
-[endif]
+[jump storage="battle-Testenemy.ks" target="*敵攻撃パターン選択"]
 
 *手番開始
 [MiniStatus]
@@ -111,7 +104,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [ShowCardList]
 [if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
 [glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red<=0"]
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="tf.ACT>0"]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="tf.P_ACT>0"]
 [s]
 
 *攻撃
@@ -125,21 +118,21 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 *技能
 [er]
 [if exp="f.Green<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル１"]スキル１命中[endlink][endif]　
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル２"]スキル２会心[endlink][endif][r]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル３"]スキル３防御[endlink][endif]　
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル４"]スキル４忍耐[endlink][endif][r]
-[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル５"]スキル５修繕[endlink][endif]　
-[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル６"]スキル６反撃[endlink][endif][r]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル１"]スキル１命中　[endlink][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル２"]スキル２会心　[endlink][endif][r]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル３"]スキル３防御　[endlink][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル４"]スキル４忍耐　[endlink][endif][r]
+[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル５"]スキル５修繕　[endlink][endif]
+[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル６"]スキル６反撃　[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
 [er]
 [if exp="f.Blue<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術１"]忍術１火遁（気力10）[endlink][endif]　
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術１"]忍術１火遁（気力10）[endlink][endif]
 [if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術２"]忍術２変わり身（気力5）[endlink][endif][r]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術３"]忍術３魅了（気力5）[endlink][endif]　
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術３"]忍術３魅了（気力5）[endlink][endif]
 [if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術４"]忍術４衣替え（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
@@ -271,66 +264,8 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="tf.P_ACT = 0"]
 [ReActivate]
 [MiniStatus]
-
-
-*敵攻撃パターン適用
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==2"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==3"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==4"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==5"]
+[jump storage="battle-Testenemy.ks" target="*敵攻撃パターン適用"]
 [s]
-
-*敵攻撃パターン1
-[enemyname]の薙ぎ払い[p]
-[Calc_Status]
-[eval exp="tf.HIT=30"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
-[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
-[eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
-[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
-なずなは敵の攻撃を回避した[p]
-[elsif exp="tf.CRT>1"]
-[quake count=5 time=300 hmax=20]
-会心の一撃[r]
-なずなに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[else]
-[quake count=5 time=300 hmax=20]
-なずなに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[endif]
-
-[MiniStatus][Triage]
-[MAZO][Orgasm][SANcheck]
-[jump target="*ターン終了"]
-
-*敵攻撃パターン2
-[enemyname]の組付[p]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.P_AVD>0 && tf.AvoidRate > tf.dice"]
-なずなは敵の組付を躱した[p]
-[jump storage="battle.ks" target="*ターン終了"]
-[endif]
-なずなは敵に組み付かれた[p]
-;[jump storage="battle.ks" target="*P_Barrier" cond="tf.P_Barrier>0"]
-[jump storage="battle-bound.ks" target="*拘束開始"]
-[s]
-
-*敵攻撃パターン3
-
-*敵攻撃パターン4
-
-*敵攻撃パターン5
-
-*敵攻撃パターン6
-
-
-
-
 
 *ターン終了
 [eval exp="tf.P_AVD=0"]

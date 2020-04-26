@@ -12,8 +12,8 @@
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
-
-[Triage]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
+[MiniStatus][Triage]
 [l][er]
 [DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
