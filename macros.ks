@@ -528,10 +528,15 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [endscript]
 [endmacro]
 
-[macro name="Initialize_1Tbuff"]
-[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_POWd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
+[macro name="Initialize_PL_1Tbuff"]
+;PLのスキルによる効果
 [eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0 , tf.P_DefSKBb1=0"]
 [eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_POWd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
+[endmacro]
+
+[macro name="Initialize_EN_1Tbuff"]
+;敵のスキルによる効果
+[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_POWd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
 [eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_POWb1=0 , tf.E_MNDb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
 [endmacro]
 

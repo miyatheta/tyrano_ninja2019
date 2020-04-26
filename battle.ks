@@ -33,8 +33,7 @@
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , tf.E_MGP=f.E_MGP"]
 [eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 
-[Initialize_1Tbuff]
-[Initialize_3Tbuff]
+[Initialize_PL_1Tbuff][Initialize_EN_1Tbuff][Initialize_3Tbuff]
 *Initialize_BadStatus
 ;状態異常の初期値設定
 [eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
@@ -63,7 +62,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [endscript]
 
 *ターン開始
-[Initialize_1Tbuff]
+[Initialize_PL_1Tbuff]
 [Refresh_3Tbuff]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
@@ -103,8 +102,8 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 [ShowCardList]
 [if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
-[glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red<=0"]
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="tf.P_ACT>0"]
+[glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red>0"]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="f.Red<=0"]
 [s]
 
 *攻撃
@@ -154,7 +153,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 敵に小ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
+[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 0.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -184,7 +183,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 敵に中ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
+[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
 [eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -217,7 +216,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 敵に大ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
+[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -262,12 +261,14 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
 [eval exp="tf.P_ACT = 0"]
+[Initialize_EN_1Tbuff]
 [ReActivate]
 [MiniStatus]
 [jump storage="battle-Testenemy.ks" target="*敵攻撃パターン適用"]
 [s]
 
 *ターン終了
+[freeimage layer="3"]
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
 ;バッドステータスのターン短縮

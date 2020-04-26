@@ -4,7 +4,7 @@
 [eval exp="tf.Mount = 1000"]
 
 *ターン開始
-[Initialize_1Tbuff]
+[Initialize_PL_1Tbuff]
 [Refresh_3Tbuff]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
@@ -76,38 +76,38 @@
 *攻撃
 [er]
 [if exp="f.Red<1"][jump target="*手札一覧"][endif]
-[if exp="f.Red>0"][link target="*攻撃１"]攻撃１もがく[endlink][endif][r]
-[if exp="f.Red>1"][link target="*攻撃２"]攻撃２抵抗する[endlink][endif][r]
-[if exp="f.Red>2"][link target="*攻撃３"]攻撃３暴れる[endlink][endif][r]
+[if exp="f.Red>0"][link target="*攻撃1"]攻撃1もがく[endlink][endif][r]
+[if exp="f.Red>1"][link target="*攻撃2"]攻撃2抵抗する[endlink][endif][r]
+[if exp="f.Red>2"][link target="*攻撃3"]攻撃3暴れる[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *技能
 [er]
 [if exp="f.Green<1"][jump target="*手札一覧"][endif]
-[if exp="f.Green>1"][link target="*スキル１"]スキル１縄抜け[endlink][endif]　
-[if exp="f.Green>1"][link target="*スキル２"]スキル２色仕掛け[endlink][endif][r]
-[if exp="f.Green>0"][link target="*スキル３"]スキル３急所狙い[endlink][endif]　
-[link target="*手札一覧"]戻る[endlink][r]
+[if exp="f.Green>1"][link target="*スキル1"]スキル1縄抜け[endlink][endif][r]
+[if exp="f.Green>1"][link target="*スキル2"]スキル2色仕掛け[endlink][endif][r]
+[if exp="f.Green>0"][link target="*スキル3"]スキル3急所狙い[endlink][endif][r]
+[link target="*手札一覧"]戻る[endlink]
 [s]
 
 *忍術
 [er]
 [if exp="f.Blue<1"][jump target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link target="*忍術１"]忍術１空蝉（気力10）[endlink][endif]　
-[if exp="f.Blue>0"][link target="*忍術２"]忍術２魅了（気力5）[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術３"]忍術３房中術（気力3）[endlink][endif]　
-[link target="*手札一覧"]戻る[endlink][r]
+[if exp="f.Blue>0"][link target="*忍術1"]忍術1空蝉（気力10）[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術2"]忍術2魅了（気力5）[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術3"]忍術3房中術（気力3）[endlink][endif][r]
+[link target="*手札一覧"]戻る[endlink]
 [s]
 
 *疲労
 [er]
-疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
-息切れ発生時、疲労カードが３枚消えます[l][er]
+疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが3枚集まると息切れ(スタン)します。[r]
+息切れ発生時、疲労カードが3枚消えます[l][er]
 [jump storage="battle.ks" target="*手札一覧"]
 [s]
 
-*攻撃１
+*攻撃1
 [er]
 なずなはもがいた
 [quake count=2 time=200 hmax=10]
@@ -146,7 +146,7 @@
 [jump target="*拘束解除" cond="tf.Mount <= 0"]
 [jump target="*攻守交代"]
 
-*スキル１
+*スキル1
 [er]
 なずなは縄抜けを試みた[lr]
 [Calc_Status]
@@ -160,7 +160,7 @@
 しかし、拘束は解けなかった[p]
 [jump target="*攻守交代"]
 
-*スキル２
+*スキル2
 [er]
 なずなは色仕掛けを試みた[lr]
 [Calc_Status]
@@ -183,7 +183,7 @@
 しかし、拘束は解けない！[p]
 [jump target="*攻守交代"]
 
-*スキル３
+*スキル3
 [er]
 なずなは金的を狙った[lr]
 [eval exp="tf.Resist = Math.floor((tf.P_DEX *  tf.ArousDEXd - tf.E_AGI) * 5) "]
@@ -201,10 +201,20 @@
 しかし、拘束は解けない！[p]
 [jump target="*攻守交代"]
 
+*息切れ
+[cm]
+なずな は息切れをした！[r]
+この手番は行動ができない！[p]
+[Ikigire]
+[eval exp="f.P_EXH = f.P_EXH - 3"]
+[eval exp="tf.P_Stan = 1"]
+[MiniStatus]
+;くみつき判定
 
 *攻守交代
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
+[Initialize_EN_1Tbuff]
 [MiniStatus]
 
 *敵行動選択
@@ -216,7 +226,7 @@
 [else][eval exp="tf.enemy_attack_pattern=5"]
 [endif]
 
-*敵行動１
+*敵行動1
 ;脱衣
 [enemyname]はくぬぎの装束を剥ぎ取ろうとした[p]
 
@@ -243,7 +253,7 @@
 [jump target="*敵行動終了"]
 [s]
 
-*敵行動２
+*敵行動2
 [enemyname]はくぬぎの胸を揉みしだいた[p]
 [if exp="f.P_BOOB==2"]
 #くぬぎ
@@ -258,7 +268,7 @@
 [jump target="*敵行動終了"]
 [s]
 
-*敵行動３
+*敵行動3
 [enemyname]はくぬぎの秘処をまさぐった[p]
 [eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
