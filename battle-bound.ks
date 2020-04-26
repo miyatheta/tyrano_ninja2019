@@ -206,7 +206,6 @@
 なずな は息切れをした！[r]
 この手番は行動ができない！[p]
 [Ikigire]
-[eval exp="f.P_EXH = f.P_EXH - 3"]
 [eval exp="tf.P_Stan = 1"]
 [MiniStatus]
 ;くみつき判定
@@ -228,7 +227,7 @@
 
 *敵行動1
 ;脱衣
-[enemyname]はくぬぎの装束を剥ぎ取ろうとした[p]
+[EnName]はくぬぎの装束を剥ぎ取ろうとした[p]
 
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
 絶頂で身動きの取れないくぬぎは一気に全裸に剥かれてしまった[p]くぬぎの色気が上昇した[p]

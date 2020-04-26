@@ -596,14 +596,16 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [macro name="MiniStatus"]
 [layopt layer="2" visible=true]
 [iscript]
+tf.Decktxt = '山札：' + f.Deck.length + '/' + f.Cards.length ;
 tf.P_HPtxt = '体力：' + tf.P_HP ;
 tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
 tf.P_EROtxt = '欲情：' + tf.P_ERO , tf.P_EXHtxt = '疲労：' + f.P_EXH;
 [endscript]
 [ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=480 ]
 [ptext name="P_HPtxt" text="&tf.P_HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
-[ptext name="P_MGPtxt" text="&tf.P_MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
-[ptext name="P_AVDtxt" text="&tf.P_AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
+[ptext name="P_MGPtxt" text="&tf.P_MGPtxt" layer="2" edge="0x000000" size=20 x=140 y=510 overwrite=true]
+[ptext name="Decktxt" text="&tf.Decktxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
+[ptext name="P_AVDtxt" text="&tf.P_AVDtxt" layer="2" edge="0x000000" size=20 x=140 y=540 overwrite=true]
 [ptext name="P_EROtxt" text="&tf.P_EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
 [ptext name="P_EXHtxt" text="&tf.P_EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 
@@ -621,7 +623,17 @@ tf.E_MNTtxt = '拘束：' + tf.Mount ;
 [endmacro]
 
 ;カード関係
+[macro name="DeckRemake"]
+;cardを増減したときなどにDeckの再構築を行う
+[iscript]
+f.Deck = [];
+n = f.Cards.length;
+for( i=0 ; i<n ; i++){f.Deck.push(i);}
+[endscript]
+[endmacro]
+
 [macro name="CardShuffle"]
+[DeckRemake]
 ;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
 [iscript]
 for(i = f.Deck.length - 1; i >= 0; i--){
@@ -683,13 +695,18 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [iscript]
 i = 0;
 n = 0;
-while(n <= 3){
-if(f.Cards[f.Hand[i]]['color']=="black"){
-  f.Cards.splice(f.Hand[i],1),n++;
+while(n < 3){
+  if(f.Cards[f.Hand[i]]['color']=="black"){
+    f.Cards.splice(f.Hand[i],1);
+    n++;
+  }
+  else{
+    i++;
+  }
 }
-i++;
-}
+f.P_EXH = f.P_EXH - 3
 [endscript]
+[DeckRemake]
 [endmacro]
 
 [macro name="Calc_HitRate"]

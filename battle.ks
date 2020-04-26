@@ -58,7 +58,9 @@ f.Cards=[
 {color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
 {color:"green",value:1,active:1,txt:"技能",tag:"*技能"},
 ];
-f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
+f.Deck = [];
+n = f.Cards.length;
+for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
 
 *ターン開始
@@ -251,7 +253,6 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 なずな は息切れをした！[r]
 この手番は行動ができない！[p]
 [Ikigire]
-[eval exp="f.P_EXH = f.P_EXH - 3"]
 [eval exp="tf.P_Stan = 1"]
 [MiniStatus]
 ;くみつき判定
@@ -262,7 +263,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
 [eval exp="tf.P_ACT = 0"]
 [Initialize_EN_1Tbuff]
-[ReActivate]
+[if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
 [jump storage="battle-Testenemy.ks" target="*敵攻撃パターン適用"]
 [s]

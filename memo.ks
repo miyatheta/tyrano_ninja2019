@@ -2,6 +2,28 @@
 レイヤー３＝カード
 フリーレイヤー＝グラフィックボタンなど
 
+DeckとCards両方から疲労を消さないとダメ
+＞DeckはCardsの枚数を０から並べただけ
+>Deckを毎回シャッフル時にfor文で再構築する
+
+while文の間違い
+①else文が必要
+②spliceしたときはiを増加させない
+[iscript]
+i = 0;
+n = 0;
+array=["a","y","x","x","y"];
+while(n < 1){
+if(array[i]=="x"){
+array.splice(i,1);
+n++;
+}
+else{i++;}
+document.write(array);
+}
+
+[endscript]
+
 欲情値の上がり方
 
 欲情値はバーで表示。
