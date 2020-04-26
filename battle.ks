@@ -27,7 +27,7 @@
 
 ;ステータスのインストール
 *Initialize
-[eval exp="tf.Turn=0"]
+[eval exp="tf.Turn=0 , tf.P_ACT = 0"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , tf.E_MGP=f.E_MGP"]
@@ -111,7 +111,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [ShowCardList]
 [if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
 [glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red<=0"]
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="f.Red<=0"]
+[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="tf.ACT>0"]
 [s]
 
 *攻撃
@@ -154,13 +154,14 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 *手番終了
 [er]
 攻撃を終了します。
+[emb exp="tf.E_HP"]
 [s]
 
 *攻撃１
 [er]
 敵に小ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.RATE = 6.0 , tf.ACC = 30 , tf.CRTrate = 0.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -172,7 +173,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[enemyname]に[emb exp="tf.Damage"] [r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
@@ -181,7 +182,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
-[Triage]
+[MiniStatus][Triage]
 [l][er]
 [DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
@@ -190,7 +191,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 敵に中ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.RATE = 10.0 , tf.ACC = 20 , tf.CRTrate = 1.0"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -204,15 +205,17 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
 
-[Triage]
+[MiniStatus][Triage]
 [l][er]
 [DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
@@ -221,7 +224,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 敵に大ダメージ[r]
 [Calc_Status]
-[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost"]
+[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
 [eval exp="tf.HIT = Math.floor(tf.ACC + tf.P_DEX * tf.ArousDEXd * 3 - tf.E_AGI)"]
 [eval exp="tf.AvoidRate = tf.E_AGI + tf.E_AVD * 10 - tf.HIT "][limit]
@@ -235,14 +238,16 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 [enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
-[Triage]
+[MiniStatus][Triage]
 [l][er]
 [DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
@@ -263,16 +268,17 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
+[eval exp="tf.P_ACT = 0"]
 [ReActivate]
 [MiniStatus]
 
 
 *敵攻撃パターン適用
 [jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==2"]
-[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==3"]
-[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==4"]
-[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==5"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==2"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==3"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==4"]
+[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==5"]
 [s]
 
 *敵攻撃パターン1
@@ -283,7 +289,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
 [eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
 [eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 10 - tf.HIT "][limit]
+[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
@@ -298,7 +304,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [endif]
 
-[Triage]
+[MiniStatus][Triage]
 [MAZO][Orgasm][SANcheck]
 [jump target="*ターン終了"]
 
