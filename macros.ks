@@ -1,5 +1,9 @@
 *マクロ
 ;文法関係
+[macro name="lr"]
+[l][r]
+[endmacro]
+
 [macro name="lrcm"]
 [l][r][cm]
 [endmacro]
@@ -13,7 +17,7 @@
 [endmacro]
 
 [macro name="EnName"]
-[emb exp="f.Enemy.HN"]
+[emb exp="f.E_HandlName"]
 [endmacro]
 
 ;レイヤー関係
@@ -33,48 +37,6 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [endmacro]
 
 ;ステータス関係
-
-[macro name="enemySetUp"]
-;敵設定読込
-[iscript]
-f.BaseEnHP = f.originEnHP;
-f.BaseEnSTR = f.originEnSTR;
-f.BaseEnDEF = f.originEnDEF;
-f.BaseEnSPD = f.originEnSPD;
-f.BaseEnDEC = f.originEnDEC;
-f.BaseEnFP = f.originEnFP;
-f.BaseEnERO = f.originEnERO;
-f.BaseEnMND = f.originEnMND;
-f.BaseEnANG = f.originEnANG;
-f.BaseEnDEX = f.originEnDEX;
-f.BaseEnEND = f.originEnEND;
-f.BaseBindPower = f.originBindPower;
-
-f.EnHP = f.BaseEnHP;
-f.EnSTR = f.BaseEnSTR;
-f.EnDEF = f.BaseEnDEF;
-f.EnSPD = f.BaseEnSPD;
-f.EnDEC = f.BaseEnDEC;
-f.EnFP = f.BaseEnFP;
-f.EnERO = f.BaseEnERO;
-f.EnMND = f.BaseEnMND;
-f.EnANG = f.BaseEnANG;
-f.EnDEX = f.BaseEnDEX;
-f.EnEND = f.BaseEnEND;
-f.BindPower = f.BaseBindPower;
-
-f.BaseEnOption = JSON.stringify(f.originEnOption);
-f.BaseEnOption = JSON.parse(f.BaseEnOption);
-f.EnOption = JSON.stringify(f.BaseEnOption);
-f.EnOption = JSON.parse(f.EnOption);
-
-f.EnCount = 0;
-
-f.EnGBuff = 1.0;
-f.EnStan = 0;
-[endscript]
-[endmacro]
-
 [macro name="Digit"]
 [iscript]
 x = "UI/number/white/x.png"
@@ -469,65 +431,6 @@ calcStatus(f.P_APPdigit,tf.P_APP);
 [endmacro]
 
 ;戦闘関連
-[macro name="Bonus"]
-[iscript]
-tf.Num = f.selectOption[f.H].num * f.selectOption[f.H-1].num * f.selectOption[f.H-2].num;
-tf.EnNum = f.EnSelectOption[f.EnSelectPattern[f.N + f.EnCount * 3]].num * f.EnSelectOption[f.EnSelectPattern[f.N-1 + f.EnCount * 3]].num * f.EnSelectOption[f.EnSelectPattern[f.N-2 + f.EnCount * 3]].num;
-[endscript]
-;PL：[emb exp="tf.Num"]＊敵：[emb exp="tf.EnNum"][l][cm]
-[if exp="tf.Num == 1"]
-  ;グー３枚＞体力上昇
-  [eval exp="f.GBuff = f.GBuff + 0.5"]
-  [image layer=4 storage="buff/STRup.png" width="75" top="200" left="280" visible="true"]
-[elsif exp="tf.Num == 2 || tf.Num == 3"]
-  ;グー２枚＞体力上昇
-  [eval exp="f.GBuff = f.GBuff + 0.2"]
-  [image layer=4 storage="buff/STRup.png" width="75" top="200" left="280" visible="true"]
-[elsif exp="tf.Num == 8"]
-  ;チョキ３枚＞FP上昇
-  [eval exp="f.FP = f.FP + 30"][eval exp="f.FP = 100" cond="f.FP > 100"]
-  [image layer=4 storage="buff/FPup.png" width="75" top="200" left="280" visible="true"]
-[elsif exp="tf.Num == 4 || tf.Num == 12"]
-  ;チョキ2枚＞FP上昇
-  [eval exp="f.FP = f.FP + 10"][eval exp="f.FP = 100" cond="f.FP > 100"]
-  [image layer=4 storage="buff/FPup.png" width="75" top="200" left="280" visible="true"]
-[elsif exp="tf.Num == 27"]
-  ;パー３枚＞スピード上昇
-  [eval exp="f.SPD = f.SPD + 9"][eval exp="f.SPD = f.BaseSPD" cond="f.SPD > f.BaseSPD"]
-  [image layer=4 storage="buff/SPDup.png" width="75" top="200" left="280" visible="true"]
-[elsif exp="tf.Num == 9 || tf.Num == 18"]
-  ;パー2枚＞スピード上昇
-  [eval exp="f.SPD = f.SPD + 3"][eval exp="f.SPD = f.BaseSPD" cond="f.SPD > f.BaseSPD"]
-  [image layer=4 storage="buff/SPDup.png" width="75" top="200" left="280" visible="true"]
-[endif]
-
-[if exp="tf.EnNum == 1"]
-  ;グー３枚
-  [eval exp="f.EnGBuff = f.EnGBuff + 0.5"]
-  [image layer=4 storage="buff/STRup.png" width="75" top="200" left="580" visible="true"]
-[elsif exp="tf.EnNum == 2 || tf.EnNum == 3"]
-  ;グー２枚
-  [eval exp="f.EnGBuff = f.EnGBuff + 0.2"]
-  [image layer=4 storage="buff/STRup.png" width="75" top="200" left="580" visible="true"]
-[elsif exp="tf.EnNum == 8"]
-  ;チョキ３枚＞FP上昇
-  [eval exp="f.EnFP = f.EnFP + 30"][eval exp="f.EnFP = 100" cond="f.EnFP > 100"]
-  [image layer=4 storage="buff/FPup.png" width="75" top="200" left="580" visible="true"]
-[elsif exp="tf.EnNum == 4 || tf.EnNum == 12"]
-  ;チョキ2枚＞FP上昇
-  [eval exp="f.EnFP = f.EnFP + 10"][eval exp="f.EnFP = 100" cond="f.EnFP > 100"]
-  [image layer=4 storage="buff/FPup.png" width="75" top="200" left="580" visible="true"]
-[elsif exp="tf.EnNum == 27"]
-  ;パー３枚＞スピード上昇
-  [eval exp="f.EnSPD = f.EnSPD + 9"][eval="f.EnSPD = f.BaseEnSPD" cond="f.EnSPD > f.BaseEnSPD"]
-  [image layer=4 storage="buff/SPDup.png" width="75" top="200" left="580" visible="true"]
-[elsif exp="tf.EnNum == 9 || tf.EnNum == 18"]
-  ;パー2枚＞スピード上昇
-  [eval exp="f.EnSPD = f.EnSPD + 3"][eval="f.EnSPD = f.BaseEnSPD" cond="f.EnSPD > f.BaseEnSPD"]
-  [image layer=4 storage="buff/SPDup.png" width="75" top="200" left="580" visible="true"]
-[endif]
-[endmacro]
-
 [macro name="Masochism"]
 [iscript]
 tf.Damage = Math.floor(3 * f.SEN / 100);
@@ -607,11 +510,12 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [macro name="Calc_Status"]
 ;evalだと括弧を計算順序が考慮しない
 [iscript]
-tf.P_STR = f.P_STR * ( 1 - tf.P_STRd3 - tf.P_STRd1 + tf.P_STRb3 + tf.P_STRb1 );
+tf.P_STR = f.P_STR * ( 1 - tf.P_STRd3 - tf.P_STRd1 + tf.P_STRb3 + tf.P_STRb1 ) * tf.ArousSTRd;
 tf.P_DUR = f.P_DUR * ( 1 - tf.P_DURd3 - tf.P_DURd1 + tf.P_DURb3 + tf.P_DURb1 );
-tf.P_AGI = f.P_AGI * ( 1 - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 );
-tf.P_DEX = f.P_DEX * ( 1 - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 );
+tf.P_AGI = f.P_AGI * ( 1 - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 ) * tf.ArousAGId;
+tf.P_DEX = f.P_DEX * ( 1 - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 ) * tf.ArousDEXd;
 tf.P_POW = f.P_POW * ( 1 - tf.P_POWd3 - tf.P_POWd1 + tf.P_POWb3 + tf.P_POWb1 );
+tf.P_MND = f.P_MND * ( 1 - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 );
 tf.P_APP = f.P_APP * ( 1 - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS) );
 
 tf.E_STR = f.E_STR * ( 1  - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 );
@@ -619,32 +523,34 @@ tf.E_DUR = f.E_DUR * ( 1  - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 );
 tf.E_AGI = f.E_AGI * ( 1  - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 );
 tf.E_DEX = f.E_DEX * ( 1  - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 );
 tf.E_POW = f.E_POW * ( 1  - tf.E_POWd3 - tf.E_POWd1 + tf.E_POWb3 + tf.E_POWb1 );
+tf.E_MND = f.E_MND * ( 1 - tf.E_MNDd3 - tf.E_MNDd1 + tf.E_MNDb3 + tf.E_MNDb1 );
 tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [endscript]
 [endmacro]
 
 [macro name="Initialize_1Tbuff"]
-[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_POWd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
-[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0 , tf.P_DefSKBb1=0 , tf.P_Cardb1=0"]
-[eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_POWd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
-[eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_POWb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
+[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_POWd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
+[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0 , tf.P_DefSKBb1=0"]
+[eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_POWd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
+[eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_POWb1=0 , tf.E_MNDb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
 [endmacro]
 
 [macro name="Initialize_3Tbuff"]
-[eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_POWd3=0 , tf.P_APPd3=0"]
-[eval exp="tf.P_STRd3_count=1 , tf.P_DURd3_count=1 , tf.P_AGId3_count=1 , tf.P_DEXd3_count=1 , tf.P_POWd3_count=1 , tf.P_APPd3_count=1"]
+[eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_POWd3=0 , tf.P_MNDd3=0 , tf.P_APPd3=0"]
+[eval exp="tf.P_STRd3_count=1 , tf.P_DURd3_count=1 , tf.P_AGId3_count=1 , tf.P_DEXd3_count=1 , tf.P_POWd3_count=1 , tf.P_MNDd3_count=1 , tf.P_APPd3_count=1"]
 
-[eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_POWb3=0 , tf.P_APPb3=0"]
-[eval exp="tf.P_STRb3_count=1 , tf.P_DURb3_count=1 , tf.P_AGIb3_count=1 , tf.P_DEXb3_count=1 , tf.P_POWb3_count=1 , tf.P_APPb3_count=1"]
+[eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_POWb3=0 , tf.P_MNDb3=0 , tf.P_APPb3=0"]
+[eval exp="tf.P_STRb3_count=1 , tf.P_DURb3_count=1 , tf.P_AGIb3_count=1 , tf.P_DEXb3_count=1 , tf.P_POWb3_count=1 , tf.P_MNDb3_count=1 , tf.P_APPb3_count=1"]
 
-[eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_POWd3=0 , tf.E_APPd3=0"]
-[eval exp="tf.E_STRd3_count=1 , tf.E_DURd3_count=1 , tf.E_AGId3_count=1 , tf.E_DEXd3_count=1 , tf.E_POWd3_count=1 , tf.E_APPd3_count=1"]
+[eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_POWd3=0 , tf.E_MNDd3=0 , tf.E_APPd3=0"]
+[eval exp="tf.E_STRd3_count=1 , tf.E_DURd3_count=1 , tf.E_AGId3_count=1 , tf.E_DEXd3_count=1 , tf.E_POWd3_count=1 , tf.E_MNDd3_count=1 , tf.E_APPd3_count=1"]
 
-[eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_POWb3=0 , tf.E_APPb3=0"]
-[eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_APPb3_count=1"]
-
-[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 "]
-[eval exp="tf.E_charm_count=1 "]
+[eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_POWb3=0 , tf.E_MNDb3=1 , tf.E_APPb3=0"]
+[eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_MNDb3_count=1 , tf.E_APPb3_count=1"]
+;魅了のデバフ
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 , tf.E_charm_count=1"]
+;怒り
+[eval exp="tf.E_anger_count=1 "]
 [endmacro]
 
 [macro name="Refresh_3Tbuff"]
@@ -652,19 +558,32 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [eval exp="tf.P_DURd3_count = tf.P_DURd3_count-1" cond="tf.P_DURd3_count>1"][eval exp="tf.P_DURd3=0 ,tf.P_DURd3_count=0" cond="tf.P_DURd3_count==1"]
 [eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1" cond="tf.P_AGId3_count>1"][eval exp="tf.P_AGId3=0 ,tf.P_AGId3_count=0" cond="tf.P_AGId3_count==1"]
 [eval exp="tf.P_DEXd3_count = tf.P_DEXd3_count-1" cond="tf.P_DEXd3_count>1"][eval exp="tf.P_DEXd3=0 ,tf.P_DEXd3_count=0" cond="tf.P_DEXd3_count==1"]
+[eval exp="tf.P_POWd3_count = tf.P_POWd3_count-1" cond="tf.P_POWd3_count>1"][eval exp="tf.P_POWd3=0 ,tf.P_POWd3_count=0" cond="tf.P_POWd3_count==1"]
+[eval exp="tf.P_MNDd3_count = tf.P_MNDd3_count-1" cond="tf.P_MNDd3_count>1"][eval exp="tf.P_MNDd3=0 ,tf.P_MNDd3_count=0" cond="tf.P_MNDd3_count==1"]
+[eval exp="tf.P_APPd3_count = tf.P_APPd3_count-1" cond="tf.P_APPd3_count>1"][eval exp="tf.P_APPd3=0 ,tf.P_APPd3_count=0" cond="tf.P_APPd3_count==1"]
 [eval exp="tf.P_STRb3_count = tf.P_STRb3_count-1" cond="tf.P_STRb3_count>1"][eval exp="tf.P_STRb3=0 ,tf.P_STRb3_count=0" cond="tf.P_STRb3_count==1"]
 [eval exp="tf.P_DURb3_count = tf.P_DURb3_count-1" cond="tf.P_DURb3_count>1"][eval exp="tf.P_DURb3=0 ,tf.P_DURb3_count=0" cond="tf.P_DURb3_count==1"]
 [eval exp="tf.P_AGIb3_count = tf.P_AGIb3_count-1" cond="tf.P_AGIb3_count>1"][eval exp="tf.P_AGIb3=0 ,tf.P_AGIb3_count=0" cond="tf.P_AGIb3_count==1"]
 [eval exp="tf.P_DEXb3_count = tf.P_DEXb3_count-1" cond="tf.P_DEXb3_count>1"][eval exp="tf.P_DEXb3=0 ,tf.P_DEXb3_count=0" cond="tf.P_DEXb3_count==1"]
+[eval exp="tf.P_POWb3_count = tf.P_POWb3_count-1" cond="tf.P_POWb3_count>1"][eval exp="tf.P_POWb3=0 ,tf.P_POWb3_count=0" cond="tf.P_POWb3_count==1"]
+[eval exp="tf.P_MNDb3_count = tf.P_MNDb3_count-1" cond="tf.P_MNDb3_count>1"][eval exp="tf.P_MNDb3=0 ,tf.P_MNDb3_count=0" cond="tf.P_MNDb3_count==1"]
+[eval exp="tf.P_APPb3_count = tf.P_APPb3_count-1" cond="tf.P_APPb3_count>1"][eval exp="tf.P_APPb3=0 ,tf.P_APPb3_count=0" cond="tf.P_APPb3_count==1"]
 
 [eval exp="tf.E_STRd3_count = tf.E_STRd3_count-1" cond="tf.E_STRd3_count>1"][eval exp="tf.E_STRd3=0 ,tf.E_STRd3_count=0" cond="tf.E_STRd3_count==1"]
 [eval exp="tf.E_DURd3_count = tf.E_DURd3_count-1" cond="tf.E_DURd3_count>1"][eval exp="tf.E_DURd3=0 ,tf.E_DURd3_count=0" cond="tf.E_DURd3_count==1"]
 [eval exp="tf.E_AGId3_count = tf.E_AGId3_count-1" cond="tf.E_AGId3_count>1"][eval exp="tf.E_AGId3=0 ,tf.E_AGId3_count=0" cond="tf.E_AGId3_count==1"]
 [eval exp="tf.E_DEXd3_count = tf.E_DEXd3_count-1" cond="tf.E_DEXd3_count>1"][eval exp="tf.E_DEXd3=0 ,tf.E_DEXd3_count=0" cond="tf.E_DEXd3_count==1"]
+[eval exp="tf.E_POWd3_count = tf.E_POWd3_count-1" cond="tf.E_POWd3_count>1"][eval exp="tf.E_POWd3=0 ,tf.E_POWd3_count=0" cond="tf.E_POWd3_count==1"]
+[eval exp="tf.E_MNDd3_count = tf.E_MNDd3_count-1" cond="tf.E_MNDd3_count>1"][eval exp="tf.E_MNDd3=0 ,tf.E_MNDd3_count=0" cond="tf.E_MNDd3_count==1"]
+[eval exp="tf.E_APPd3_count = tf.E_APPd3_count-1" cond="tf.E_APPd3_count>1"][eval exp="tf.E_APPd3=0 ,tf.E_APPd3_count=0" cond="tf.E_APPd3_count==1"]
 [eval exp="tf.E_STRb3_count = tf.E_STRb3_count-1" cond="tf.E_STRb3_count>1"][eval exp="tf.E_STRb3=0 ,tf.E_STRb3_count=0" cond="tf.E_STRb3_count==1"]
 [eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=0 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
 [eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=0 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
 [eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=0 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
+[eval exp="tf.E_POWb3_count = tf.E_POWb3_count-1" cond="tf.E_POWb3_count>1"][eval exp="tf.E_POWb3=0 ,tf.E_POWb3_count=0" cond="tf.E_POWb3_count==1"]
+[eval exp="tf.E_MNDb3_count = tf.E_MNDb3_count-1" cond="tf.E_MNDb3_count>1"][eval exp="tf.E_MNDb3=0 ,tf.E_MNDb3_count=0" cond="tf.E_MNDb3_count==1"]
+[eval exp="tf.E_APPb3_count = tf.E_APPb3_count-1" cond="tf.E_APPb3_count>1"][eval exp="tf.E_APPb3=0 ,tf.E_APPb3_count=0" cond="tf.E_APPb3_count==1"]
+
 [eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
 [endmacro]
 
@@ -672,16 +591,41 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [macro name="MiniStatus"]
 [layopt layer="2" visible=true]
 [iscript]
-tf.HPtxt = '体力：' + tf.P_HP ;
-tf.MGPtxt = '気力：' + f.P_MGP , tf.AVDtxt = '回避：+' + tf.P_AVD ;
-tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
+tf.P_HPtxt = '体力：' + tf.P_HP ;
+tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
+tf.P_EROtxt = '欲情：' + tf.P_ERO , tf.P_EXHtxt = '疲労：' + f.P_EXH;
 [endscript]
 [ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=480 ]
-[ptext name="HPtxt" text="&tf.HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
-[ptext name="MGPtxt" text="&tf.MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
-[ptext name="AVDtxt" text="&tf.AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
-[ptext name="EROtxt" text="&tf.EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
-[ptext name="EXHtxt" text="&tf.EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
+[ptext name="P_HPtxt" text="&tf.P_HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
+[ptext name="P_MGPtxt" text="&tf.P_MGPtxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
+[ptext name="P_AVDtxt" text="&tf.P_AVDtxt" layer="2" edge="0x000000" size=20 x=120 y=540 overwrite=true]
+[ptext name="P_EROtxt" text="&tf.P_EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
+[ptext name="P_EXHtxt" text="&tf.P_EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
+
+[iscript]
+tf.E_HPtxt = '体力：' + tf.E_HP ;
+tf.E_MGPtxt = '気力：' + tf.E_MGP ;
+tf.E_EROtxt = '欲情：' + tf.E_ERO ;
+tf.E_MNTtxt = '拘束：' + tf.Mount ;
+[endscript]
+[ptext text="&tf.E_name" layer="2" edge="0x000000" size=20 x=620 y=5 ]
+[ptext name="E_HPtxt" text="&tf.E_HPtxt" layer="2" edge="0x000000" size=20 x=620 y=30 overwrite=true]
+[ptext name="E_MGPtxt" text="&tf.E_MGPtxt" layer="2" edge="0x000000" size=20 x=740 y=30 overwrite=true]
+[ptext name="E_EROtxt" text="&tf.E_EROtxt" layer="2" edge="0x000000" size=20 x=840 y=30 overwrite=true]
+[ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=840 y=50 overwrite=true]
+[endmacro]
+
+;カード関係
+[macro name="CardShuffle"]
+;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
+[iscript]
+for(i = f.Deck.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.Deck[i];
+    f.Deck[i] = f.Deck[r];
+    f.Deck[r] = tmp;
+}
+[endscript]
 [endmacro]
 
 [macro name="ShowCardList"]
@@ -690,6 +634,25 @@ tf.EROtxt = '欲情：' + tf.P_ERO , tf.EXHtxt = '疲労：' + f.P_EXH;
 [glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['value']" cond="f.Cards[f.Hand[2]]['active']>0" target="&f.Cards[f.Hand[2]]['tag']" ]
 [glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['value']" cond="f.Cards[f.Hand[3]]['active']>0" target="&f.Cards[f.Hand[3]]['tag']" ]
 [glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['value']" cond="f.Cards[f.Hand[4]]['active']>0" target="&f.Cards[f.Hand[4]]['tag']" ]
+[endmacro]
+
+[macro name="Calc_Card"]
+;各色の数値を計算
+[iscript]
+f.Red=0,f.Green=0,f.Blue=0,f.black=0;
+for(i = 4; i >= 0; i--){
+  if(f.Cards[f.Hand[i]]['color'] == "red"){f.Red += f.Cards[f.Hand[i]]['value'];}
+}
+for(i = 4; i >= 0; i--){
+  if(f.Cards[f.Hand[i]]['color'] == "green"){f.Green += f.Cards[f.Hand[i]]['value'];}
+}
+for(i = 4; i >= 0; i--){
+  if(f.Cards[f.Hand[i]]['color'] == "blue"){f.Blue += f.Cards[f.Hand[i]]['value'];}
+}
+for(i = 4; i >= 0; i--){
+  if(f.Cards[f.Hand[i]]['color'] == "black"){f.black += f.Cards[f.Hand[i]]['value'];}
+}
+[endscript]
 [endmacro]
 
 [macro name="DeActivate"]
@@ -750,7 +713,7 @@ i++;
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
 なずなは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousSEXd =2"]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousMNDd =0.8 , tf.ArousSEXd =2"]
 [endif]
 
 [if exp="tf.Kaikan > 99 && tf.Orga < 1"]

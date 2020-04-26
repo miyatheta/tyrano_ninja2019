@@ -13,8 +13,10 @@
 [eval exp="f.P_DEX=30"]
 ;幸運＞乱数の幅
 [eval exp="f.P_LUK=5"]
-;精神力＞快感への耐性
+;精神力＞術の火力
 [eval exp="f.P_POW=15"]
+;精神力＞快感への抵抗値
+[eval exp="f.P_MND=15"]
 ;魅力
 [eval exp="f.P_APP=14"]
 ;呼吸＞行動回数
@@ -52,6 +54,8 @@
 [eval exp="f.E_LUK=5"]
 ;精神力＞術の威力
 [eval exp="f.E_POW=5"]
+;精神力＞魅了などへの抵抗値
+[eval exp="f.E_MND=5"]
 ;魅力>敵は魅了への抵抗として使用？
 [eval exp="f.E_APP=7"]
 ;呼吸＞行動回数

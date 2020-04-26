@@ -28,17 +28,17 @@
 ;ステータスのインストール
 *Initialize
 [eval exp="tf.Turn=0"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_APP=f.P_APP"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
-[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , f.E_MGP=0"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP , tf.E_ACT=f.E_ACT , tf.E_MGP=f.E_MGP"]
 [eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND"]
 
 [Initialize_1Tbuff]
 [Initialize_3Tbuff]
 *Initialize_BadStatus
 ;状態異常の初期値設定
-[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
-[eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 0 , tf.ArousSEXd =1"]
+[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
+[eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousPOWb = 1 , tf.ArousMNDb = 1 , tf.ArousSEXd =1"]
 [eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 *Initialize_Cards
@@ -65,6 +65,26 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 *ターン開始
 [Initialize_1Tbuff]
 [Refresh_3Tbuff]
+;ターン開始
+[eval exp="tf.Turn=tf.Turn+1"]
+;状態異常のカウント・治癒
+;絶頂
+[eval exp="tf.Orga = tf.Orga - 1"]
+[if exp="tf.Orga > 0"]
+くぬぎは絶頂の余韻から抜け出せないでいる![p]
+[elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
+くぬぎは絶頂から抜け出した[p]
+[eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1"]
+[eval exp="tf.Arousal = 1"]
+[endif]
+;興奮
+[if exp="tf.Arousal == 1"]
+くぬぎの興奮が収まった[p]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
+[endif]
+;スタン
+[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
+
 
 *敵攻撃パターン選択
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -72,44 +92,19 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
 [elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
 [elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
-[else][eval exp="tf.enemy_attack_pattern=5"][eval exp="enemy_attack_pattern=4"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[else][eval exp="tf.enemy_attack_pattern=5"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
 [endif]
 
 *手番開始
 [MiniStatus]
-[glink text="手番開始" size="18" width="15" height="100" x="350" y="500" color="gray" target="*シャッフルスタート" ]
+[glink text="手番開始" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札構築" ]
 [s]
 
-*シャッフルスタート
-;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
-[iscript]
-for(i = f.Deck.length - 1; i >= 0; i--){
-    var r = Math.floor(Math.random() * (i + 1));
-    var tmp = f.Deck[i];
-    f.Deck[i] = f.Deck[r];
-    f.Deck[r] = tmp;
-}
-[endscript]
-
 *手札構築
+[CardShuffle]
 [eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
 [ShowCardList]
-;各色の数値を計算
-[iscript]
-f.Red=0,f.Green=0,f.Blue=0,f.black=0;
-for(i = 4; i >= 0; i--){
-  if(f.Cards[f.Hand[i]]['color'] == "red"){f.Red += f.Cards[f.Hand[i]]['value'];}
-}
-for(i = 4; i >= 0; i--){
-  if(f.Cards[f.Hand[i]]['color'] == "green"){f.Green += f.Cards[f.Hand[i]]['value'];}
-}
-for(i = 4; i >= 0; i--){
-  if(f.Cards[f.Hand[i]]['color'] == "blue"){f.Blue += f.Cards[f.Hand[i]]['value'];}
-}
-for(i = 4; i >= 0; i--){
-  if(f.Cards[f.Hand[i]]['color'] == "black"){f.black += f.Cards[f.Hand[i]]['value'];}
-}
-[endscript]
+[Calc_Card]
 
 *手札一覧
 [er]
@@ -121,7 +116,7 @@ for(i = 4; i >= 0; i--){
 
 *攻撃
 [er]
-[if exp="f.Red<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
+[if exp="f.Red<1"][jump storage="battle.ks" target="*手札一覧"][endif]
 [if exp="f.Red>0"][link target="*攻撃１"]攻撃１[endlink][endif] [if exp="f.Red>1"][link target="*攻撃２"]攻撃２[endlink][endif][r]
 [if exp="f.Red>2"][link target="*攻撃３"]攻撃３[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
@@ -129,7 +124,7 @@ for(i = 4; i >= 0; i--){
 
 *技能
 [er]
-[if exp="f.Green<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
+[if exp="f.Green<1"][jump storage="battle.ks" target="*手札一覧"][endif]
 [if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル１"]スキル１命中[endlink][endif]　
 [if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル２"]スキル２会心[endlink][endif][r]
 [if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル３"]スキル３防御[endlink][endif]　
@@ -141,8 +136,7 @@ for(i = 4; i >= 0; i--){
 
 *忍術
 [er]
-青をコストに忍術を使います。
-[if exp="f.Blue<1"]コスト不足[p][jump storage="battle.ks" target="*手札一覧"][endif]
+[if exp="f.Blue<1"][jump storage="battle.ks" target="*手札一覧"][endif]
 [if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術１"]忍術１火遁（気力10）[endlink][endif]　
 [if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術２"]忍術２変わり身（気力5）[endlink][endif][r]
 [if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術３"]忍術３魅了（気力5）[endlink][endif]　
@@ -154,7 +148,7 @@ for(i = 4; i >= 0; i--){
 [er]
 疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
 息切れ発生時、疲労カードが３枚消えます[l][er]
-[jump storage="battle.ks" target="*手札一覧"]
+[jump target="*手札一覧"]
 [s]
 
 *手番終了
@@ -275,10 +269,10 @@ for(i = 4; i >= 0; i--){
 
 *敵攻撃パターン適用
 [jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==2"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==3"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==4"]
-[jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==5"]
+[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==2"]
+[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==3"]
+[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==4"]
+[jump target="*敵攻撃パターン2" cond="tf.enemy_attack_pattern==5"]
 [s]
 
 *敵攻撃パターン1
@@ -309,7 +303,16 @@ for(i = 4; i >= 0; i--){
 [jump target="*ターン終了"]
 
 *敵攻撃パターン2
-
+[enemyname]の組付[p]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[if exp="tf.P_AVD>0 && tf.AvoidRate > tf.dice"]
+なずなは敵の組付を躱した[p]
+[jump storage="battle.ks" target="*ターン終了"]
+[endif]
+なずなは敵に組み付かれた[p]
+;[jump storage="battle.ks" target="*P_Barrier" cond="tf.P_Barrier>0"]
+[jump storage="battle-bound.ks" target="*拘束開始"]
+[s]
 
 *敵攻撃パターン3
 
@@ -318,6 +321,9 @@ for(i = 4; i >= 0; i--){
 *敵攻撃パターン5
 
 *敵攻撃パターン6
+
+
+
 
 
 *ターン終了
