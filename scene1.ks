@@ -35,7 +35,22 @@
 
 *route_select
 
-;easy-1
+;easy-
+[iscript]
+i = 0;
+n = 0;
+array=["a","y","x","x","y"];
+while(n < 1){
+if(array[i]=="x"){
+array.splice(i,1);
+n++;
+}
+else{i++;}
+document.write(array);
+}
+
+[endscript]
+[emb exp="tf.array"]
 高火力。一発。萬子[p]
 [eval exp="tf.E_name='大砲魔'"]
 [eval exp="tf.E_HandlName='大砲魔'"]

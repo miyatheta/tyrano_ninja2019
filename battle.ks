@@ -102,7 +102,7 @@ f.Deck=[0,1,2,3,4,5,6,7,8,9,10,11];
 [er]
 [ShowCardList]
 [if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
-[glink text="手番続行" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red>0"]
+[glink text="手番継続" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red>0"]
 [glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="f.Red<=0"]
 [s]
 

@@ -681,13 +681,12 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [macro name="Ikigire"]
 ;息切れ時の疲労カード削除
 [iscript]
-i=0;
-n=3;
-while(tf.Cost>0){
+i = 0;
+n = 0;
+while(n <= 3){
 if(f.Cards[f.Hand[i]]['color']=="black"){
-  f.Cards.splice(f.Hand[i],1);
-  n--;
-};
+  f.Cards.splice(f.Hand[i],1),n++;
+}
 i++;
 }
 [endscript]
