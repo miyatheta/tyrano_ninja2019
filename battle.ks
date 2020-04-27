@@ -84,7 +84,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
 [endif]
 ;スタン
-[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
+[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][EnName]が自由に動けるようになった[p][endif]
 
 *敵攻撃パターン選択
 [jump storage="battle-Testenemy.ks" target="*敵攻撃パターン選択"]
@@ -96,7 +96,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 *手札構築
 [CardShuffle]
-[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
 [ShowCardList]
 [Calc_Card]
 
@@ -167,12 +166,12 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
-[enemyname]に[emb exp="tf.Damage"] [r]
+[EnName]に[emb exp="tf.Damage"] [r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
@@ -198,13 +197,13 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
@@ -231,13 +230,13 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 
 [else]
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [endif]
 
@@ -269,7 +268,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [s]
 
 *ターン終了
-[freeimage layer="3"]
+[freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
 ;バッドステータスのターン短縮

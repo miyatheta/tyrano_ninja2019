@@ -17,7 +17,7 @@
 [endmacro]
 
 [macro name="EnName"]
-[emb exp="f.E_HandlName"]
+[emb exp="tf.E_HandlName"]
 [endmacro]
 
 ;レイヤー関係
@@ -480,9 +480,9 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 
 [macro name="SUKEBE"]
 ;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
-[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
+[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * (1 - tf.P_DefSKBb1) * (100 - tf.P_SAN)/100)"]
 ;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * (1 - tf.P_DefSKBb1) * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
 [endmacro]
 
 [macro name="limit"]
@@ -620,6 +620,8 @@ tf.E_MNTtxt = '拘束：' + tf.Mount ;
 [ptext name="E_MGPtxt" text="&tf.E_MGPtxt" layer="2" edge="0x000000" size=20 x=740 y=30 overwrite=true]
 [ptext name="E_EROtxt" text="&tf.E_EROtxt" layer="2" edge="0x000000" size=20 x=840 y=30 overwrite=true]
 [ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=840 y=50 overwrite=true]
+
+[CardDebug]
 [endmacro]
 
 ;カード関係
@@ -643,6 +645,7 @@ for(i = f.Deck.length - 1; i >= 0; i--){
     f.Deck[r] = tmp;
 }
 [endscript]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
 [endmacro]
 
 [macro name="ShowCardList"]
@@ -709,6 +712,14 @@ f.P_EXH = f.P_EXH - 3
 [DeckRemake]
 [endmacro]
 
+[macro name="CardDebug"]
+[layopt layer="4" visible=true]
+[ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
+[ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
+[ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
+[endmacro]
+
+
 [macro name="Calc_HitRate"]
 [eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
 (命中率[emb exp="tf.HitRate"]％)[r]
@@ -769,7 +780,7 @@ f.P_EXH = f.P_EXH - 3
 [macro name="SCALD"]
 [if exp="tf.E_scald>0"]
 [eval exp="tf.E_HP = tf.E_HP - 100"][limit]
-火傷で[enemyname]の体力が100減少[p]
+火傷で[EnName]の体力が100減少[p]
 [eval exp="tf.E_scald = tf.E_scald - 1"]
 [Triage]
 [endif]

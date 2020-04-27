@@ -171,7 +171,7 @@
 
 
 *組付
-[enemyname]の組付[p]
+[EnName]の組付[p]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.P_AVD>0 && tf.AvoidRate > tf.dice"]
 なずなは敵の組付を躱した[p]
@@ -213,7 +213,7 @@
 [s]
 
 *薙ぎ払い
-[enemyname]の薙ぎ払い[p]
+[EnName]の薙ぎ払い[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -232,7 +232,7 @@
 [s]
 
 *斬り落とし
-[enemyname]の斬り落とし[p]
+[EnName]の斬り落とし[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -271,7 +271,7 @@
 [s]
 
 *打ち払い
-[enemyname]の打ち払い[p]
+[EnName]の打ち払い[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -290,7 +290,7 @@
 [s]
 
 *乱れ突き
-[enemyname]の乱れ突き[p]
+[EnName]の乱れ突き[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -330,7 +330,7 @@
 [s]
 
 *正拳突き
-[enemyname]の正拳突き[p]
+[EnName]の正拳突き[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -349,7 +349,7 @@
 [s]
 
 *飛び蹴り
-[enemyname]の飛び蹴り[p]
+[EnName]の飛び蹴り[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -388,7 +388,7 @@
 [s]
 
 *切りつけ
-[enemyname]の切りつけ[p]
+[EnName]の切りつけ[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
@@ -407,7 +407,7 @@
 [s]
 
 *めった切り
-[enemyname]のめった切り[p]
+[EnName]のめった切り[p]
 [Calc_Status]
 [eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*E_attack_miss" cond="tf.HIT < tf.dice"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]

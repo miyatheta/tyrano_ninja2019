@@ -4,21 +4,21 @@
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
 ;腕力＞攻撃力
-[eval exp="f.P_STR=23"]
+[eval exp="f.P_STR=100"]
 ;耐久＞防御力
-[eval exp="f.P_DUR=23"]
+[eval exp="f.P_DUR=100"]
 ;敏捷＞回避
-[eval exp="f.P_AGI=36"]
+[eval exp="f.P_AGI=100"]
 ;技量＞命中
-[eval exp="f.P_DEX=30"]
+[eval exp="f.P_DEX=100"]
 ;幸運＞乱数の幅
-[eval exp="f.P_LUK=5"]
+[eval exp="f.P_LUK=100"]
 ;精神力＞術の火力
-[eval exp="f.P_POW=15"]
+[eval exp="f.P_POW=100"]
 ;精神力＞快感への抵抗値
-[eval exp="f.P_MND=15"]
+[eval exp="f.P_MND=100"]
 ;魅力
-[eval exp="f.P_APP=14"]
+[eval exp="f.P_APP=100"]
 ;呼吸＞行動回数
 [eval exp="f.P_ACT=7"]
 ;気力＞SP
@@ -30,7 +30,7 @@
 ;欲情
 [eval exp="f.P_ERO=0"]
 ;理性,SAN値
-[eval exp="f.P_SAN=89"]
+[eval exp="f.P_SAN=100"]
 ;衣服耐久度
 [eval exp="f.P_ARMOR=100"]
 ;着衣状態  2=着衣　1=損傷　0=脱衣

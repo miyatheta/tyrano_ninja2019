@@ -8,7 +8,7 @@
 #くぬぎ
 きゃあ！！[p]
 #
-[enemyname]は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
+[EnName]は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump target="*bochu"]
 [endif]

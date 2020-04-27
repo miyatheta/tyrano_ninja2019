@@ -27,7 +27,7 @@
 [endif]
 
 ;スタン
-[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][enemyname]が自由に動けるようになった[p][endif]
+[if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][EnName]が自由に動けるようになった[p][endif]
 [MiniStatus]
 
 [if exp="tf.Orga==4 && tf.dice>49"]
@@ -94,9 +94,8 @@
 *忍術
 [er]
 [if exp="f.Blue<1"][jump target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link target="*忍術1"]忍術1空蝉（気力10）[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術2"]忍術2魅了（気力5）[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術3"]忍術3房中術（気力3）[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術0"]忍術0練気（気力1）[endlink][endif]　　[if exp="f.Blue>0"][link target="*忍術1"]忍術1空蝉（気力10）[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術2"]忍術2魅了（気力5）[endlink][endif]　　[if exp="f.Blue>0"][link target="*忍術3"]忍術3房中術（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
@@ -139,7 +138,7 @@
 [quake count=1 time=100 hmax=30]
 [lr]
 [Calc_Status]
-[e[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.ArousSTRd * 13) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.ArousSTRd * 13) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
 拘束が[emb exp="tf.Resist"]緩んだ[p]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
@@ -170,7 +169,7 @@
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 ;[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_MND) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-;[enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
+;[EnName]の欲情が[emb exp="tf.HDamage"]上昇した[p]
 [if exp="tf.E_anger_count > 1"]
 [eval exp="tf.E_anger_count = 0"]
 [EnName]の怒り状態が解除された[lr]
@@ -201,6 +200,26 @@
 しかし、拘束は解けない！[p]
 [jump target="*攻守交代"]
 
+*忍術0
+[er]
+
+[jump target="*攻守交代"]
+
+*忍術1
+[er]
+
+[jump target="*攻守交代"]
+
+*忍術2
+[er]
+
+[jump target="*攻守交代"]
+
+*忍術3
+[er]
+
+[jump target="*攻守交代"]
+
 *息切れ
 [cm]
 なずな は息切れをした！[r]
@@ -214,6 +233,7 @@
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [Initialize_EN_1Tbuff]
+[if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
 
 *敵行動選択
@@ -224,6 +244,14 @@
 [elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"]
 [else][eval exp="tf.enemy_attack_pattern=5"]
 [endif]
+
+*敵行動パターン適用
+[jump target="*敵行動1" cond="tf.enemy_attack_pattern==1"]
+[jump target="*敵行動2" cond="tf.enemy_attack_pattern==2"]
+[jump target="*敵行動3" cond="tf.enemy_attack_pattern==3"]
+[jump target="*敵行動4" cond="tf.enemy_attack_pattern==4"]
+[jump target="*敵行動5" cond="tf.enemy_attack_pattern==5"]
+[s]
 
 *敵行動1
 ;脱衣
@@ -253,7 +281,7 @@
 [s]
 
 *敵行動2
-[enemyname]はくぬぎの胸を揉みしだいた[p]
+[EnName]はくぬぎの胸を揉みしだいた[p]
 [if exp="f.P_BOOB==2"]
 #くぬぎ
 いやあっ！！[p]
@@ -268,7 +296,7 @@
 [s]
 
 *敵行動3
-[enemyname]はくぬぎの秘処をまさぐった[p]
+[EnName]はくぬぎの秘処をまさぐった[p]
 [eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
@@ -277,8 +305,8 @@
 [jump target="*敵行動終了"]
 [s]
 
-*敵行動４
-[enemyname]の攻撃[p]
+*敵行動4
+[EnName]の攻撃[p]
 [quake count=3 time=300 hmax=30]
 [Calc_Status]
 [eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR) * 3"]
@@ -289,8 +317,8 @@
 [jump target="*敵行動終了"]
 [s]
 
-*敵行動５
-[enemyname]はくぬぎを締め上げた[p]
+*敵行動5
+[EnName]はくぬぎを締め上げた[p]
 [quake count=5 time=300 hmax=20]
 [Calc_Status]
 [eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR) * 3"]
@@ -305,6 +333,7 @@
 
 
 *ターン終了
+[freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
 ;バッドステータスのターン短縮

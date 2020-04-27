@@ -117,7 +117,7 @@
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage , tf.E_scald=3"][limit]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[EnName]に[emb exp="tf.Damage"]のダメージ[p]
 [Triage]
 [jump target="*術の終了"]
 [s]
@@ -143,18 +143,18 @@
 [Calc_Status]
 ;感情は確定で上昇、上昇幅は抵抗値次第
 [eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-[enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
+[EnName]の欲情が[emb exp="tf.HDamage"]上昇した[p]
 ;魅了による弱体化
-[enemyname]は前かがみになった[p]
+[EnName]は前かがみになった[p]
 [eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_DUR=0.7"]
-[enemyname]の攻撃力と防御力が減少した（3ターン）[p]
+[EnName]の攻撃力と防御力が減少した（3ターン）[p]
 ;スタンは抵抗判定、魅力VS理性と感情
 [eval exp="tf.TAG = 100 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.TAG < tf.dice"]
 ;魅了によるスタン
 [eval exp="tf.E_stan=1"]
-[enemyname]は行動不能になった（1ターン）[p]
+[EnName]は行動不能になった（1ターン）[p]
 [endif]
 [Triage]
 [jump target="*術の終了"]
@@ -179,7 +179,7 @@
 [eval exp="tf.Damage = Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[p]
+[EnName]に[emb exp="tf.Damage"]のダメージ[p]
 [Triage]
 [jump target="*術の終了"]
 [s]
@@ -190,12 +190,12 @@
 [if exp="tf.dice>tf.E_ACT-1"]
 ;防御
 [eval exp="tf.E_AVD=0 , tf.E_GRD=1.5 , tf.E_ACT=tf.E_ACT-0"]
-[enemyname]:防御[r]
+[EnName]:防御[r]
 [else]
 ;回避
 [eval exp="tf.E_AVD = Math.floor(tf.E_AGI * 3) , tf.E_GRD=0 , tf.E_ACT=tf.E_ACT-1"]
 [eval exp="tf.AvoidRate = 100 - (tf.HIT - tf.E_AVD)"][limit]
-[enemyname]回避：[emb exp="tf.AvoidRate"]％[r]
+[EnName]回避：[emb exp="tf.AvoidRate"]％[r]
 [endif]
 [return]
 

@@ -1,7 +1,7 @@
 *敵攻撃パターン選択
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice<20"]   [eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[if exp="tf.dice<20"]   [eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
 [elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 [elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 [else]                  [eval exp="tf.enemy_attack_pattern=5"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_G.png" x=650 y=300 width=50 visible=true]
@@ -40,7 +40,7 @@
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *薙ぎ払い
-[enemyname]の薙ぎ払い[p]
+[EnName]の薙ぎ払い[p]
 [Calc_Status]
 [eval exp="tf.HIT=30"]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
@@ -67,7 +67,7 @@
 [s]
 
 *組付
-[enemyname]の組付[p]
+[EnName]の組付[p]
 [Calc_Status]
 [eval exp="tf.HIT = 40"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]

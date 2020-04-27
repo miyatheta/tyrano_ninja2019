@@ -11,7 +11,7 @@
 
 [Calc_Damage]
 [quake count=5 time=300 hmax=20]
-[enemyname]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
 [MiniStatus][Triage]
 [l][er]
@@ -29,18 +29,18 @@
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost , f.P_MGP = f.P_MGP - 5"]
 ;感情は確定で上昇、上昇幅は抵抗値次第
 [eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-[enemyname]の欲情が[emb exp="tf.HDamage"]上昇した[p]
+[EnName]の欲情が[emb exp="tf.HDamage"]上昇した[p]
 ;魅了による弱体化
-[enemyname]は前かがみになった[p]
+[EnName]は前かがみになった[p]
 [eval exp="tf.E_charm_count=3 ,tf.E_charm_STR=0.6 ,tf.E_charm_DUR=0.7"]
-[enemyname]の攻撃力と防御力が減少した（3ターン）[p]
+[EnName]の攻撃力と防御力が減少した（3ターン）[p]
 ;スタンは抵抗判定、魅力VS理性と感情
 [eval exp="tf.TAG = 100 + tf.E_SAN - tf.E_ERO - (tf.P_APP + tf.ArousAPPb - tf.E_APP)*3"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.TAG < tf.dice"]
 ;魅了によるスタン
 [eval exp="tf.E_stan=1"]
-[enemyname]は行動不能になった（1ターン）[p]
+[EnName]は行動不能になった（1ターン）[p]
 [endif]
 [Triage]
 [jump target="*術の終了"]
