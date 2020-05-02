@@ -470,21 +470,6 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [emb exp="tf.E_attack_ex"]
 [endmacro]
 
-[macro name="GoSKB"]
-[Calc_Status]
-[eval exp="tf.GoSKB = 0"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/2 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
-[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 50 && tf.dice> tf.SKB"]
-[endmacro]
-
-[macro name="SUKEBE"]
-;欲情＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×理性による減衰
-[eval exp="tf.Yokujo = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * (1 - tf.P_DefSKBb1) * (100 - tf.P_SAN)/100)"]
-;快感＝敵の性技技能値×行為の基礎倍率×欲情状態のデバフ×セクハラへの防御状態×欲情度による倍率
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * tf.ArousSEXd * (1 - tf.P_DefSKBb1) * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
-[endmacro]
-
 [macro name="limit"]
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
 [eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
@@ -500,6 +485,8 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.E_ERO = 0" cond="tf.E_ERO < 0"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
 [eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
+[eval exp="tf.HIT= 0" cond="tf.HIT < 0"]
+[eval exp="tf.HIT = 100" cond="tf.HIT > 100"]
 [eval exp="tf.AvoidRate = 0" cond="tf.AvoidRate < 0"]
 [eval exp="tf.AvoidRate = 100" cond="tf.AvoidRate > 100"]
 [eval exp="tf.E_ACT = f.E_ACT" cond="tf.E_ACT > f.E_ACT"]
@@ -518,8 +505,8 @@ tf.P_POW = f.P_POW * ( 1 - tf.P_POWd3 - tf.P_POWd1 + tf.P_POWb3 + tf.P_POWb1 );
 tf.P_MND = f.P_MND * ( 1 - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 );
 tf.P_APP = f.P_APP * ( 1 - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS) );
 
-tf.E_STR = f.E_STR * ( 1  - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 );
-tf.E_DUR = f.E_DUR * ( 1  - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 );
+tf.E_STR = f.E_STR * ( 1  - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 ) * tf.E_charm_STR;
+tf.E_DUR = f.E_DUR * ( 1  - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 ) * tf.E_charm_DUR;
 tf.E_AGI = f.E_AGI * ( 1  - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 );
 tf.E_DEX = f.E_DEX * ( 1  - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 );
 tf.E_POW = f.E_POW * ( 1  - tf.E_POWd3 - tf.E_POWd1 + tf.E_POWb3 + tf.E_POWb1 );
@@ -528,9 +515,17 @@ tf.E_APP = f.E_APP * ( 1  - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 );
 [endscript]
 [endmacro]
 
+[macro name="Initialize"]
+[eval exp="tf.Turn=0 , tf.P_ACT = 0"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
+[eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_SEX=f.P_SEX  , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP"]
+[eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND , tf.E_MGP=f.E_MGP"]
+[endmacro]
+
 [macro name="Initialize_PL_1Tbuff"]
 ;PLのスキルによる効果
-[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0 , tf.P_DefSKBb1=0"]
+[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0"]
 [eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_POWd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
 [endmacro]
 
@@ -715,22 +710,56 @@ f.P_EXH = f.P_EXH - 3
 [macro name="CardDebug"]
 [layopt layer="4" visible=true]
 [ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
+[ptext name="Cardstxt" text="&f.Cards[0].txt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
+[ptext name="Detxt" text="&f.Cards[f.Deck[0]].txt" layer="4" edge="0x000000" size=10 x=80 y=0 overwrite=true]
 [ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
 [ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
 [endmacro]
 
-
-[macro name="Calc_HitRate"]
-[eval exp="tf.HitRate = tf.HIT"][eval exp="tf.HitRate=0" cond="tf.HitRate<0"][eval exp="tf.HitRate=100" cond="tf.HitRate>100"]
-(命中率[emb exp="tf.HitRate"]％)[r]
+[macro name="Calc_P_Hit"]
+[eval exp="tf.HIT = Math.floor(tf.P_DEX - tf.E_AGI ) * 5 + 25 + tf.ACC"]
+[eval exp="tf.AvoidRate = 100 - tf.HIT "][limit]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+(命中率[emb exp="tf.HIT"]％)[r]
 [endmacro]
 
-[macro name="Calc_Damage"]
-[eval exp="tf.DEF = Math.floor(tf.E_DUR * tf.E_charm_DUR * 2)"]
-[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
+[macro name="Calc_P_Crt"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
+[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
+[endmacro]
+
+[macro name="Calc_P_Damage"]
+[Calc_P_Crt]
+;敵防御力
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * 2)"]
+;乱数の発生
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
-[eval exp="tf.ATP = tf.P_STR * tf.ArousSTRd * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.ATP = tf.P_STR * tf.RATE * tf.CRT + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[Calc_P_Hit]
+[endmacro]
+
+[macro name="Calc_E_Hit"]
+[eval exp="tf.HIT = Math.floor(tf.E_DEX - tf.P_AGI ) * 5 + 25 + tf.ACC"]
+[eval exp="tf.HIT = tf.HIT - (tf.P_AVD * 20)"]
+[eval exp="tf.AvoidRate = 100 - tf.HIT "][limit]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+(命中率[emb exp="tf.HIT"]％)[r]
+[endmacro]
+
+[macro name="Calc_E_Crt"]
+[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
+[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.E_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
+[endmacro]
+
+[macro name="Calc_E_Damage"]
+[Calc_E_Crt]
+[eval exp="tf.DEF = Math.floor(tf.P_DUR * 2)"]
+;乱数の発生
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
+[eval exp="tf.ATP = tf.E_STR * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[Calc_E_Hit]
 [endmacro]
 
 ;勝敗判定
@@ -740,12 +769,39 @@ f.P_EXH = f.P_EXH - 3
 [jump storage="battle-Triage.ks" target="*game_win" cond="tf.E_HP <= 0"]
 [endmacro]
 
+[macro name="GoSKB"]
+[Calc_Status]
+[eval exp="tf.GoSKB = 0"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/2 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
+[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 50 && tf.dice> tf.SKB"]
+[endmacro]
+
+[macro name="SUKEBE"]
+;快感＝行為の基礎倍率RATE×
+;部位ごとの乗算は他のマクロで実行する
+;絶頂判定=(敵の性技技能値SEX-P.MND)+50⇒耐えた/失敗⇒スタン&SAN減少
+[eval exp="tf.Kaikan = Math.floor(tf.RATE * 10)"]
+;命中判定=(敵の性技技能SEX-P.SEX)
+[eval exp="tf.HIT = Math.floor(tf.E_SEX - tf.P_SEX) * 5 + 50"]
+(成功率[emb exp="tf.HIT"]％)[r]
+[endmacro]
+
+[macro name="MAZO"]
+[if exp="f.P_MAZO>0"]
+[eval exp="tf.RATE=f.P_MAZO*2 "]
+[eval exp="tf.Kaikan = Math.floor(tf.RATE * 10)"]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[endif]
+[endmacro]
+
 ;絶頂判定
 [macro name="Orgasm"]
 [if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
-なずなは興奮状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousPOWb =2 , tf.ArousMNDd =0.8 , tf.ArousSEXd =2"]
+なずなは欲情状態になった[p]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousMNDd =0.8 , tf.ArousSEXd =2"]
 [endif]
 
 [if exp="tf.Kaikan > 99 && tf.Orga < 1"]
@@ -783,18 +839,6 @@ f.P_EXH = f.P_EXH - 3
 火傷で[EnName]の体力が100減少[p]
 [eval exp="tf.E_scald = tf.E_scald - 1"]
 [Triage]
-[endif]
-[endmacro]
-
-[macro name="MAZO"]
-[if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO*2 , tf.P_SEN = f.P_SEN_EX"]
-;欲情＝敵の性技技能値は無関係
-[eval exp="tf.Yokujo = Math.floor(10 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (100 - tf.P_SAN)/100)"]
-;快感＝敵の性技技能値は無関係
-[eval exp="tf.Kaikan = Math.floor(18 * tf.RATE * tf.ArousSEXd * tf.P_DefSKBb1 * (tf.P_SEN * f.P_SENboost ) / 100 * (tf.P_ERO + 50)/100)"]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [endif]
 [endmacro]
 

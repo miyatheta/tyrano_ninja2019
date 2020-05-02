@@ -1,6 +1,6 @@
 *敵攻撃パターン選択
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice<20"]   [eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[if exp="tf.dice<20"]   [eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
 [elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
 [elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 [elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
@@ -18,7 +18,7 @@
 [s]
 
 *敵攻撃パターン1
-[call target="*薙ぎ払い"]
+[call target="*弱攻撃"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン2
@@ -26,29 +26,24 @@
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン3
-[call target="*大木段"]
+[call target="*強攻撃"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン4
-[call target="*全力"]
-[call target="*薙ぎ払い"]
+[call target="*練気法"]
+[call target="*弱攻撃"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン5
-[call target="*薙ぎ払い"]
-[call target="*気迫"]
+[call target="*弱攻撃"]
+[call target="*金縛り"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
-*薙ぎ払い
-[EnName]の薙ぎ払い[p]
+*弱攻撃
+[EnName]の弱攻撃[p]
 [Calc_Status]
-[eval exp="tf.HIT=30"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
-[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
-[eval exp="tf.ATP = 5 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
-[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="tf.RATE = 6.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
+[Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
@@ -81,17 +76,12 @@
 [jump storage="battle-bound.ks" target="*拘束開始"]
 [s]
 
-*大木段
+*強攻撃
 「大木断」[p]
 大上段から薙刀が叩きつけられた[p]
 [Calc_Status]
 [eval exp="tf.HIT=10"]
-[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * 2 + tf.dice)"]
-[eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice][eval exp="tf.CRT = 1.3" cond="tf.dice <= f.E_LUK * 4 * tf.CRTrate"]
-[eval exp="tf.ATP = 10.0 * tf.E_STR * tf.E_charm_STR * tf.CRT"]
-[eval exp="tf.Damage =  Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
-[eval exp="tf.AvoidRate = tf.P_AGI + tf.P_AVD * 20 - tf.HIT "][limit]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="tf.RATE = 12.0 , tf.ACC = 20 , tf.CRTrate = 1.5"]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
@@ -109,15 +99,15 @@
 [return]
 [s]
 
-*全力
-「全力」[p]
+*練気法
+「練気法」[p]
 敵の物理攻撃力が上昇[p]
 [eval exp="tf.E_STRb1 = 0.3"]
 [return]
 [s]
 
-*気迫
-「気迫」[p]
+*金縛り
+「金縛り」[p]
 敵に気圧されたなずなの命中が低下[p]
 [eval exp="tf.P_DEXd1 = tf.P_DEXd1 + 0.3 "][limit]
 [return]

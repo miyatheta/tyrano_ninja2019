@@ -41,7 +41,7 @@
 
 「うっ！」[p]
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex01' , tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex01' , tf.RATE=3 "][jump target="*Sex"]
 *bochu001-sex01
 
 忍術のために集中を始めたなずなだったが[p]
@@ -68,7 +68,7 @@
 ＜被虐状態か判定[p]
 [if exp="f.P_MAZO>0"]
 ああんっ！！[p]
-[eval exp="tf.label='*bochu001-MAZO01' , tf.RATE=2*f.P_MAZO , tf.P_SEN = f.P_SEN_BB"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-MAZO01' , tf.RATE=2*f.P_MAZO"][jump target="*Sex"]
 [endif]
 *bochu001-MAZO01
 
@@ -84,10 +84,10 @@
 敵はそう言うやいなや逸物をなずなの膣に挿入した[p]
 [endif]
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex02' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex02' , tf.RATE=4"][jump target="*Sex"]
 *bochu001-sex02
 
-[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
+[eval exp="tf.RATE=3 "][SUKEBE]
 ＜欲情度によって返答が変化[p]
 「あうっ！・・・このっ、いきなり、挿れてんじゃないわよ！！」[p]
 「おおっと？痛かったかい？」[p]
@@ -109,7 +109,7 @@
 「へっへっへっ！どうだいお前さんが馬鹿にした魔羅様のお味は？」[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex03' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex03' , tf.RATE=4"][jump target="*Sex"]
 *bochu001-sex03
 
 ＜欲情度によって返答が変化[p]
@@ -118,7 +118,7 @@
 「言うねぇ。だが、下の口はそうは言ってないみたいだぜ?」[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex04' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex04' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex04
 
 「ひううっ！」[p]
@@ -154,7 +154,7 @@
 敵は舌なめずりをするとなずなの股座に顔を埋めた[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex05' , tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex05' , tf.RATE=3 "][jump target="*Sex"]
 *bochu001-sex05
 
 「はうっ！！」[p]
@@ -174,7 +174,7 @@
 「ひぃんっ！！そんなっ！乱暴にぃっ！！んんっ！！」[p]
 「おお悪い。悪い。じゃあ、こうしてやるよ！！」[p]
 言うと敵はなずなの右の乳房に吸いついた[p]
-[eval exp="tf.label='*bochu001-BOOB01' , tf.RATE=2*f.P_BOOB , tf.P_SEN = f.P_SEN_BB"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-BOOB01' , tf.RATE=2*f.P_BOOB "][jump target="*Sex"]
 [endif]
 *bochu001-BOOB01
 [if exp="f.P_BOOB>0"]
@@ -205,7 +205,7 @@
 [endif]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex06' , tf.RATE=4 , tf.P_SEN = (f.P_SEN_VG + f.P_SEN_BB) * 0.6"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex06' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex06
 
 「ああんっ！！あうっ！！いやぁっ！！」[p]
@@ -216,7 +216,7 @@
 陰唇に突きこまれる指が追加され３本となり、同時に親指が陰核をすり潰す[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex07' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex07' , tf.RATE=4"][jump target="*Sex"]
 *bochu001-sex07
 
 「ひぃんっ！！ああああっ！！」[p]
@@ -234,10 +234,10 @@
 先程よりも一層硬く大きく屹立した敵の逸物がなずなの膣を一気に最奥まで貫いた[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex08' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex08' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex08
 
-[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
+[eval exp="tf.RATE=3 "][SUKEBE]
 「あああああっ！！深いいいいっ！！んんんんっ！！！」[p]
 「オラオラオラオラぁっ！！鳴け！！喘げ！！」[p]
 ヨガり声を上げ悶えるなずなの身体を固定するように杭を打つような勢いで敵の腰が上下する[p]
@@ -254,7 +254,7 @@
 どうやら敵も絶頂が近いらしい。腰振りが一際激しく、獣じみた荒々しさになっていく。[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex09' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex09' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex09
 
 「あんっ！！あんっ！！ふあっ！！あんっ！！あああんっ！！！」[p]
@@ -329,7 +329,7 @@
 いや、一匹の雌にまで成り下がっていた[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex20' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex20' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex20
 
 （だめぇっ！！精気を吸うはずだったから、身体が欲しがってるぅっ！！）[p]
@@ -344,13 +344,13 @@
 「ひああああああああああっ！！！イクッ！！イぐぅうううううううっ！！！」[p]
 
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex21' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex21' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex21
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex22' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex22' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex22
 ＜快感発生[p]
-[eval exp="tf.label='*bochu001-sex23' , tf.RATE=4 , tf.P_SEN = f.P_SEN_VG"][jump target="*Sex"]
+[eval exp="tf.label='*bochu001-sex23' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex23
 
 敵の射精と同時になずなは絶頂した[p]

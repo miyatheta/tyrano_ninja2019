@@ -9,7 +9,7 @@
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost , f.P_MGP = f.P_MGP - 10"]
 [eval exp="tf.RATE = 20.0 , tf.ACC = 1000 , tf.CRTrate = 0"]
 
-[Calc_Damage]
+[Calc_P_Damage]
 [quake count=5 time=300 hmax=20]
 [EnName]に[emb exp="tf.Damage"]のダメージ[r]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]

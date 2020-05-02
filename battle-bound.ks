@@ -13,17 +13,17 @@
 ;絶頂
 [eval exp="tf.Orga = tf.Orga - 1"]
 [if exp="tf.Orga > 0"]
-くぬぎは絶頂の余韻から抜け出せないでいる![p]
+なずな は絶頂の余韻から抜け出せないでいる![p]
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
-くぬぎは絶頂から抜け出した[p]
+なずな は絶頂から抜け出した[p]
 [eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1"]
 [eval exp="tf.Arousal = 1"]
 [endif]
 
-;興奮
+;欲情
 [if exp="tf.Arousal == 1"]
-くぬぎの興奮が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousSEXd =1"]
+なずな の欲情が収まった[p]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousSEXd =1"]
 [endif]
 
 ;スタン
@@ -31,26 +31,26 @@
 [MiniStatus]
 
 [if exp="tf.Orga==4 && tf.dice>49"]
-くぬぎは絶頂の衝撃で動けない(行動不能)[p]
+なずな は絶頂の衝撃で動けない(行動不能)[p]
 [eval exp="tf.OrgaStan = 1"]
 [eval exp="tf.Orga = tf.Orga-1"]
 [jump target="*攻守交代"]
 
 [elsif exp="tf.Orga>0"]
-くぬぎは絶頂の余韻から抜け出せない[p]
+なずな は絶頂の余韻から抜け出せない[p]
 [eval exp="tf.OrgaStan = 0"]
 [eval exp="tf.Orga = tf.Orga-1 "]
 [MiniStatus]
 
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
-くぬぎは絶頂から抜け出した[p]
+なずな は絶頂から抜け出した[p]
 [eval exp="tf.OrgaStan = 0"]
 [eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1 , tf.Arousal = 1"]
 [endif]
 
 [if exp="tf.Arousal == 1"]
-くぬぎの興奮が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousPOWb =0 , tf.ArousMNDd =0 ,tf.ArousSEXd =1"]
+なずな の欲情が収まった[p]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousMNDd =0 ,tf.ArousSEXd =1"]
 [endif]
 
 [MiniStatus]
@@ -69,6 +69,7 @@
 *手札一覧
 [er]
 [ShowCardList]
+[MiniStatus]
 [if exp="f.black>=3"][wt7][jump target="*息切れ"][endif]
 [glink text="拘束中" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧"]
 [s]
@@ -112,7 +113,7 @@
 [quake count=2 time=200 hmax=10]
 [lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.ArousSTRd * 8) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = Math.floor(tf.P_STR * 8) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
 拘束が[emb exp="tf.Resist"]緩んだ[p]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
@@ -125,7 +126,7 @@
 [quake count=5 time=300 hmax=20]
 [lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.ArousSTRd * 10) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = Math.floor(tf.P_STR * 10) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
 拘束が[emb exp="tf.Resist"]緩んだ[p]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
@@ -138,7 +139,7 @@
 [quake count=1 time=100 hmax=30]
 [lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * tf.ArousSTRd * 13) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = Math.floor(tf.P_STR * 13) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
 拘束が[emb exp="tf.Resist"]緩んだ[p]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
@@ -149,7 +150,7 @@
 [er]
 なずなは縄抜けを試みた[lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor((tf.P_AGI *  tf.ArousAGId - tf.E_DEX) * 5) "]
+[eval exp="tf.Resist = Math.floor((tf.P_AGI - tf.E_DEX) * 5) "]
 [eval exp="tf.Resist = 50" cond="tf.Resist > 50"]
 [eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -168,8 +169,6 @@
 [eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
-;[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_MND) * 4.5 * (100 - tf.E_SAN)/100 * (tf.E_ERO + 100)/100) , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-;[EnName]の欲情が[emb exp="tf.HDamage"]上昇した[p]
 [if exp="tf.E_anger_count > 1"]
 [eval exp="tf.E_anger_count = 0"]
 [EnName]の怒り状態が解除された[lr]
@@ -185,7 +184,7 @@
 *スキル3
 [er]
 なずなは金的を狙った[lr]
-[eval exp="tf.Resist = Math.floor((tf.P_DEX *  tf.ArousDEXd - tf.E_AGI) * 5) "]
+[eval exp="tf.Resist = Math.floor((tf.P_DEX - tf.E_AGI) * 5) "]
 [eval exp="tf.Resist = 50" cond="tf.Resist > 50"]
 [eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
@@ -222,7 +221,7 @@
 
 *息切れ
 [cm]
-なずな は息切れをした！[r]
+は息切れをした！[r]
 この手番は行動ができない！[p]
 [Ikigire]
 [eval exp="tf.P_Stan = 1"]
@@ -255,51 +254,51 @@
 
 *敵行動1
 ;脱衣
-[EnName]はくぬぎの装束を剥ぎ取ろうとした[p]
+[EnName]はなずな の装束を剥ぎ取ろうとした[p]
 
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
-絶頂で身動きの取れないくぬぎは一気に全裸に剥かれてしまった[p]くぬぎの色気が上昇した[p]
+絶頂で身動きの取れないなずな は一気に全裸に剥かれてしまった[p]なずな の色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
-絶頂で身動きの取れないくぬぎは為す術なく全裸にされた[p]くぬぎの色気が上昇した[p]
+絶頂で身動きの取れないなずな は為す術なく全裸にされた[p]なずな の色気が上昇した[p]
 [eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.P_DRESS > 1"]
 [eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
-くぬぎは下着姿に剥かれた[p]くぬぎの色気が上昇した[p]
+なずな は下着姿に剥かれた[p]なずな の色気が上昇した[p]
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="tf.P_DRESS > 0"]
 [eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
-くぬぎは一糸まとわぬ姿に剥かれた[p]くぬぎの色気が上昇した[p]
+なずな は一糸まとわぬ姿に剥かれた[p]なずな の色気が上昇した[p]
 [chara_mod name="kunugi" face="nude"]
 [endif]
 [jump target="*敵行動終了"]
 [s]
 
 *敵行動2
-[EnName]はくぬぎの胸を揉みしだいた[p]
+[EnName]はなずな の胸を揉みしだいた[p]
 [if exp="f.P_BOOB==2"]
-#くぬぎ
+#なずな
 いやあっ！！[p]
-揉みしだかれたくぬぎの乳房から母乳が迸った[p]
+揉みしだかれたなずな の乳房から母乳が迸った[p]
 [endif]
-[eval exp="tf.RATE=2 + (f.P_BOOB*2) , tf.P_SEN = f.P_SEN_BB"][SUKEBE]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[eval exp="tf.RATE= 5 * f.P_BOOB"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
+[emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[p]
 ;絶頂判定＆正気度判定
 [Orgasm][SANcheck][MiniStatus]
 [jump target="*敵行動終了"]
 [s]
 
 *敵行動3
-[EnName]はくぬぎの秘処をまさぐった[p]
-[eval exp="tf.RATE=3 , tf.P_SEN = f.P_SEN_VG"][SUKEBE]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-[emb exp="tf.Kaikan"]の快感[r]くぬぎの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[EnName]はなずな の秘処をまさぐった[p]
+[eval exp="tf.RATE = 10"][SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
+[emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[p]
 ;絶頂判定＆正気度判定
 [Orgasm][SANcheck][MiniStatus]
 [jump target="*敵行動終了"]
@@ -309,8 +308,8 @@
 [EnName]の攻撃[p]
 [quake count=3 time=300 hmax=30]
 [Calc_Status]
-[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR) * 3"]
-くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
+なずな に[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [MiniStatus][Triage]
 [MAZO][Orgasm][SANcheck][MiniStatus]
@@ -318,11 +317,11 @@
 [s]
 
 *敵行動5
-[EnName]はくぬぎを締め上げた[p]
+[EnName]はなずな を締め上げた[p]
 [quake count=5 time=300 hmax=20]
 [Calc_Status]
-[eval exp="tf.Damage=Math.floor(tf.E_STR * tf.E_charm_STR) * 3"]
-くぬぎに[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
+なずな に[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [MiniStatus][Triage]
 [MAZO][Orgasm][SANcheck][MiniStatus]
@@ -347,5 +346,5 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [jump target="*ターン開始"]
 
 *拘束解除
-くぬぎは拘束を振りほどいた[p]
+なずな は拘束を振りほどいた[p]
 [jump storage="battle.ks" target="*ターン開始"]
