@@ -479,9 +479,9 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="f.P_MGP = 0" cond="f.P_MGP < 0"]
 [eval exp="f.P_LUK = 5" cond="f.P_LUK > 5"]
 [eval exp="f.P_LUK = 0" cond="f.P_LUK < 0"]
-[eval exp="tf.P_ERO = 999" cond="tf.P_ERO > 999"]
+[eval exp="tf.P_ERO = 9999" cond="tf.P_ERO > 9999"]
 [eval exp="tf.P_ERO = 0" cond="tf.P_ERO < 0"]
-[eval exp="tf.E_ERO = 999" cond="tf.E_ERO > 999"]
+[eval exp="tf.E_ERO = 9999" cond="tf.E_ERO > 9999"]
 [eval exp="tf.E_ERO = 0" cond="tf.E_ERO < 0"]
 [eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
 [eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
@@ -689,29 +689,38 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [endmacro]
 
 [macro name="Ikigire"]
+[MiniStatus]
+[ReActivate]
 ;息切れ時の疲労カード削除
 [iscript]
 i = 0;
 n = 0;
 while(n < 3){
-  if(f.Cards[f.Hand[i]]['color']=="black"){
-    f.Cards.splice(f.Hand[i],1);
+  if(f.Cards[i]['color']=="black"){
+    f.Cards.splice([i],1);
     n++;
   }
   else{
     i++;
   }
 }
-f.P_EXH = f.P_EXH - 3
+f.P_EXH = f.P_EXH - 3;
 [endscript]
 [DeckRemake]
 [endmacro]
 
 [macro name="CardDebug"]
 [layopt layer="4" visible=true]
+[iscript]
+tf.Cardtxt ="全札：";
+i=0;
+while(i < f.Cards.length){
+  tf.Cardtxt = tf.Cardtxt + f.Cards[i].txt;
+  i++;
+}
+[endscript]
 [ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
-[ptext name="Cardstxt" text="&f.Cards[0].txt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
-[ptext name="Detxt" text="&f.Cards[f.Deck[0]].txt" layer="4" edge="0x000000" size=10 x=80 y=0 overwrite=true]
+[ptext name="Cardstxt" text="&tf.Cardtxt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
 [ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
 [ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
 [endmacro]
@@ -725,7 +734,7 @@ f.P_EXH = f.P_EXH - 3
 
 [macro name="Calc_P_Crt"]
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
-[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
+[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * tf.CRTrate"]
 [endmacro]
 
 [macro name="Calc_P_Damage"]
@@ -772,9 +781,7 @@ f.P_EXH = f.P_EXH - 3
 [macro name="GoSKB"]
 [Calc_Status]
 [eval exp="tf.GoSKB = 0"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[eval exp="tf.SKB=(50 + tf.E_SAN) - Math.floor(tf.E_ERO/2 + (tf.P_APP + tf.ArousAPPb - tf.E_APP)*5)"]
-[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 50 && tf.dice> tf.SKB"]
+[eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 1000"]
 [endmacro]
 
 [macro name="SUKEBE"]
@@ -804,13 +811,13 @@ f.P_EXH = f.P_EXH - 3
 [eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousMNDd =0.8 , tf.ArousSEXd =2"]
 [endif]
 
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[if exp="tf.Kaikan > 999 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは絶頂した[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
 
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[elsif exp="tf.Kaikan > 999 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
@@ -820,9 +827,8 @@ f.P_EXH = f.P_EXH - 3
 
 [macro name="SANcheck"]
 ;理性喪失判定
-[eval exp="tf.Max=tf.Kaikan , tf.Min=0"][dice]
-[if exp="tf.Orga == 4  && tf.dice >= tf.P_SAN && f.Insanity==0"]
-[eval exp="tf.dice=1"]
+[eval exp="tf.Max=Math.floor(tf.Kaikan/100)+1 , tf.Min=1"][dice]
+[if exp="tf.Orga == 4 && f.Insanity==0"]
 絶頂によりなずなの理性が[emb exp="tf.dice"]減少[p]
 [eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
 [endif]

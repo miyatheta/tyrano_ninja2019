@@ -92,6 +92,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *手札構築
 [CardShuffle]
 [ShowCardList]
+[MiniStatus]
 [Calc_Card]
 
 *手札一覧
@@ -138,12 +139,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
 息切れ発生時、疲労カードが３枚消えます[l][er]
 [jump target="*手札一覧"]
-[s]
-
-*手番終了
-[er]
-攻撃を終了します。
-[emb exp="tf.E_HP"]
 [s]
 
 *攻撃１
@@ -242,7 +237,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
-[eval exp="tf.P_ACT = 0"]
 [Initialize_EN_1Tbuff]
 [if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
@@ -253,12 +247,14 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
-;バッドステータスのターン短縮
-[eval exp="f.P_Stan = 0"]
 ;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
 ;疲労カードの追加
+[if exp="tf.P_Stan < 1"]
 [iscript]
 f.Deck.push(f.Cards.length);
 f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endscript]
+[endif]
+;バッドステータスのターン短縮
+[eval exp="tf.P_Stan = 0"]
 [jump target="*ターン開始"]

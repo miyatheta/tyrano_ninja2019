@@ -150,9 +150,9 @@
 [er]
 なずなは縄抜けを試みた[lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor((tf.P_AGI - tf.E_DEX) * 5) "]
-[eval exp="tf.Resist = 50" cond="tf.Resist > 50"]
-[eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
+;AGIとDEX対抗+50(基礎点)
+[eval exp="tf.Resist = Math.floor(tf.P_AGI - tf.E_DEX) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 [if exp="tf.dice < tf.Resist"]
 [jump target="*拘束解除" cond="tf.Mount <= 0"]
@@ -164,9 +164,8 @@
 [er]
 なずなは色仕掛けを試みた[lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor((tf.P_APP - tf.E_APP) * 5) "]
-[eval exp="tf.Resist = 50" cond="tf.Resist > 50"]
-[eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
+[eval exp="tf.Resist = Math.floor(tf.P_APP - tf.E_APP) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 [if exp="tf.E_anger_count > 1"]
@@ -184,9 +183,9 @@
 *スキル3
 [er]
 なずなは金的を狙った[lr]
-[eval exp="tf.Resist = Math.floor((tf.P_DEX - tf.E_AGI) * 5) "]
-[eval exp="tf.Resist = 50" cond="tf.Resist > 50"]
-[eval exp="tf.Resist = tf.Resist + Math.floor((1000 - tf.Mount)/5) "]
+;LUK対抗
+[eval exp="tf.Resist = Math.floor(tf.P_LUK - tf.E_LUK) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 [eval exp="tf.E_anger_count = 3"]
@@ -221,7 +220,7 @@
 
 *息切れ
 [cm]
-は息切れをした！[r]
+なずな は息切れをした！[r]
 この手番は行動ができない！[p]
 [Ikigire]
 [eval exp="tf.P_Stan = 1"]
@@ -335,14 +334,16 @@
 [freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
 [eval exp="f.P_EXH++"]
-;バッドステータスのターン短縮
-[eval exp="f.P_Stan = 0"]
 ;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
-;疲労カードの追加
+;疲労カードの追加スタン時は除外
+[if exp="tf.P_Stan < 1"]
 [iscript]
 f.Deck.push(f.Cards.length);
 f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endscript]
+[endif]
+;バッドステータスのターン短縮
+[eval exp="tf.P_Stan = 0"]
 [jump target="*ターン開始"]
 
 *拘束解除
