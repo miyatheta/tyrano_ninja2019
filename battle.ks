@@ -32,7 +32,7 @@
 *Initialize_BadStatus
 ;状態異常の初期値設定
 [eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
-[eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb = 0 , tf.ArousMNDb = 1 , tf.ArousSEXd =1"]
+[eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousMNDb =0 , tf.ArousSEXd =1"]
 [eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 *Initialize_Cards
@@ -76,7 +76,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 ;欲情
 [if exp="tf.Arousal == 1"]
 くぬぎの欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousSEXd =1"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousSEXd =0"]
 [endif]
 ;スタン
 [if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][EnName]が自由に動けるようになった[p][endif]

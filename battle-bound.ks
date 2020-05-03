@@ -23,7 +23,7 @@
 ;欲情
 [if exp="tf.Arousal == 1"]
 なずな の欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousSEXd =1"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousSEXd =0"]
 [endif]
 
 ;スタン
@@ -50,7 +50,7 @@
 
 [if exp="tf.Arousal == 1"]
 なずな の欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =0 , tf.ArousMNDd =0 ,tf.ArousSEXd =1"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousMNDd =0 ,tf.ArousSEXd =0"]
 [endif]
 
 [MiniStatus]
@@ -151,11 +151,13 @@
 なずなは縄抜けを試みた[lr]
 [Calc_Status]
 ;AGIとDEX対抗+50(基礎点)
-[eval exp="tf.Resist = Math.floor(tf.P_AGI - tf.E_DEX) * 5 "]
+[eval exp="tf.Resist = Math.floor(tf.P_AGI - tf.E_AGI) * 5 "]
 [eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
+
+目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
 [if exp="tf.dice < tf.Resist"]
-[jump target="*拘束解除" cond="tf.Mount <= 0"]
+[jump target="*拘束解除"]
 [endif]
 しかし、拘束は解けなかった[p]
 [jump target="*攻守交代"]
@@ -173,8 +175,9 @@
 [EnName]の怒り状態が解除された[lr]
 [endif]
 
+目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
 [if exp="tf.dice < tf.Resist"]
-[jump target="*拘束解除" cond="tf.Mount <= 0"]
+[jump target="*拘束解除"]
 [endif]
 
 しかし、拘束は解けない！[p]
@@ -184,15 +187,16 @@
 [er]
 なずなは金的を狙った[lr]
 ;LUK対抗
-[eval exp="tf.Resist = Math.floor(tf.P_LUK - tf.E_LUK) * 5 "]
+[eval exp="tf.Resist = Math.floor(f.P_LUK - f.E_LUK) * 5 "]
 [eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 [eval exp="tf.E_anger_count = 3"]
 [EnName]は怒り状態になった[lr]
 
+目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
 [if exp="tf.dice < tf.Resist"]
-[jump target="*拘束解除" cond="tf.Mount <= 0"]
+[jump target="*拘束解除"]
 [endif]
 
 しかし、拘束は解けない！[p]
@@ -253,6 +257,7 @@
 
 *敵行動1
 ;脱衣
+[jump target="*敵行動選択" cond="tf.P_DRESS < 1"]
 [EnName]はなずな の装束を剥ぎ取ろうとした[p]
 
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]

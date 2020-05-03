@@ -1,7 +1,7 @@
 *集中
 「集中」[p]
 敵の命中力が上昇[p]
-[eval exp="tf.E_DEXb1 = 1.5"]
+[eval exp="tf.E_DEXb1 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
@@ -15,42 +15,42 @@
 *全力
 「全力」[p]
 敵の物理攻撃力が上昇[p]
-[eval exp="tf.E_STRb3 = 1.3"]
+[eval exp="tf.E_STRb3 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *激怒
 「激怒」[p]
 敵の物理攻撃力が上昇、耐久力が減少（1ターン）[p]
-[eval exp="tf.E_STRb1 = 1.5 ,tf.E_DURb1 = 0.7"]
+[eval exp="tf.E_STRb1 = 10 ,tf.E_DURd1 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *剛体
 「剛体」[p]
 敵の防御が上昇[p]
-[eval exp="tf.E_DURb1 = 1.5"]
+[eval exp="tf.E_DURb1 = 10"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *見切り
 「見切り」[p]
 敵の回避が上昇[p]
-[eval exp="tf.E_AGIb1 = 1.5"]
+[eval exp="tf.E_AGIb1 = 10"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *視姦
 「視姦」[p]
 敵の命中が上昇(１ターン)。この戦闘中、なずなの快感への耐性が低下[p]
-[eval exp="tf.E_DEXb1 = 1.3"]
+[eval exp="tf.E_DEXb1 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *挑発
 「挑発」[p]
 なずなの攻撃力が上昇、命中が減少(１ターン)[p]
-[eval exp="tf.P_STRb1 = 1.3"][eval exp="tf.P_DEXd1 = 0.7"]
+[eval exp="tf.P_STRb1 = 5"][eval exp="tf.P_DEXd1 = 10"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
@@ -92,14 +92,14 @@
 *粘液
 「粘液」[p]
 なずなの回避が低下[p]
-[eval exp="tf.P_AGId1 = 0.7"]
+[eval exp="tf.P_AGId1 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
 *煙幕
 「煙幕」[p]
 なずなの命中が低下[p]
-[eval exp="tf.P_DEXd1 = 0.7"]
+[eval exp="tf.P_DEXd1 = 5"]
 [jump storage="battle.ks" target="*P_phase_start"]
 [s]
 
@@ -107,17 +107,17 @@
 「催淫香」[p]
 なずなの欲情が上昇した[p]
 [eval exp="tf.Max=5 , tf.Min=2"][dice][eval exp="tf.P_ERO = tf.P_ERO + tf.dice"]
-[if exp="tf.P_ERO >= 70 && tf.Arousal != 2"]
+[if exp="tf.P_ERO >= 700 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
 なずなは欲情状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =0.8 , tf.ArousAGId =0.8 , tf.ArousDEXd =0.8 , tf.ArousAPPb =2 , tf.ArousMNDd =0.8 , tf.ArousSEXd =2"]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =2 , tf.ArousMNDd =1 , tf.ArousSEXd =2"]
 [endif]
-[if exp="tf.Kaikan > 99 && tf.Orga < 1"]
+[if exp="tf.Kaikan > 999 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは絶頂した[p]
 [eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
-[elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
+[elsif exp="tf.Kaikan > 999 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]

@@ -102,7 +102,7 @@
 *練気法
 「練気法」[p]
 敵の物理攻撃力が上昇[p]
-[eval exp="tf.E_STRb1 = 0.3"]
+[eval exp="tf.E_STRb1 = 5"]
 [return]
 [s]
 

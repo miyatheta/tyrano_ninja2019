@@ -21,44 +21,10 @@
 敵の弱攻撃・・・回避+３なら50%以下にはしたい
 カードを残すことの効果は大きくしたい
 
+息切れ時にReactivateでエラーを出すのは、
+Handとデッキがずれていたから？（先にデッキ再構築を行っていた）
 
-息切れの瞬間20/20
-[13,9,1,18,19,14,11,15,6,2,7,12,17,0,4,16,3,5,10,8]
-その後敵の攻撃
-[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-[6,7,15,2,3,10,1,12,17,18,9,14,4,16,13,8,5,11,0,19]
-708行エラー
-[0,18,15,4,13,9,6,12,7,17,3,11,19,16,1,14,5,2,10,8]要素が19個
-別段抜けてる数字はない
-エラー時のHand
-[0,18,15,4,13]18＝19番を指定している
-エラー時のCard
-[{"color":"red","value":1,"active":1,"txt":"攻撃","tag":"*攻撃"},
-{"color":"red","value":1,"active":1,"txt":"攻撃","tag":"*攻撃"},
-{"color":"red","value":1,"active":1,"txt":"攻撃","tag":"*攻撃"},
-{"color":"red","value":1,"active":1,"txt":"攻撃","tag":"*攻撃"},
-{"color":"blue","value":1,"active":1,"txt":"忍術","tag":"*忍術"},
-{"color":"blue","value":1,"active":1,"txt":"忍術","tag":"*忍術"},
-{"color":"blue","value":1,"active":1,"txt":"忍術","tag":"*忍術"},
-{"color":"blue","value":1,"active":1,"txt":"忍術","tag":"*忍術"},
-{"color":"green","value":1,"active":1,"txt":"技能","tag":"*技能"},
-{"color":"green","value":1,"active":1,"txt":"技能","tag":"*技能"},
-{"color":"green","value":1,"active":1,"txt":"技能","tag":"*技能"},
-{"color":"green","value":1,"active":1,"txt":"技能","tag":"*技能"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"},
-{"color":"black","value":1,"active":1,"txt":"疲労","tag":"*疲労"}]要素が18個
-しかも20/20と表示されている。
-どこかで数字がずれている。
-１回目の息切れ直後、deckとHandがずれている？⇒Handは最初に作っていこうそのまま？
-カードシャッフル時にハンドも再構築するように変更
-
-DeckとCards両方から疲労を消さないとダメ
-＞DeckはCardsの枚数を０から並べただけ
->Deckを毎回シャッフル時にfor文で再構築する
+時折非表示になるカードが有るのは息切れ時にカードを押してるから？
 
 while文の間違い
 ①else文が必要
