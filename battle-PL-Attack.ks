@@ -1,4 +1,4 @@
-*攻撃１
+*攻撃1
 [er]
 敵に小ダメージ[p]
 [Calc_Status]
@@ -25,7 +25,7 @@
 [Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
 
-*攻撃２
+*攻撃2
 [er]
 敵に中ダメージ[p]
 [Calc_Status]
@@ -52,7 +52,7 @@
 [Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
 
-*攻撃３
+*攻撃3
 [er]
 敵に大ダメージ[p]
 [Calc_Status]
@@ -80,13 +80,13 @@
 [jump storage="battle.ks" target="*手札一覧"]
 [s]
 
-*攻撃４
+*攻撃4
 [er]
 敵に中ダメージ＆命中低下[p]
 [Calc_Status]
 [eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
 [eval exp="tf.RATE = 8.0 , tf.ACC = 30 , tf.CRTrate = 1.6"]
-[Calc_P_Damage]
+[Calc_P_DamageEx]
 [if exp="tf.AvoidRate > tf.dice"]
 敵はなずなの手裏剣を回避した[p]
 
@@ -108,13 +108,13 @@
 [Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
 
-*攻撃５
+*攻撃5
 [er]
 敵に小ダメージ&攻撃力低下[p]
 [Calc_Status]
 [eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
 [eval exp="tf.RATE = 7.0 , tf.ACC = 40 , tf.CRTrate = 2.1"]
-[Calc_P_Damage]
+[Calc_P_DamageEx]
 [if exp="tf.AvoidRate > tf.dice"]
 敵はなずなの撒き菱を回避した[p]
 

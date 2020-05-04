@@ -1,7 +1,6 @@
 *拘束開始
 [Calc_Status]
-[eval exp="tf.Esc=0"][limit]
-[eval exp="tf.Mount = 1000"]
+[limit]
 
 *ターン開始
 [Reflesh_PL_buff]
@@ -76,48 +75,37 @@
 *攻撃
 [er]
 [if exp="f.Red<1"][jump target="*手札一覧"][endif]
-[if exp="f.Red>0"][link target="*攻撃1"]攻撃1もがく[endlink][endif][r]
-[if exp="f.Red>1"][link target="*攻撃2"]攻撃2抵抗する[endlink][endif][r]
-[if exp="f.Red>2"][link target="*攻撃3"]攻撃3暴れる[endlink][endif][r]
+;[if exp="f.Red>0"][link target="*攻撃1"]攻撃1もがく[endlink][endif][r]
+[if exp="f.Red>0"][link target="*攻撃2"]抵抗する：STRに応じて拘束値を減少[endlink][endif][r]
+[if exp="f.Red>0"][link target="*攻撃3"]暴れる：STRに応じて拘束値を大きく減少。疲労が１増加[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *技能
 [er]
 [if exp="f.Green<1"][jump target="*手札一覧"][endif]
-[if exp="f.Green>1"][link target="*スキル1"]スキル1縄抜け[endlink][endif][r]
-[if exp="f.Green>1"][link target="*スキル2"]スキル2色仕掛け[endlink][endif][r]
-[if exp="f.Green>0"][link target="*スキル3"]スキル3急所狙い[endlink][endif][r]
+[if exp="f.Green>0"][link target="*スキル1"]深呼吸：疲労と欲情を減少[endlink][endif][r]
+[if exp="f.Green>0"][link target="*スキル2"]縄抜け：技量に応じて確率で拘束を解除。拘束値が低いほど確率アップ[endlink][endif][r]
+[if exp="f.Green>0"][link target="*スキル3"]急所狙い：運に応じて確率で拘束を解除。敵が怒り状態になる[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *忍術
 [er]
 [if exp="f.Blue<1"][jump target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link target="*忍術0"]忍術0練気（気力1）[endlink][endif]　　[if exp="f.Blue>0"][link target="*忍術1"]忍術1空蝉（気力10）[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術2"]忍術2魅了（気力5）[endlink][endif]　　[if exp="f.Blue>0"][link target="*忍術3"]忍術3房中術（気力3）[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術1"]忍術0色仕掛け（気力0）：魅力に応じて確率で敵の怒り状態を解除。[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術2"]忍術1空蝉の術（気力10）：拘束を解除する[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術3"]忍術2魅了の術（気力5）：魅力に応じて敵の欲情を上昇、確率で拘束を解除[endlink][endif][r]
+;[if exp="f.Blue>0"][link target="*忍術4"]忍術3房中術（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *疲労
 [er]
 疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが3枚集まると息切れ(スタン)します。[r]
-息切れ発生時、疲労カードが3枚消えます[l][er]
+息切れ発生時、疲労カードが3枚消えます[p]
 [jump storage="battle.ks" target="*手札一覧"]
 [s]
-
-*攻撃1
-[er]
-なずなはもがいた
-[quake count=2 time=200 hmax=10]
-[lr]
-[Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * 8) - (tf.E_BND*4)"]
-[eval exp="tf.Resist = 1" cond="tf.Resist<1"]
-拘束が[emb exp="tf.Resist"]緩んだ[p]
-[eval exp="tf.Mount = tf.Mount - tf.Resist"]
-[jump target="*拘束解除" cond="tf.Mount <= 0"]
-[jump target="*攻守交代"]
 
 *攻撃2
 [er]
@@ -125,7 +113,8 @@
 [quake count=5 time=300 hmax=20]
 [lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * 10) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = tf.P_STR + f.Red "]
+[eval exp="tf.Resist = Math.floor(tf.Resist * 8) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
 拘束が[emb exp="tf.Resist"]緩んだ[p]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
@@ -138,20 +127,29 @@
 [quake count=1 time=100 hmax=30]
 [lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_STR * 13) - (tf.E_BND*4)"]
+[eval exp="tf.Resist = tf.P_STR + f.Red "]
+[eval exp="tf.Resist = Math.floor(tf.Resist * 12) - (tf.E_BND*4)"]
 [eval exp="tf.Resist = 1" cond="tf.Resist<1"]
-拘束が[emb exp="tf.Resist"]緩んだ[p]
+拘束が[emb exp="tf.Resist"]緩んだ[r]
+疲労が１増加した[p]
+[Hirou]
 [eval exp="tf.Mount = tf.Mount - tf.Resist"]
 [jump target="*拘束解除" cond="tf.Mount <= 0"]
 [jump target="*攻守交代"]
 
-*スキル1
+
+*スキル2
+[er]
+
+[jump target="*攻守交代"]
+
+*スキル2
 [er]
 なずなは縄抜けを試みた[lr]
 [Calc_Status]
 ;AGIとDEX対抗+50(基礎点)
-[eval exp="tf.Resist = Math.floor(tf.P_AGI - tf.E_AGI) * 5 "]
-[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
+[eval exp="tf.Resist = Math.floor(tf.P_AGI + f.Green - tf.E_AGI) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 45"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
@@ -161,36 +159,15 @@
 しかし、拘束は解けなかった[p]
 [jump target="*攻守交代"]
 
-*スキル2
-[er]
-なずなは色仕掛けを試みた[lr]
-[Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_APP - tf.E_MND) * 5 "]
-[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-
-[if exp="tf.E_anger_count > 1"]
-[eval exp="tf.E_anger_count = 0"]
-[EnName]の怒り状態が解除された[lr]
-[endif]
-
-目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
-[if exp="tf.dice < tf.Resist"]
-[jump target="*拘束解除"]
-[endif]
-
-しかし、拘束は解けない！[p]
-[jump target="*攻守交代"]
-
 *スキル3
 [er]
 なずなは金的を狙った[lr]
 ;LUK対抗
-[eval exp="tf.Resist = Math.floor(tf.P_LUK - tf.E_LUK) * 5 "]
-[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
+[eval exp="tf.Resist = Math.floor(tf.P_LUK + f.Green - tf.E_LUK) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 45"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
-[eval exp="tf.E_anger_count = 3"]
+[eval exp="tf.E_anger_count = 3 , tf.E_anger_DEX = 1 , tf.E_anger_STR = 1 "]
 [EnName]は怒り状態になった[lr]
 
 目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
@@ -201,24 +178,62 @@
 しかし、拘束は解けない！[p]
 [jump target="*攻守交代"]
 
-*忍術0
-[er]
-
-[jump target="*攻守交代"]
-
 *忍術1
 [er]
+なずなは色仕掛けを試みた[lr]
+[Calc_Status]
+[eval exp="tf.Resist = Math.floor(tf.P_APP + f.Green - tf.E_MND) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 25"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
 
+[if exp="tf.E_anger_count > 1"]
+[eval exp="tf.E_anger_count = 0 , tf.E_anger_DEX = 0 , tf.E_anger_STR = 0 "]
+[EnName]の怒り状態が解除された[lr]
+[Calc_Status]
+[endif]
+
+目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
+[if exp="tf.dice < tf.Resist"]
+[jump target="*拘束解除"]
+[endif]
+
+しかし、拘束は解けない！[p]
 [jump target="*攻守交代"]
 
 *忍術2
 [er]
-
+空蝉の術[r]
+[eval exp="f.P_MGP = f.P_MGP - 10"]
 [jump target="*攻守交代"]
 
 *忍術3
 [er]
+魅了の術[p]
+[eval exp="f.P_MGP = f.P_MGP - 5"]
 
+[Calc_Status]
+[eval exp="tf.Resist = Math.floor(tf.P_APP + f.Green - tf.E_MND) * 5 "]
+[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 25"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+
+[if exp="tf.E_anger_count > 1"]
+[eval exp="tf.E_anger_count = 0 , tf.E_anger_DEX = 0 , tf.E_anger_STR = 0 "]
+[EnName]の怒り状態が解除された[lr]
+[Calc_Status]
+[endif]
+
+目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
+[if exp="tf.dice < tf.Resist"]
+[jump target="*拘束解除"]
+[endif]
+
+しかし、拘束は解けない！[p]
+[eval exp="tf.E_charm_count = 3 , tf.E_charm_MND = 2 , tf.E_charm_STR = 2 "]
+[jump target="*攻守交代"]
+
+*忍術4
+[er]
+房中術[p]
 [jump target="*攻守交代"]
 
 *息切れ
@@ -261,21 +276,21 @@
 
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
 絶頂で身動きの取れないなずな は一気に全裸に剥かれてしまった[p]なずな の色気が上昇した[p]
-[eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
+[eval exp="tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
 絶頂で身動きの取れないなずな は為す術なく全裸にされた[p]なずな の色気が上昇した[p]
-[eval exp="tf.P_ARMOR = 0 , tf.P_DRESS = 0"]
+[eval exp="tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.P_DRESS > 1"]
-[eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
+[eval exp="tf.P_DRESS = 1"]
 なずな は下着姿に剥かれた[p]なずな の色気が上昇した[p]
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="tf.P_DRESS > 0"]
-[eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
+[eval exp="tf.P_DRESS = 0"]
 なずな は一糸まとわぬ姿に剥かれた[p]なずな の色気が上昇した[p]
 [chara_mod name="kunugi" face="nude"]
 [endif]
@@ -352,5 +367,6 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 
 *拘束解除
 [er]
-なずな は拘束を振りほどいた[p]
+なずな は拘束から抜け出した[p]
+[eval exp="tf.Mount = 0"]
 [jump storage="battle.ks" target="*ターン開始"]

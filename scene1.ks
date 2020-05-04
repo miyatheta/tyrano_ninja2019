@@ -39,10 +39,6 @@
 ダミーが現れた[p]
 [eval exp="tf.E_name='ダミー'"]
 [eval exp="tf.E_HandlName='ダミー'"]
-[eval exp="f.E_HP=2000 , f.E_STR=36 , f.E_DUR=36 , f.E_AGI=27 , f.E_DEX=33 , f.E_LUK=31"]
-[eval exp="f.E_MND=25 , f.E_APP=33 , f.E_ACT=5 , f.E_MGP=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=100 , f.E_SEX=33 , f.E_BND = 33 "]
-@jump storage="battle.ks"
-
-
-
+[eval exp="f.E_HP=2000 , f.E_STR=33 , f.E_DUR=31 , f.E_AGI=25 , f.E_DEX=32 , f.E_LUK=27"]
+[eval exp="f.E_MND=25 , f.E_APP=25 , f.E_MGP=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=100 , f.E_SEX=33 , f.E_BND = 33 "]
 @jump storage="battle.ks"

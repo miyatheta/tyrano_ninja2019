@@ -18,24 +18,24 @@
 [s]
 
 *敵攻撃パターン1
-[call target="*弱攻撃"]
+[call target="*弱攻撃"][P_Counter][P_Barrier]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン2
-[call target="*組付"]
+[call target="*組付"][P_Barrier][jump storage="battle-bound.ks" target="*拘束開始" cond="tf.Mount > 0"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン3
-[call target="*強攻撃"]
+[call target="*強攻撃"][P_Counter][P_Barrier]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン4
 [call target="*練気法"]
-[call target="*弱攻撃"]
+[call target="*弱攻撃"][P_Counter][P_Barrier]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン5
-[call target="*弱攻撃"]
+[call target="*弱攻撃"][P_Counter][P_Barrier]
 [call target="*金縛り"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
@@ -45,19 +45,26 @@
 [eval exp="tf.RATE = 8.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
 [Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
+[eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
 なずなは敵の攻撃を回避した[p]
+
+[elsif exp="tf.P_Barrier==1"]
+[eval exp="tf.P_Barrier=2"]
+
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
 なずなに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"]
+[limit][MiniStatus][Triage][MAZO][Orgasm][SANcheck]
+
 [else]
 [quake count=5 time=300 hmax=20]
 なずなに[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"]
+[limit][MiniStatus][Triage][MAZO][Orgasm][SANcheck]
 [endif]
-[MiniStatus][Triage]
-[MAZO][Orgasm][SANcheck]
+
 [return]
 [s]
 
@@ -72,8 +79,8 @@
 [return]
 [endif]
 なずなは敵に組み付かれた[p]
-;[jump storage="battle.ks" target="*P_Barrier" cond="tf.P_Barrier>0"]
-[jump storage="battle-bound.ks" target="*拘束開始"]
+[eval exp="tf.Mount = 1000"]
+[return]
 [s]
 
 *強攻撃
@@ -83,6 +90,7 @@
 [eval exp="tf.RATE = 15.0 , tf.ACC = 40 , tf.CRTrate = 1.5"]
 [Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
+[eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
 なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
@@ -94,8 +102,7 @@
 なずなに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
 [endif]
-[MiniStatus][Triage]
-[MAZO][Orgasm][SANcheck]
+[MiniStatus][Triage][MAZO][Orgasm][SANcheck]
 [return]
 [s]
 

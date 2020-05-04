@@ -4,23 +4,21 @@
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
 ;腕力＞攻撃力
-[eval exp="f.P_STR=30"]
+[eval exp="f.P_STR=27"]
 ;耐久＞防御力
-[eval exp="f.P_DUR=30"]
+[eval exp="f.P_DUR=25"]
 ;敏捷＞回避
-[eval exp="f.P_AGI=33"]
+[eval exp="f.P_AGI=32"]
 ;技量＞命中
-[eval exp="f.P_DEX=31"]
+[eval exp="f.P_DEX=29"]
 ;幸運＞乱数の幅
-[eval exp="f.P_LUK=33"]
+[eval exp="f.P_LUK=30"]
 ;精神力＞快感への抵抗値
-[eval exp="f.P_MND=33"]
+[eval exp="f.P_MND=35"]
 ;魅力
 [eval exp="f.P_APP=30"]
 ;房中
 [eval exp="f.P_SEX=33"]
-;呼吸＞行動回数
-[eval exp="f.P_ACT=7"]
 ;気力＞SP
 [eval exp="f.P_MGP=0"]
 ;回避ボーナス＞回避

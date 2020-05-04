@@ -27,13 +27,8 @@
 
 ;ステータスのインストール
 *Initialize
-[Initialize]
+[Initialize][Initialize_BadStatus]
 [Reflesh_PL_buff][Reflesh_EN_buff][Initialize_3Tbuff]
-*Initialize_BadStatus
-;状態異常の初期値設定
-[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
-[eval exp="tf.Arousal=0 , tf.ArousSTRd =1 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousMNDb =0 , tf.ArousSEXd =1"]
-[eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 
 *Initialize_Cards
 ;カードの情報を収めた連想(ハッシュ・辞書)配列(=オブジェクト)を収めた配列(多次元配列)を作成。
@@ -106,22 +101,22 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *攻撃
 [er]
 [if exp="f.Red<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Red>0"][link storage="battle-PL-Attack.ks" target="*攻撃１"]拳/弱攻撃[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃２"]蹴り/中攻撃[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃４"]手裏剣/特殊１[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃５"]撒き菱/特殊２[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃３"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>0"][link storage="battle-PL-Attack.ks" target="*攻撃1"]拳/弱攻撃[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃2"]蹴り/中攻撃[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃4"]手裏剣/特殊１[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃5"]撒き菱/特殊２[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃3"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *技能
 [er]
 [if exp="f.Green<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル１"]スキル１命中　[endlink][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル２"]スキル２会心　[endlink][endif][r]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル３"]スキル３防御　[endlink][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル４"]スキル４忍耐　[endlink][endif][r]
-[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル５"]スキル５修繕　[endlink][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル1"]スキル1命中　[endlink][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル2"]スキル2会心　[endlink][endif][r]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル3"]スキル3防御　[endlink][endif]
+[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル4"]スキル4忍耐　[endlink][endif][r]
+[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル5"]スキル5修繕　[endlink][endif]
 [if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル６"]スキル６反撃　[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
@@ -129,17 +124,17 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *忍術
 [er]
 [if exp="f.Blue<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術１"]忍術１火遁（気力10）[endlink][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術２"]忍術２変わり身（気力5）[endlink][endif][r]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術３"]忍術３魅了（気力5）[endlink][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術４"]忍術４衣替え（気力3）[endlink][endif][r]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術1"]忍術1火遁（気力10）[endlink][endif]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術2"]忍術2変わり身（気力5）[endlink][endif][r]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術3"]忍術3魅了（気力5）[endlink][endif]
+[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術4"]忍術4衣替え（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *疲労
 [er]
 疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
-息切れ発生時、疲労カードが３枚消えます[l][er]
+息切れ発生時、疲労カードが３枚消えます[p]
 [jump target="*手札一覧"]
 [s]
 
@@ -165,15 +160,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *ターン終了
 [freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
-[eval exp="f.P_EXH++"]
-;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
-;疲労カードの追加
-[if exp="tf.P_Stan < 1"]
-[iscript]
-f.Deck.push(f.Cards.length);
-f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
-[endscript]
-[endif]
+[Hirou]
 ;バッドステータスのターン短縮
 [eval exp="tf.P_Stan = 0"]
 [jump target="*ターン開始"]

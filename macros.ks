@@ -91,13 +91,8 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.P_HP = 0" cond="tf.P_HP < 0"]
 [eval exp="tf.E_HP = 0" cond="tf.E_HP < 0"]
 [eval exp="f.P_EXH = 100" cond="f.P_EXH > 100"]
-[eval exp="f.P_MGP = 100" cond="f.P_MGP > 100"]
-[eval exp="f.E_MGP = 100" cond="f.E_MGP > 100"]
+[eval exp="f.P_MGP = 10" cond="f.P_MGP > 10"]
 [eval exp="f.P_MGP = 0" cond="f.P_MGP < 0"]
-[eval exp="tf.P_LUK = 100" cond="tf.P_LUK > 100"]
-[eval exp="tf.P_LUK = 0" cond="tf.P_LUK < 0"]
-[eval exp="tf.E_LUK = 100" cond="tf.E_LUK > 100"]
-[eval exp="tf.E_LUK = 0" cond="tf.E_LUK < 0"]
 [eval exp="tf.P_ERO = 9999" cond="tf.P_ERO > 9999"]
 [eval exp="tf.P_ERO = 0" cond="tf.P_ERO < 0"]
 [eval exp="tf.E_ERO = 9999" cond="tf.E_ERO > 9999"]
@@ -106,8 +101,6 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="tf.HIT = 100" cond="tf.HIT > 100"]
 [eval exp="tf.AvoidRate = 0" cond="tf.AvoidRate < 0"]
 [eval exp="tf.AvoidRate = 100" cond="tf.AvoidRate > 100"]
-[eval exp="tf.E_ACT = f.E_ACT" cond="tf.E_ACT > f.E_ACT"]
-[eval exp="tf.P_ACT = tf.P_ACTmax" cond="tf.P_ACT > tf.P_ACTmax"]
 [eval exp="tf.P_ARMOR = 0" cond="tf.P_ARMOR < 0"]
 [endmacro]
 
@@ -120,20 +113,20 @@ tf.P_AGI = f.P_AGI  - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 - tf.Aro
 tf.P_DEX = f.P_DEX  - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 - tf.ArousDEXd;
 tf.P_LUK = f.P_LUK  - tf.P_LUKd3 - tf.P_LUKd1 + tf.P_LUKb3 + tf.P_LUKb1 ;
 tf.P_MND = f.P_MND  - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 ;
-tf.P_APP = f.P_APP  - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS) ;
+tf.P_APP = f.P_APP  - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + tf.ArousAPPb + (2 - tf.P_DRESS) ;
 
-tf.E_STR = f.E_STR - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 - tf.E_charm_STR;
-tf.E_DUR = f.E_DUR - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 - tf.E_charm_DUR;
+tf.E_STR = f.E_STR - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 - tf.E_charm_STR + tf.E_anger_STR;
+tf.E_DUR = f.E_DUR - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 ;
 tf.E_AGI = f.E_AGI - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 ;
-tf.E_DEX = f.E_DEX - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 ;
+tf.E_DEX = f.E_DEX - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 - tf.E_anger_DEX;
 tf.E_LUK = f.E_LUK - tf.E_LUKd3 - tf.E_LUKd1 + tf.E_LUKb3 + tf.E_LUKb1 ;
-tf.E_MND = f.E_MND - tf.E_MNDd3 - tf.E_MNDd1 + tf.E_MNDb3 + tf.E_MNDb1 ;
+tf.E_MND = f.E_MND - tf.E_MNDd3 - tf.E_MNDd1 + tf.E_MNDb3 + tf.E_MNDb1 - tf.E_charm_MND;
 tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [endscript]
 [endmacro]
 
 [macro name="Initialize"]
-[eval exp="tf.Turn=0 , tf.P_ACT = 0"]
+[eval exp="tf.Turn=0"]
 [eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_LUK=f.P_LUK , tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_SEX=f.P_SEX  , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_LUK=f.E_LUK , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP"]
@@ -147,6 +140,15 @@ tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_MNDd3=0 , tf.E_APPd3=0 , tf.E_LUKd3=0"]
 [eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_MNDd3=0 , tf.P_APPd3=0 , tf.P_LUKd3=0"]
 [eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_MNDb3=0 , tf.E_APPb3=0 , tf.E_LUKb3=0"]
+[eval exp="tf.E_charm_STR=0 , tf.E_charm_MND=0 ,tf.E_charm_count=0"]
+[eval exp="tf.E_anger_STR=0 , tf.E_anger_DEX=0 ,tf.E_anger_count=0"]
+[endmacro]
+
+[macro name="Initialize_BadStatus"]
+;状態異常の初期値設定
+[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
+[eval exp="tf.Arousal=0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousMNDb =0 , tf.ArousSEXd =0"]
+[eval exp="tf.E_scald = 0 , tf.E_stan=0"]
 [endmacro]
 
 [macro name="Reflesh_PL_buff"]
@@ -168,8 +170,9 @@ tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [eval exp="tf.E_MNDd3_count = tf.E_MNDd3_count-1" cond="tf.E_MNDd3_count>1"][eval exp="tf.E_MNDd3=0 ,tf.E_MNDd3_count=0" cond="tf.E_MNDd3_count==1"]
 [eval exp="tf.E_APPd3_count = tf.E_APPd3_count-1" cond="tf.E_APPd3_count>1"][eval exp="tf.E_APPd3=0 ,tf.E_APPd3_count=0" cond="tf.E_APPd3_count==1"]
 
-[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
-
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=0 , tf.E_charm_MND=0 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+[eval exp="tf.E_anger_count = tf.E_anger_count-1" cond="tf.E_anger_count>1"][eval exp="tf.E_anger_STR=0 , tf.E_anger_DEX=0 ,tf.E_anger_count=0" cond="tf.E_anger_count==1"]
+[eval exp="tf.P_Counter = tf.P_Counter - 1" cond="tf.P_Counter"]
 [endmacro]
 
 [macro name="Reflesh_EN_buff"]
@@ -206,9 +209,9 @@ tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_LUKb3=0 , tf.E_MNDb3=1 , tf.E_APPb3=0"]
 [eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_LUKb3_count=1 , tf.E_MNDb3_count=1 , tf.E_APPb3_count=1"]
 ;魅了のデバフ
-[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 , tf.E_charm_count=1"]
+[eval exp="tf.E_charm_STR=0 , tf.E_charm_MND=0 , tf.E_charm_count=1"]
 ;怒り
-[eval exp="tf.E_anger_count=1 "]
+[eval exp="tf.E_anger_STR=0 , tf.E_anger_DEX=0 , tf.E_anger_count=1"]
 [endmacro]
 
 ;プレイヤーのステータス欄
@@ -240,7 +243,19 @@ tf.E_MNTtxt = '拘束：' + tf.Mount ;
 [ptext name="E_EROtxt" text="&tf.E_EROtxt" layer="2" edge="0x000000" size=20 x=840 y=30 overwrite=true]
 [ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=840 y=50 overwrite=true]
 
-[CardDebug]
+[layopt layer="4" visible=true]
+[iscript]
+tf.Cardtxt ="全札：";
+i=0;
+while(i < f.Cards.length){
+  tf.Cardtxt = tf.Cardtxt + f.Cards[i].txt;
+  i++;
+}
+[endscript]
+[ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
+[ptext name="Cardstxt" text="&tf.Cardtxt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
+[ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
+[ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
 [endmacro]
 
 ;カード関係
@@ -333,20 +348,16 @@ f.P_EXH = f.P_EXH - 3;
 [DeckRemake]
 [endmacro]
 
-[macro name="CardDebug"]
-[layopt layer="4" visible=true]
+[macro name="Hirou"]
+[eval exp="f.P_EXH++"]
+;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
+;疲労カードの追加スタン時は除外
+[if exp="tf.P_Stan < 1"]
 [iscript]
-tf.Cardtxt ="全札：";
-i=0;
-while(i < f.Cards.length){
-  tf.Cardtxt = tf.Cardtxt + f.Cards[i].txt;
-  i++;
-}
+f.Deck.push(f.Cards.length);
+f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endscript]
-[ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
-[ptext name="Cardstxt" text="&tf.Cardtxt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
-[ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
-[ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
+[endif]
 [endmacro]
 
 [macro name="Calc_P_Hit"]
@@ -358,16 +369,28 @@ while(i < f.Cards.length){
 
 [macro name="Calc_P_Crt"]
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
-[eval exp="tf.CRT = 1.3" cond="tf.dice <= (f.P_LUK + tf.P_LUKb1) * tf.CRTrate"]
+[eval exp="tf.CRT = 2" cond="tf.dice <= (f.P_LUK + tf.P_LUKb1) * tf.CRTrate"]
 [endmacro]
 
 [macro name="Calc_P_Damage"]
 [Calc_P_Crt]
 ;敵防御力
+[eval exp="tf.DEF = Math.floor(tf.E_DUR * 2)"][eval exp="tf.DEF = 0" cond="tf.CRT > 1"]
+;乱数の発生
+[eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
+[eval exp="tf.ATP = tf.P_STR * tf.RATE + tf.dice"]
+[eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+[Calc_P_Hit]
+[endmacro]
+
+[macro name="Calc_P_DamageEx"]
+;特殊攻撃用のクリティカル（防御貫通）なし用
+[Calc_P_Crt]
+;敵防御力
 [eval exp="tf.DEF = Math.floor(tf.E_DUR * 2)"]
 ;乱数の発生
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
-[eval exp="tf.ATP = tf.P_STR * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.ATP = tf.P_STR * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [Calc_P_Hit]
 [endmacro]
@@ -382,17 +405,27 @@ while(i < f.Cards.length){
 
 [macro name="Calc_E_Crt"]
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
-[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.E_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
+[eval exp="tf.CRT = 2" cond="tf.dice <= (1 + tf.E_LUKb1) * f.P_LUK * 3 * tf.CRTrate"]
 [endmacro]
 
 [macro name="Calc_E_Damage"]
 [Calc_E_Crt]
-[eval exp="tf.DEF = Math.floor(tf.P_DUR * 2)"]
+[eval exp="tf.DEF = Math.floor(tf.P_DUR * 2)"][eval exp="tf.DEF = 0" cond="tf.CRT > 1"]
 ;乱数の発生
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice]
-[eval exp="tf.ATP = tf.E_STR * tf.RATE * tf.CRT + tf.dice"]
+[eval exp="tf.ATP = tf.E_STR * tf.RATE + tf.dice"]
 [eval exp="tf.Damage = Math.floor(tf.ATP - tf.DEF)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [Calc_E_Hit]
+[endmacro]
+
+;カウンター
+[macro name="P_Counter"]
+[call storage="battle-PL-Skill.ks" target="*PLカウンター発動" cond="tf.P_Counter > 1 "]
+[endmacro]
+
+;身代わり
+[macro name="P_Barrier"]
+[call storage="battle-PL-Magic.ks" target="*変わり身発動" cond="tf.P_Barrier > 1"]
 [endmacro]
 
 ;勝敗判定
@@ -432,7 +465,7 @@ while(i < f.Cards.length){
 [if exp="tf.P_ERO >= 700 && tf.Arousal != 2"]
 [eval exp="tf.Arousal = 2"]
 なずなは欲情状態になった[p]
-[eval exp="tf.Arousal = 2 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =2 , tf.ArousMNDd =1 , tf.ArousSEXd =2"]
+[eval exp="tf.Arousal = 2 , tf.ArousSTRd =1 , tf.ArousAGId =1 , tf.ArousDEXd =1 , tf.ArousAPPb =1 , tf.ArousMNDd =1 , tf.ArousSEXd =2"]
 [endif]
 
 [if exp="tf.Kaikan > 999 && tf.Orga < 1"]
@@ -474,11 +507,11 @@ while(i < f.Cards.length){
 
 [macro name="Dress"]
 [if exp="tf.P_DRESS > 1"]
-[eval exp="tf.P_ARMOR = 33 ,tf.P_DRESS = 1"]
+[eval exp="tf.P_DRESS = 1"]
 なずなは下着姿になった[p]なずなの色気が上昇した[p]
 [chara_mod name="kunugi" face="seminude"]
 [elsif exp="tf.P_DRESS > 0"]
-[eval exp="tf.P_ARMOR = 0 ,tf.P_DRESS = 0"]
+[eval exp="tf.P_DRESS = 0"]
 なずなは一糸まとわぬ姿になった[p]なずなの色気が上昇した[p]
 [chara_mod name="kunugi" face="nude"]
 [endif]
