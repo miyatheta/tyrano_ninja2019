@@ -4,8 +4,7 @@
 [eval exp="tf.Mount = 1000"]
 
 *ターン開始
-[Initialize_PL_1Tbuff]
-[Refresh_3Tbuff]
+[Reflesh_PL_buff]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
 ;状態異常のカウント・治癒
@@ -166,7 +165,7 @@
 [er]
 なずなは色仕掛けを試みた[lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_APP - tf.E_APP) * 5 "]
+[eval exp="tf.Resist = Math.floor(tf.P_APP - tf.E_MND) * 5 "]
 [eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
@@ -187,7 +186,7 @@
 [er]
 なずなは金的を狙った[lr]
 ;LUK対抗
-[eval exp="tf.Resist = Math.floor(f.P_LUK - f.E_LUK) * 5 "]
+[eval exp="tf.Resist = Math.floor(tf.P_LUK - tf.E_LUK) * 5 "]
 [eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
@@ -234,7 +233,7 @@
 *攻守交代
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
-[Initialize_EN_1Tbuff]
+[Reflesh_EN_buff]
 [if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
 
@@ -352,5 +351,6 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [jump target="*ターン開始"]
 
 *拘束解除
+[er]
 なずな は拘束を振りほどいた[p]
 [jump storage="battle.ks" target="*ターン開始"]

@@ -42,7 +42,7 @@
 *弱攻撃
 [EnName]の弱攻撃[p]
 [Calc_Status]
-[eval exp="tf.RATE = 6.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
+[eval exp="tf.RATE = 8.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
 [Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
@@ -80,8 +80,8 @@
 「大木断」[p]
 大上段から薙刀が叩きつけられた[p]
 [Calc_Status]
-[eval exp="tf.HIT=10"]
-[eval exp="tf.RATE = 12.0 , tf.ACC = 20 , tf.CRTrate = 1.5"]
+[eval exp="tf.RATE = 15.0 , tf.ACC = 40 , tf.CRTrate = 1.5"]
+[Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の攻撃を回避した[p]
 [elsif exp="tf.CRT>1"]
@@ -108,7 +108,7 @@
 
 *金縛り
 「金縛り」[p]
-敵に気圧されたなずなの命中が低下[p]
-[eval exp="tf.P_DEXd1 = tf.P_DEXd1 + 0.3 "][limit]
+敵に気圧されたなずなの回避が低下(3ターン)[p]
+[eval exp="tf.P_AGId3 = 5 "][limit]
 [return]
 [s]

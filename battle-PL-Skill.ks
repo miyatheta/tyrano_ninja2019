@@ -5,16 +5,16 @@
 [eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.P_DEXb1 = 5"]
 [l][er]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 
 *スキル２
 [er]
 会心の一撃発生率上昇
 [eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
-[eval exp="tf.P_LUKb1 = 5"]
+[eval exp="tf.P_LUKb1 = 10"]
 [l][er]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 
 *スキル３
@@ -23,7 +23,7 @@
 [eval exp="tf.Cost = 1 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.P_DURb1 = 10"]
 [l][er]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 
 *スキル４
@@ -32,7 +32,7 @@
 [eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.P_MNDb1 = 10"]
 [l][er]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 
 *スキル５
@@ -41,7 +41,7 @@
 [eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.P_DRESS=2"]
 [chara_mod name="kunugi" face="default"]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 [s]
 
@@ -51,5 +51,5 @@
 [eval exp="tf.Cost = 3 , tf.Type='green' , f.Green = f.Green - tf.Cost , tf.P_ACT = tf.P_ACT + tf.Cost"]
 [eval exp="tf.P_STRb1 = 5"]
 [l][er]
-[DeActivate]
+[Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]

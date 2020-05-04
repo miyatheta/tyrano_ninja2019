@@ -4,21 +4,19 @@
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
 ;腕力＞攻撃力
-[eval exp="f.P_STR=33"]
+[eval exp="f.P_STR=30"]
 ;耐久＞防御力
-[eval exp="f.P_DUR=33"]
+[eval exp="f.P_DUR=30"]
 ;敏捷＞回避
 [eval exp="f.P_AGI=33"]
 ;技量＞命中
-[eval exp="f.P_DEX=33"]
+[eval exp="f.P_DEX=31"]
 ;幸運＞乱数の幅
 [eval exp="f.P_LUK=33"]
-;精神力＞術の火力
-[eval exp="f.P_POW=33"]
 ;精神力＞快感への抵抗値
 [eval exp="f.P_MND=33"]
 ;魅力
-[eval exp="f.P_APP=33"]
+[eval exp="f.P_APP=30"]
 ;房中
 [eval exp="f.P_SEX=33"]
 ;呼吸＞行動回数
@@ -54,8 +52,6 @@
 [eval exp="f.E_DEX=24"]
 ;幸運＞乱数の幅
 [eval exp="f.E_LUK=5"]
-;精神力＞術の威力
-[eval exp="f.E_POW=5"]
 ;精神力＞魅了などへの抵抗値
 [eval exp="f.E_MND=5"]
 ;魅力>敵は魅了への抵抗として使用？MNDで良いので使う機会はない

@@ -432,7 +432,7 @@
 [eval exp="f.E_MGP = f.E_MGP - 50"]
 [if exp="tf.P_AVD>0"][eval exp="tf.Max=99 , tf.Min=0"][dice][jump storage="battle.ks" target="*P_avoid_success" cond="tf.AvoidRate > tf.dice"][endif]
 [eval exp="tf.Max=9 , tf.Min=0+f.P_LUK"][dice][eval exp="tf.DEF = Math.floor(tf.P_DUR * tf.P_GRD * 2 + tf.dice)"]
-[eval exp="tf.ATP = 30.0 * tf.E_POW  "]
+[eval exp="tf.ATP = 600 "]
 [eval exp="tf.Damage =  Math.floor(tf.ATP + 1)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
 [quake count=5 time=300 hmax=20]
 なずなに[emb exp="tf.Damage"]のダメージ[p]

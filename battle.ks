@@ -28,7 +28,7 @@
 ;ステータスのインストール
 *Initialize
 [Initialize]
-[Initialize_PL_1Tbuff][Initialize_EN_1Tbuff][Initialize_3Tbuff]
+[Reflesh_PL_buff][Reflesh_EN_buff][Initialize_3Tbuff]
 *Initialize_BadStatus
 ;状態異常の初期値設定
 [eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
@@ -59,8 +59,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
 
 *ターン開始
-[Initialize_PL_1Tbuff]
-[Refresh_3Tbuff]
+[Reflesh_PL_buff]
 ;ターン開始
 [eval exp="tf.Turn=tf.Turn+1"]
 ;状態異常のカウント・治癒
@@ -107,8 +106,11 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *攻撃
 [er]
 [if exp="f.Red<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Red>0"][link target="*攻撃１"]攻撃１[endlink][endif] [if exp="f.Red>1"][link target="*攻撃２"]攻撃２[endlink][endif][r]
-[if exp="f.Red>2"][link target="*攻撃３"]攻撃３[endlink][endif][r]
+[if exp="f.Red>0"][link storage="battle-PL-Attack.ks" target="*攻撃１"]拳/弱攻撃[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃２"]蹴り/中攻撃[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃４"]手裏剣/特殊１[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃５"]撒き菱/特殊２[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃３"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
@@ -141,89 +143,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [jump target="*手札一覧"]
 [s]
 
-*攻撃１
-[er]
-敵に小ダメージ[p]
-[Calc_Status]
-[eval exp="tf.Cost = 1 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
-[eval exp="tf.RATE = 6.0 , tf.ACC = 50 , tf.CRTrate = 0.5"]
-[Calc_P_Damage]
-[if exp="tf.AvoidRate > tf.dice"]
-敵はなずなの攻撃を回避した[p]
-
-[elsif exp="tf.CRT>1"]
-[quake count=5 time=300 hmax=20]
-会心の一撃[r]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-
-[else]
-[quake count=5 time=300 hmax=20]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[endif]
-
-[MiniStatus][Triage]
-[er]
-[DeActivate]
-[jump storage="battle.ks" target="*手札一覧"]
-
-*攻撃２
-[er]
-敵に中ダメージ[p]
-[Calc_Status]
-[eval exp="tf.Cost = 2 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
-[eval exp="tf.RATE = 10.0 , tf.ACC = 30 , tf.CRTrate = 1.0"]
-[Calc_P_Damage]
-[if exp="tf.AvoidRate > tf.dice"]
-敵はなずなの攻撃を回避した[p]
-
-[elsif exp="tf.CRT>1"]
-[quake count=5 time=300 hmax=20]
-会心の一撃[r]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-
-[else]
-[quake count=5 time=300 hmax=20]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[endif]
-
-[MiniStatus][Triage]
-[er]
-[DeActivate]
-[jump storage="battle.ks" target="*手札一覧"]
-
-*攻撃３
-[er]
-敵に大ダメージ[p]
-[Calc_Status]
-[eval exp="tf.Cost = 3 , tf.Type='red' , f.Red = f.Red - tf.Cost "]
-[eval exp="tf.RATE = 14.0 , tf.ACC = 10 , tf.CRTrate = 1.5"]
-[Calc_P_Damage]
-[if exp="tf.AvoidRate > tf.dice"]
-敵はなずなの攻撃を回避した[p]
-
-[elsif exp="tf.CRT>1"]
-[quake count=5 time=300 hmax=20]
-会心の一撃[r]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-
-[else]
-[quake count=5 time=300 hmax=20]
-[EnName]に[emb exp="tf.Damage"]のダメージ[p]
-[eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[endif]
-
-[MiniStatus][Triage]
-[er]
-[DeActivate]
-[jump storage="battle.ks" target="*手札一覧"]
-[s]
-
-
 *息切れ
 [cm]
 なずな は息切れをした！[r]
@@ -237,7 +156,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [cm]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
-[Initialize_EN_1Tbuff]
+[Reflesh_EN_buff]
 [if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
 [jump storage="battle-Testenemy.ks" target="*敵攻撃パターン適用"]

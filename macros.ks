@@ -94,14 +94,14 @@ tf.Damage = Math.floor(5 * f.SEN / 100);
 [eval exp="f.P_MGP = 100" cond="f.P_MGP > 100"]
 [eval exp="f.E_MGP = 100" cond="f.E_MGP > 100"]
 [eval exp="f.P_MGP = 0" cond="f.P_MGP < 0"]
-[eval exp="f.P_LUK = 5" cond="f.P_LUK > 5"]
-[eval exp="f.P_LUK = 0" cond="f.P_LUK < 0"]
+[eval exp="tf.P_LUK = 100" cond="tf.P_LUK > 100"]
+[eval exp="tf.P_LUK = 0" cond="tf.P_LUK < 0"]
+[eval exp="tf.E_LUK = 100" cond="tf.E_LUK > 100"]
+[eval exp="tf.E_LUK = 0" cond="tf.E_LUK < 0"]
 [eval exp="tf.P_ERO = 9999" cond="tf.P_ERO > 9999"]
 [eval exp="tf.P_ERO = 0" cond="tf.P_ERO < 0"]
 [eval exp="tf.E_ERO = 9999" cond="tf.E_ERO > 9999"]
 [eval exp="tf.E_ERO = 0" cond="tf.E_ERO < 0"]
-[eval exp="tf.P_ACT = 0" cond="tf.P_ACT < 0"]
-[eval exp="tf.E_ACT = 0" cond="tf.E_ACT < 0"]
 [eval exp="tf.HIT= 0" cond="tf.HIT < 0"]
 [eval exp="tf.HIT = 100" cond="tf.HIT > 100"]
 [eval exp="tf.AvoidRate = 0" cond="tf.AvoidRate < 0"]
@@ -118,7 +118,7 @@ tf.P_STR = f.P_STR  - tf.P_STRd3 - tf.P_STRd1 + tf.P_STRb3 + tf.P_STRb1 - tf.Aro
 tf.P_DUR = f.P_DUR  - tf.P_DURd3 - tf.P_DURd1 + tf.P_DURb3 + tf.P_DURb1 ;
 tf.P_AGI = f.P_AGI  - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 - tf.ArousAGId;
 tf.P_DEX = f.P_DEX  - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 - tf.ArousDEXd;
-tf.P_POW = f.P_POW  - tf.P_POWd3 - tf.P_POWd1 + tf.P_POWb3 + tf.P_POWb1 ;
+tf.P_LUK = f.P_LUK  - tf.P_LUKd3 - tf.P_LUKd1 + tf.P_LUKb3 + tf.P_LUKb1 ;
 tf.P_MND = f.P_MND  - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 ;
 tf.P_APP = f.P_APP  - tf.P_APPd3 - tf.P_APPd1 + tf.P_APPb3 + tf.P_APPb1 + (2 - tf.P_DRESS) ;
 
@@ -126,7 +126,7 @@ tf.E_STR = f.E_STR - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 - tf.E_ch
 tf.E_DUR = f.E_DUR - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 - tf.E_charm_DUR;
 tf.E_AGI = f.E_AGI - tf.E_AGId3 - tf.E_AGId1 + tf.E_AGIb3 + tf.E_AGIb1 ;
 tf.E_DEX = f.E_DEX - tf.E_DEXd3 - tf.E_DEXd1 + tf.E_DEXb3 + tf.E_DEXb1 ;
-tf.E_POW = f.E_POW - tf.E_POWd3 - tf.E_POWd1 + tf.E_POWb3 + tf.E_POWb1 ;
+tf.E_LUK = f.E_LUK - tf.E_LUKd3 - tf.E_LUKd1 + tf.E_LUKb3 + tf.E_LUKb1 ;
 tf.E_MND = f.E_MND - tf.E_MNDd3 - tf.E_MNDd1 + tf.E_MNDb3 + tf.E_MNDb1 ;
 tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [endscript]
@@ -134,55 +134,30 @@ tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 
 [macro name="Initialize"]
 [eval exp="tf.Turn=0 , tf.P_ACT = 0"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_POW=f.P_POW, tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_LUK=f.P_LUK , tf.P_MND=f.P_MND, tf.P_APP=f.P_APP"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_SEX=f.P_SEX  , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
-[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_POW=f.E_POW , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP"]
+[eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_LUK=f.E_LUK , tf.E_MND=f.E_MND , tf.E_APP=f.E_APP"]
 [eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_SEX=f.E_SEX , tf.E_BND=f.E_BND , tf.E_MGP=f.E_MGP"]
+
+[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0"]
+[eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
+[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
+[eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_MNDb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
+[eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_MNDb3=0 , tf.P_APPb3=0 , tf.P_LUKb3=0"]
+[eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_MNDd3=0 , tf.E_APPd3=0 , tf.E_LUKd3=0"]
+[eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_MNDd3=0 , tf.P_APPd3=0 , tf.P_LUKd3=0"]
+[eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_MNDb3=0 , tf.E_APPb3=0 , tf.E_LUKb3=0"]
 [endmacro]
 
-[macro name="Initialize_PL_1Tbuff"]
-;PLのスキルによる効果
-[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_POWb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0"]
-[eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_POWd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
-[endmacro]
-
-[macro name="Initialize_EN_1Tbuff"]
-;敵のスキルによる効果
-[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_POWd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
-[eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_POWb1=0 , tf.E_MNDb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
-[endmacro]
-
-[macro name="Initialize_3Tbuff"]
-[eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_POWd3=0 , tf.P_MNDd3=0 , tf.P_APPd3=0"]
-[eval exp="tf.P_STRd3_count=1 , tf.P_DURd3_count=1 , tf.P_AGId3_count=1 , tf.P_DEXd3_count=1 , tf.P_POWd3_count=1 , tf.P_MNDd3_count=1 , tf.P_APPd3_count=1"]
-
-[eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_POWb3=0 , tf.P_MNDb3=0 , tf.P_APPb3=0"]
-[eval exp="tf.P_STRb3_count=1 , tf.P_DURb3_count=1 , tf.P_AGIb3_count=1 , tf.P_DEXb3_count=1 , tf.P_POWb3_count=1 , tf.P_MNDb3_count=1 , tf.P_APPb3_count=1"]
-
-[eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_POWd3=0 , tf.E_MNDd3=0 , tf.E_APPd3=0"]
-[eval exp="tf.E_STRd3_count=1 , tf.E_DURd3_count=1 , tf.E_AGId3_count=1 , tf.E_DEXd3_count=1 , tf.E_POWd3_count=1 , tf.E_MNDd3_count=1 , tf.E_APPd3_count=1"]
-
-[eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_POWb3=0 , tf.E_MNDb3=1 , tf.E_APPb3=0"]
-[eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_POWb3_count=1 , tf.E_MNDb3_count=1 , tf.E_APPb3_count=1"]
-;魅了のデバフ
-[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 , tf.E_charm_count=1"]
-;怒り
-[eval exp="tf.E_anger_count=1 "]
-[endmacro]
-
-[macro name="Refresh_3Tbuff"]
-[eval exp="tf.P_STRd3_count = tf.P_STRd3_count-1" cond="tf.P_STRd3_count>1"][eval exp="tf.P_STRd3=0 ,tf.P_STRd3_count=0" cond="tf.P_STRd3_count==1"]
-[eval exp="tf.P_DURd3_count = tf.P_DURd3_count-1" cond="tf.P_DURd3_count>1"][eval exp="tf.P_DURd3=0 ,tf.P_DURd3_count=0" cond="tf.P_DURd3_count==1"]
-[eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1" cond="tf.P_AGId3_count>1"][eval exp="tf.P_AGId3=0 ,tf.P_AGId3_count=0" cond="tf.P_AGId3_count==1"]
-[eval exp="tf.P_DEXd3_count = tf.P_DEXd3_count-1" cond="tf.P_DEXd3_count>1"][eval exp="tf.P_DEXd3=0 ,tf.P_DEXd3_count=0" cond="tf.P_DEXd3_count==1"]
-[eval exp="tf.P_POWd3_count = tf.P_POWd3_count-1" cond="tf.P_POWd3_count>1"][eval exp="tf.P_POWd3=0 ,tf.P_POWd3_count=0" cond="tf.P_POWd3_count==1"]
-[eval exp="tf.P_MNDd3_count = tf.P_MNDd3_count-1" cond="tf.P_MNDd3_count>1"][eval exp="tf.P_MNDd3=0 ,tf.P_MNDd3_count=0" cond="tf.P_MNDd3_count==1"]
-[eval exp="tf.P_APPd3_count = tf.P_APPd3_count-1" cond="tf.P_APPd3_count>1"][eval exp="tf.P_APPd3=0 ,tf.P_APPd3_count=0" cond="tf.P_APPd3_count==1"]
+[macro name="Reflesh_PL_buff"]
+;PLのスキルによる効果(1ターン)
+[eval exp="tf.P_STRb1=0 , tf.P_DURb1=0 , tf.P_AGIb1=0 , tf.P_DEXb1=0 , tf.P_MNDb1=0 , tf.P_APPb1=0 , tf.P_LUKb1=0"]
+[eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_MNDd1=0 , tf.E_APPd1=0 , tf.E_LUKd1=0"]
+;PLのスキルによる効果(3ターン)
 [eval exp="tf.P_STRb3_count = tf.P_STRb3_count-1" cond="tf.P_STRb3_count>1"][eval exp="tf.P_STRb3=0 ,tf.P_STRb3_count=0" cond="tf.P_STRb3_count==1"]
 [eval exp="tf.P_DURb3_count = tf.P_DURb3_count-1" cond="tf.P_DURb3_count>1"][eval exp="tf.P_DURb3=0 ,tf.P_DURb3_count=0" cond="tf.P_DURb3_count==1"]
 [eval exp="tf.P_AGIb3_count = tf.P_AGIb3_count-1" cond="tf.P_AGIb3_count>1"][eval exp="tf.P_AGIb3=0 ,tf.P_AGIb3_count=0" cond="tf.P_AGIb3_count==1"]
 [eval exp="tf.P_DEXb3_count = tf.P_DEXb3_count-1" cond="tf.P_DEXb3_count>1"][eval exp="tf.P_DEXb3=0 ,tf.P_DEXb3_count=0" cond="tf.P_DEXb3_count==1"]
-[eval exp="tf.P_POWb3_count = tf.P_POWb3_count-1" cond="tf.P_POWb3_count>1"][eval exp="tf.P_POWb3=0 ,tf.P_POWb3_count=0" cond="tf.P_POWb3_count==1"]
 [eval exp="tf.P_MNDb3_count = tf.P_MNDb3_count-1" cond="tf.P_MNDb3_count>1"][eval exp="tf.P_MNDb3=0 ,tf.P_MNDb3_count=0" cond="tf.P_MNDb3_count==1"]
 [eval exp="tf.P_APPb3_count = tf.P_APPb3_count-1" cond="tf.P_APPb3_count>1"][eval exp="tf.P_APPb3=0 ,tf.P_APPb3_count=0" cond="tf.P_APPb3_count==1"]
 
@@ -190,18 +165,50 @@ tf.E_APP = f.E_APP - tf.E_APPd3 - tf.E_APPd1 + tf.E_APPb3 + tf.E_APPb1 ;
 [eval exp="tf.E_DURd3_count = tf.E_DURd3_count-1" cond="tf.E_DURd3_count>1"][eval exp="tf.E_DURd3=0 ,tf.E_DURd3_count=0" cond="tf.E_DURd3_count==1"]
 [eval exp="tf.E_AGId3_count = tf.E_AGId3_count-1" cond="tf.E_AGId3_count>1"][eval exp="tf.E_AGId3=0 ,tf.E_AGId3_count=0" cond="tf.E_AGId3_count==1"]
 [eval exp="tf.E_DEXd3_count = tf.E_DEXd3_count-1" cond="tf.E_DEXd3_count>1"][eval exp="tf.E_DEXd3=0 ,tf.E_DEXd3_count=0" cond="tf.E_DEXd3_count==1"]
-[eval exp="tf.E_POWd3_count = tf.E_POWd3_count-1" cond="tf.E_POWd3_count>1"][eval exp="tf.E_POWd3=0 ,tf.E_POWd3_count=0" cond="tf.E_POWd3_count==1"]
 [eval exp="tf.E_MNDd3_count = tf.E_MNDd3_count-1" cond="tf.E_MNDd3_count>1"][eval exp="tf.E_MNDd3=0 ,tf.E_MNDd3_count=0" cond="tf.E_MNDd3_count==1"]
 [eval exp="tf.E_APPd3_count = tf.E_APPd3_count-1" cond="tf.E_APPd3_count>1"][eval exp="tf.E_APPd3=0 ,tf.E_APPd3_count=0" cond="tf.E_APPd3_count==1"]
+
+[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+
+[endmacro]
+
+[macro name="Reflesh_EN_buff"]
+;敵のスキルによる効果(１ターン)
+[eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_MNDd1=0 , tf.P_APPd1=0 , tf.P_LUKd1=0"]
+[eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_MNDb1=0 , tf.E_APPb1=0 , tf.E_LUKb1=0"]
+;敵のスキルによる効果(３ターン)
 [eval exp="tf.E_STRb3_count = tf.E_STRb3_count-1" cond="tf.E_STRb3_count>1"][eval exp="tf.E_STRb3=0 ,tf.E_STRb3_count=0" cond="tf.E_STRb3_count==1"]
 [eval exp="tf.E_DURb3_count = tf.E_DURb3_count-1" cond="tf.E_DURb3_count>1"][eval exp="tf.E_DURb3=0 ,tf.E_DURb3_count=0" cond="tf.E_DURb3_count==1"]
 [eval exp="tf.E_AGIb3_count = tf.E_AGIb3_count-1" cond="tf.E_AGIb3_count>1"][eval exp="tf.E_AGIb3=0 ,tf.E_AGIb3_count=0" cond="tf.E_AGIb3_count==1"]
 [eval exp="tf.E_DEXb3_count = tf.E_DEXb3_count-1" cond="tf.E_DEXb3_count>1"][eval exp="tf.E_DEXb3=0 ,tf.E_DEXb3_count=0" cond="tf.E_DEXb3_count==1"]
-[eval exp="tf.E_POWb3_count = tf.E_POWb3_count-1" cond="tf.E_POWb3_count>1"][eval exp="tf.E_POWb3=0 ,tf.E_POWb3_count=0" cond="tf.E_POWb3_count==1"]
 [eval exp="tf.E_MNDb3_count = tf.E_MNDb3_count-1" cond="tf.E_MNDb3_count>1"][eval exp="tf.E_MNDb3=0 ,tf.E_MNDb3_count=0" cond="tf.E_MNDb3_count==1"]
 [eval exp="tf.E_APPb3_count = tf.E_APPb3_count-1" cond="tf.E_APPb3_count>1"][eval exp="tf.E_APPb3=0 ,tf.E_APPb3_count=0" cond="tf.E_APPb3_count==1"]
 
-[eval exp="tf.E_charm_count = tf.E_charm_count-1" cond="tf.E_charm_count>1"][eval exp="tf.E_charm_STR=1 ,tf.E_charm_DUR=1 ,tf.E_charm_count=0" cond="tf.E_charm_count==1"]
+[eval exp="tf.P_STRd3_count = tf.P_STRd3_count-1" cond="tf.P_STRd3_count>1"][eval exp="tf.P_STRd3=0 ,tf.P_STRd3_count=0" cond="tf.P_STRd3_count==1"]
+[eval exp="tf.P_DURd3_count = tf.P_DURd3_count-1" cond="tf.P_DURd3_count>1"][eval exp="tf.P_DURd3=0 ,tf.P_DURd3_count=0" cond="tf.P_DURd3_count==1"]
+[eval exp="tf.P_AGId3_count = tf.P_AGId3_count-1" cond="tf.P_AGId3_count>1"][eval exp="tf.P_AGId3=0 ,tf.P_AGId3_count=0" cond="tf.P_AGId3_count==1"]
+[eval exp="tf.P_DEXd3_count = tf.P_DEXd3_count-1" cond="tf.P_DEXd3_count>1"][eval exp="tf.P_DEXd3=0 ,tf.P_DEXd3_count=0" cond="tf.P_DEXd3_count==1"]
+[eval exp="tf.P_MNDd3_count = tf.P_MNDd3_count-1" cond="tf.P_MNDd3_count>1"][eval exp="tf.P_MNDd3=0 ,tf.P_MNDd3_count=0" cond="tf.P_MNDd3_count==1"]
+[eval exp="tf.P_APPd3_count = tf.P_APPd3_count-1" cond="tf.P_APPd3_count>1"][eval exp="tf.P_APPd3=0 ,tf.P_APPd3_count=0" cond="tf.P_APPd3_count==1"]
+
+[endmacro]
+
+[macro name="Initialize_3Tbuff"]
+[eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_LUKd3=0 , tf.P_MNDd3=0 , tf.P_APPd3=0"]
+[eval exp="tf.P_STRd3_count=1 , tf.P_DURd3_count=1 , tf.P_AGId3_count=1 , tf.P_DEXd3_count=1 , tf.P_MNDd3_count=1 , tf.P_APPd3_count=1"]
+
+[eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_LUKb3=0 , tf.P_MNDb3=0 , tf.P_APPb3=0"]
+[eval exp="tf.P_STRb3_count=1 , tf.P_DURb3_count=1 , tf.P_AGIb3_count=1 , tf.P_DEXb3_count=1 , tf.P_MNDb3_count=1 , tf.P_APPb3_count=1"]
+
+[eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_LUKd3=0 , tf.E_MNDd3=0 , tf.E_APPd3=0"]
+[eval exp="tf.E_STRd3_count=1 , tf.E_DURd3_count=1 , tf.E_AGId3_count=1 , tf.E_DEXd3_count=1 , tf.E_LUKd3_count=1 , tf.E_MNDd3_count=1 , tf.E_APPd3_count=1"]
+
+[eval exp="tf.E_STRb3=0 , tf.E_DURb3=0 , tf.E_AGIb3=0 , tf.E_DEXb3=0 , tf.E_LUKb3=0 , tf.E_MNDb3=1 , tf.E_APPb3=0"]
+[eval exp="tf.E_STRb3_count=1 , tf.E_DURb3_count=1 , tf.E_AGIb3_count=1 , tf.E_DEXb3_count=1 , tf.E_LUKb3_count=1 , tf.E_MNDb3_count=1 , tf.E_APPb3_count=1"]
+;魅了のデバフ
+[eval exp="tf.E_charm_STR=1 , tf.E_charm_DUR=1 , tf.E_charm_count=1"]
+;怒り
+[eval exp="tf.E_anger_count=1 "]
 [endmacro]
 
 ;プレイヤーのステータス欄
@@ -346,12 +353,12 @@ while(i < f.Cards.length){
 [eval exp="tf.HIT = Math.floor(tf.P_DEX - tf.E_AGI ) * 5 + 25 + tf.ACC"]
 [eval exp="tf.AvoidRate = 100 - tf.HIT "][limit]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
-(命中率[emb exp="tf.HIT"]％)[r]
+(命中[emb exp="tf.HIT"]％)
 [endmacro]
 
 [macro name="Calc_P_Crt"]
 [eval exp="tf.Max=99 , tf.Min=0 , tf.CRT = 1"][dice]
-[eval exp="tf.CRT = 1.3" cond="tf.dice <= (1 + tf.P_LUKb1) * f.P_LUK * tf.CRTrate"]
+[eval exp="tf.CRT = 1.3" cond="tf.dice <= (f.P_LUK + tf.P_LUKb1) * tf.CRTrate"]
 [endmacro]
 
 [macro name="Calc_P_Damage"]
