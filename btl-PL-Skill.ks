@@ -48,9 +48,8 @@
 *スキル６
 [er]
 なずなは反撃の構えを取った[p]
-[eval exp="tf.Cost = 3 , tf.Type='green' , f.Green = f.Green - tf.Cost "]
+[eval exp="tf.Cost = 2 , tf.Type='green' , f.Green = f.Green - tf.Cost "]
 [eval exp="tf.P_Counter = 1"]
-[p]
 [Calc_Status][DeActivate]
 [jump storage="battle.ks" target="*技能"]
 [s]
@@ -59,7 +58,7 @@
 [er]
 なずなの反撃[p]
 [Calc_Status]
-[eval exp="tf.RATE = 15.0 , tf.ACC = 1000 , tf.CRTrate = 1"]
+[eval exp="tf.RATE = 12.0 , tf.ACC = 1000 , tf.CRTrate = 1"]
 [Calc_P_DamageEx]
 
 [quake count=5 time=300 hmax=20]

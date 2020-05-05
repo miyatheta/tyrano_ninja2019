@@ -22,7 +22,7 @@
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン2
-[call target="*組付"][P_Barrier][jump storage="battle-bound.ks" target="*拘束開始" cond="tf.Mount > 0"]
+[call target="*組付"][P_Barrier][jump storage="btl-bound.ks" target="*拘束開始" cond="tf.Mount > 0"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン3
@@ -42,7 +42,7 @@
 *弱攻撃
 [EnName]の弱攻撃[p]
 [Calc_Status]
-[eval exp="tf.RATE = 8.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
+[eval exp="tf.RATE = 6.0 , tf.ACC = 60 , tf.CRTrate = 0.5"]
 [Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 [eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
@@ -71,10 +71,9 @@
 *組付
 [EnName]の組付[p]
 [Calc_Status]
-[eval exp="tf.HIT = 40"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[eval exp="tf.AvoidRate = 50 + (tf.P_AGI - tf.HIT) * 5 "][limit]
-[if exp="tf.AvoidRate > tf.dice"]
+[eval exp="tf.ACC = 100"]
+[Calc_E_Hit]
+[if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の組付を躱した[p]
 [return]
 [endif]
@@ -87,7 +86,7 @@
 「大木断」[p]
 大上段から薙刀が叩きつけられた[p]
 [Calc_Status]
-[eval exp="tf.RATE = 15.0 , tf.ACC = 40 , tf.CRTrate = 1.5"]
+[eval exp="tf.RATE = 14.0 , tf.ACC = 40 , tf.CRTrate = 1.5"]
 [Calc_E_Damage]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 [eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]

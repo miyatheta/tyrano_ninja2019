@@ -8,7 +8,7 @@
 
 ;メッセージウィンドウの設定
 [position layer="message0" left=340 top=480 width=610 height=150 color="0x696969" opacity=50 page=fore visible=true]
-
+[deffont size=18][resetfont]
 ;文字が表示される領域を調整
 [position layer=message0 page=fore margint="10" marginl="10" marginr="10" marginb="10"]
 
@@ -39,6 +39,6 @@
 ダミーが現れた[p]
 [eval exp="tf.E_name='ダミー'"]
 [eval exp="tf.E_HandlName='ダミー'"]
-[eval exp="f.E_HP=2000 , f.E_STR=33 , f.E_DUR=31 , f.E_AGI=25 , f.E_DEX=32 , f.E_LUK=27"]
-[eval exp="f.E_MND=25 , f.E_APP=25 , f.E_MGP=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=100 , f.E_SEX=33 , f.E_BND = 33 "]
+[eval exp="f.E_HP=2000 , f.E_STR=32 , f.E_DUR=31 , f.E_AGI=25 , f.E_DEX=32 , f.E_LUK=20"]
+[eval exp="f.E_MND=25 , f.E_SEX=30 , f.E_MGP=0 , f.E_EXH=0 , f.E_ERO=0 , f.E_SAN=100 , f.E_BND = 33 "]
 @jump storage="battle.ks"

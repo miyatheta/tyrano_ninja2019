@@ -70,13 +70,13 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 ;欲情
 [if exp="tf.Arousal == 1"]
 くぬぎの欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousSEXd =0"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 "]
 [endif]
 ;スタン
 [if exp="tf.E_stan>0"][eval exp="tf.E_stan=0"][EnName]が自由に動けるようになった[p][endif]
 
 *敵攻撃パターン選択
-[jump storage="battle-Testenemy.ks" target="*敵攻撃パターン選択"]
+[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択"]
 
 *手番開始
 [MiniStatus]
@@ -101,33 +101,33 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *攻撃
 [er]
 [if exp="f.Red<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Red>0"][link storage="battle-PL-Attack.ks" target="*攻撃1"]拳/弱攻撃[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃2"]蹴り/中攻撃[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃4"]手裏剣/特殊１[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>1"][link storage="battle-PL-Attack.ks" target="*攻撃5"]撒き菱/特殊２[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>2"][link storage="battle-PL-Attack.ks" target="*攻撃3"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>0"][link storage="btl-PL-Attack.ks" target="*攻撃1"]拳/弱攻撃[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃2"]蹴り/中攻撃[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃4"]手裏剣/特殊１[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
+[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃5"]撒き菱/特殊２[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
+[if exp="f.Red>2"][link storage="btl-PL-Attack.ks" target="*攻撃3"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
 [link target="*手札一覧"]戻る[endlink]
 [s]
 
 *技能
 [er]
 [if exp="f.Green<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル1"]スキル1命中　[endlink][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル2"]スキル2会心　[endlink][endif][r]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル3"]スキル3防御　[endlink][endif]
-[if exp="f.Green>0"][link storage="battle-PL-Skill.ks" target="*スキル4"]スキル4忍耐　[endlink][endif][r]
-[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル5"]スキル5修繕　[endlink][endif]
-[if exp="f.Green>1"][link storage="battle-PL-Skill.ks" target="*スキル６"]スキル６反撃　[endlink][endif][r]
+[if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル1"]スキル1命中　[endlink][endif]
+[if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル2"]スキル2会心　[endlink][endif][r]
+[if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル3"]スキル3防御　[endlink][endif]
+[if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル4"]スキル4忍耐　[endlink][endif][r]
+[if exp="f.Green>1"][link storage="btl-PL-Skill.ks" target="*スキル5"]スキル5修繕　[endlink][endif]
+[if exp="f.Green>1"][link storage="btl-PL-Skill.ks" target="*スキル６"]スキル６反撃　[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
 *忍術
 [er]
 [if exp="f.Blue<1"][jump storage="battle.ks" target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術1"]忍術1火遁（気力10）[endlink][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術2"]忍術2変わり身（気力5）[endlink][endif][r]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術3"]忍術3魅了（気力5）[endlink][endif]
-[if exp="f.Blue>0"][link storage="battle-PL-Magic.ks" target="*忍術4"]忍術4衣替え（気力3）[endlink][endif][r]
+[if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術1"]忍術1火遁（気力10）[endlink][endif]
+[if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術2"]忍術2変わり身（気力5）[endlink][endif][r]
+[if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術3"]忍術3魅了（気力5）[endlink][endif]
+[if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術4"]忍術4衣替え（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
@@ -154,7 +154,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [Reflesh_EN_buff]
 [if exp="tf.P_Stan!=1"][ReActivate][endif]
 [MiniStatus]
-[jump storage="battle-Testenemy.ks" target="*敵攻撃パターン適用"]
+[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン適用"]
 [s]
 
 *ターン終了

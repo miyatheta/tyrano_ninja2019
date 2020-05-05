@@ -11,11 +11,9 @@
 
 [Calc_P_Damage]
 [quake count=5 time=300 hmax=20]
-[EnName]に[emb exp="tf.Damage"]のダメージ[r]
+[EnName]に[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
-[MiniStatus][Triage]
-[p]
-[DeActivate]
+[DeActivate][MiniStatus][Triage]
 [jump storage="battle.ks" target="*手札一覧"]
 
 *忍術2
@@ -32,6 +30,7 @@
 なずな の忍術・変わり身[p]
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , f.P_MGP = f.P_MGP - 5"]
 [eval exp="tf.P_Barrier=1"]
+[DeActivate]
 [jump storage="battle.ks" target="*手札一覧"]
 [s]
 
@@ -39,10 +38,11 @@
 [er]
 変わり身の術[p]
 なずな は衣服を身代わりに攻撃を回避した[p]
-なずな は衣服を失った[p]
+なずな は衣服を失った[r][EnName]の精神力が低下した[p]
 [eval exp="tf.Mount = 0"]
 [eval exp="tf.P_DRESS = 1"]
-[chara_mod name="kunugi" face="nude"]
+[chara_mod name="kunugi" face="seminude"]
+[eval exp="tf.P_Barrier=0"]
 [return]
 [s]
 
@@ -55,27 +55,21 @@
 
 なずな の忍術・魅了[p]
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , f.P_MGP = f.P_MGP - 5"]
-;感情は確定で上昇
-[eval exp="tf.HDamage = Math.floor(tf.P_APP - tf.E_MND) * 10 , tf.E_ERO = tf.E_ERO + tf.HDamage"][limit]
-[EnName]の欲情が[emb exp="tf.HDamage"]上昇した[p]
-
 ;魅了による弱体化
-[eval exp="tf.E_charm_count = 3 , tf.E_charm_STR = 2 , tf.E_charm_MND = 2"]
-[EnName]の攻撃力と理性が低下した（3ターン）[p]
-
+[CHARM]
 ;スタンは抵抗判定、魅力VS理性の対抗ロール
 [Calc_Status]
-[eval exp="tf.TAG = Math.floor(tf.P_APP - tf.E_MND) * 5 "]
+[eval exp="tf.TAG = Math.floor(tf.P_SEX - tf.E_MND) * 5 "]
 [eval exp="tf.TAG = tf.TAG + 50"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 ;魅了によるスタン
-[if exp="tf.TAG < tf.dice"]
+[if exp="tf.TAG > tf.dice"]
 [eval exp="tf.E_stan=1"]
 [EnName]は行動不能になった（1ターン）[p]
 [endif]
 
-[Triage]
+[DeActivate][MiniStatus][Triage]
 [jump storage="battle.ks" target="*手札一覧"]
 [s]
 

@@ -21,7 +21,7 @@
 ;欲情
 [if exp="tf.Arousal == 1"]
 なずな の欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousSEXd =0"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 "]
 [endif]
 
 ;スタン
@@ -48,7 +48,7 @@
 
 [if exp="tf.Arousal == 1"]
 なずな の欲情が収まった[p]
-[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousAPPb =0 , tf.ArousMNDd =0 ,tf.ArousSEXd =0"]
+[eval exp="tf.P_ERO =0 , tf.Arousal =0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousMNDd =0 "]
 [endif]
 
 [MiniStatus]
@@ -93,9 +93,9 @@
 *忍術
 [er]
 [if exp="f.Blue<1"][jump target="*手札一覧"][endif]
-[if exp="f.Blue>0"][link target="*忍術1"]忍術0色仕掛け（気力0）：魅力に応じて確率で敵の怒り状態を解除。[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術2"]忍術1空蝉の術（気力10）：拘束を解除する[endlink][endif][r]
-[if exp="f.Blue>0"][link target="*忍術3"]忍術2魅了の術（気力5）：魅力に応じて敵の欲情を上昇、確率で拘束を解除[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術1"]色仕掛け（気力0）：房中術に応じて確率で敵の怒り状態を解除[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術2"]空蝉の術（気力10）：拘束を解除する[endlink][endif][r]
+[if exp="f.Blue>0"][link target="*忍術3"]魅了の術（気力5）：房中術に応じて敵を弱体化、確率で拘束解除[endlink][endif][r]
 ;[if exp="f.Blue>0"][link target="*忍術4"]忍術3房中術（気力3）[endlink][endif][r]
 [link target="*手札一覧"]戻る[endlink]
 [s]
@@ -137,12 +137,6 @@
 [jump target="*拘束解除" cond="tf.Mount <= 0"]
 [jump target="*攻守交代"]
 
-
-*スキル2
-[er]
-
-[jump target="*攻守交代"]
-
 *スキル2
 [er]
 なずなは縄抜けを試みた[lr]
@@ -182,8 +176,8 @@
 [er]
 なずなは色仕掛けを試みた[lr]
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_APP + f.Green - tf.E_MND) * 5 "]
-[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 25"]
+[eval exp="tf.TAG = Math.floor(tf.P_SEX + f.Green - tf.E_MND) * 5 "]
+[eval exp="tf.TAG = tf.TAG - Math.floor(tf.Mount/20) + 25"]
 [eval exp="tf.Max=99 , tf.Min=0"][dice]
 
 [if exp="tf.E_anger_count > 1"]
@@ -192,8 +186,8 @@
 [Calc_Status]
 [endif]
 
-目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
-[if exp="tf.dice < tf.Resist"]
+目標値[emb exp="tf.TAG"]以下＝＞ダイス[emb exp="tf.dice"][l]
+[if exp="tf.dice < tf.TAG"]
 [jump target="*拘束解除"]
 [endif]
 
@@ -204,17 +198,13 @@
 [er]
 空蝉の術[r]
 [eval exp="f.P_MGP = f.P_MGP - 10"]
-[jump target="*攻守交代"]
+[jump target="*拘束解除"]
 
 *忍術3
 [er]
-魅了の術[p]
-[eval exp="f.P_MGP = f.P_MGP - 5"]
-
 [Calc_Status]
-[eval exp="tf.Resist = Math.floor(tf.P_APP + f.Green - tf.E_MND) * 5 "]
-[eval exp="tf.Resist = tf.Resist - Math.floor(tf.Mount/20) + 25"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[eval exp="f.P_MGP = f.P_MGP - 5"]
+魅了の術[p]
 
 [if exp="tf.E_anger_count > 1"]
 [eval exp="tf.E_anger_count = 0 , tf.E_anger_DEX = 0 , tf.E_anger_STR = 0 "]
@@ -222,14 +212,17 @@
 [Calc_Status]
 [endif]
 
-目標値[emb exp="tf.Resist"]以下＝＞ダイス[emb exp="tf.dice"][l]
-[if exp="tf.dice < tf.Resist"]
-[jump target="*拘束解除"]
-[endif]
+[CHARM]
+
+[eval exp="tf.TAG = Math.floor(tf.P_SEX + f.Green - tf.E_MND) * 5 "]
+[eval exp="tf.TAG = tf.TAG - Math.floor(tf.Mount/20) + 25"]
+[eval exp="tf.Max=99 , tf.Min=0"][dice]
+目標値[emb exp="tf.TAG"]以下＞ダイス[emb exp="tf.dice"][p]
+[jump target="*拘束解除" cond="tf.TAG > tf.dice"]
 
 しかし、拘束は解けない！[p]
-[eval exp="tf.E_charm_count = 3 , tf.E_charm_MND = 2 , tf.E_charm_STR = 2 "]
 [jump target="*攻守交代"]
+[s]
 
 *忍術4
 [er]
@@ -275,23 +268,23 @@
 [EnName]はなずな の装束を剥ぎ取ろうとした[p]
 
 [if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
-絶頂で身動きの取れないなずな は一気に全裸に剥かれてしまった[p]なずな の色気が上昇した[p]
+絶頂で身動きの取れないなずな は一気に全裸に剥かれてしまった[p][EnName]の精神力が低下した[p]
 [eval exp="tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
-絶頂で身動きの取れないなずな は為す術なく全裸にされた[p]なずな の色気が上昇した[p]
+絶頂で身動きの取れないなずな は為す術なく全裸にされた[p][EnName]の精神力が低下した[p]
 [eval exp="tf.P_DRESS = 0"]
 [chara_mod name="kunugi" face="nude"]
 
 [elsif exp="tf.P_DRESS > 1"]
 [eval exp="tf.P_DRESS = 1"]
-なずな は下着姿に剥かれた[p]なずな の色気が上昇した[p]
+なずな は下着姿に剥かれた[p][EnName]の精神力が低下した[p]
 [chara_mod name="kunugi" face="seminude"]
 
 [elsif exp="tf.P_DRESS > 0"]
 [eval exp="tf.P_DRESS = 0"]
-なずな は一糸まとわぬ姿に剥かれた[p]なずな の色気が上昇した[p]
+なずな は一糸まとわぬ姿に剥かれた[p][EnName]の精神力が低下した[p]
 [chara_mod name="kunugi" face="nude"]
 [endif]
 [jump target="*敵行動終了"]
@@ -304,7 +297,7 @@
 いやあっ！！[p]
 揉みしだかれたなずな の乳房から母乳が迸った[p]
 [endif]
-[eval exp="tf.RATE= 5 * f.P_BOOB"][SUKEBE]
+[eval exp="tf.RATE= f.P_BOOB"][ITAZRA]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[p]
 ;絶頂判定＆正気度判定
@@ -314,7 +307,7 @@
 
 *敵行動3
 [EnName]はなずな の秘処をまさぐった[p]
-[eval exp="tf.RATE = 10"][SUKEBE]
+[eval exp="tf.RATE = 2"][ITAZRA]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[p]
 ;絶頂判定＆正気度判定

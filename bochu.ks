@@ -1,5 +1,5 @@
 *Sex
-[SUKEBE]
+[ITAZRA]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
 [emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
 [if exp="tf.Kaikan > 99 && tf.Orga < 1"]
@@ -87,7 +87,7 @@
 [eval exp="tf.label='*bochu001-sex02' , tf.RATE=4"][jump target="*Sex"]
 *bochu001-sex02
 
-[eval exp="tf.RATE=3 "][SUKEBE]
+[eval exp="tf.RATE=3 "][ITAZRA]
 ＜欲情度によって返答が変化[p]
 「あうっ！・・・このっ、いきなり、挿れてんじゃないわよ！！」[p]
 「おおっと？痛かったかい？」[p]
@@ -237,7 +237,7 @@
 [eval exp="tf.label='*bochu001-sex08' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex08
 
-[eval exp="tf.RATE=3 "][SUKEBE]
+[eval exp="tf.RATE=3 "][ITAZRA]
 「あああああっ！！深いいいいっ！！んんんんっ！！！」[p]
 「オラオラオラオラぁっ！！鳴け！！喘げ！！」[p]
 ヨガり声を上げ悶えるなずなの身体を固定するように杭を打つような勢いで敵の腰が上下する[p]
@@ -268,7 +268,7 @@
 *bochu001-game05
 
 ＜全５ゲームの結果を受けて最後に敵に快感が叩きつけられる。ダメージが１００を超えたら勝利[p]
-[eval exp="tf.HDamage = Math.floor((tf.P_APP + tf.ArousAPPb - tf.E_APP) * tf.VP * (100-tf.E_SAN) / 100 * (tf.E_ERO + 50)/100)"]
+[eval exp="tf.HDamage = Math.floor((tf.P_SEX - tf.P_SEX) * tf.VP * (100-tf.E_SAN) / 100 * (tf.E_ERO + 50)/100)"]
 敵に[emb exp="tf.HDamage"]の快感[p]
 [jump target="*bochu001_win" cond="tf.HDamage>=100"]
 [jump target="*bochu001_lose"]

@@ -3,8 +3,12 @@
 
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
+;気力＞SP
+[eval exp="f.P_MGP=0"]
+;快感
+[eval exp="f.P_ERO=0"]
 ;腕力＞攻撃力
-[eval exp="f.P_STR=27"]
+[eval exp="f.P_STR=26"]
 ;耐久＞防御力
 [eval exp="f.P_DUR=25"]
 ;敏捷＞回避
@@ -12,23 +16,17 @@
 ;技量＞命中
 [eval exp="f.P_DEX=29"]
 ;幸運＞乱数の幅
-[eval exp="f.P_LUK=30"]
+[eval exp="f.P_LUK=25"]
 ;精神力＞快感への抵抗値
 [eval exp="f.P_MND=35"]
-;魅力
-[eval exp="f.P_APP=30"]
-;房中
-[eval exp="f.P_SEX=33"]
-;気力＞SP
-[eval exp="f.P_MGP=0"]
+;房中術・魅力
+[eval exp="f.P_SEX=25"]
+;理性,SAN値
+[eval exp="f.P_SAN=100"]
 ;回避ボーナス＞回避
 [eval exp="f.P_AVD=0"]
 ;疲労(exhaustion)
 [eval exp="f.P_EXH=0"]
-;欲情
-[eval exp="f.P_ERO=0"]
-;理性,SAN値
-[eval exp="f.P_SAN=100"]
 ;衣服耐久度
 [eval exp="f.P_ARMOR=100"]
 ;着衣状態  2=着衣　1=損傷　0=脱衣
@@ -52,9 +50,7 @@
 [eval exp="f.E_LUK=5"]
 ;精神力＞魅了などへの抵抗値
 [eval exp="f.E_MND=5"]
-;魅力>敵は魅了への抵抗として使用？MNDで良いので使う機会はない
-[eval exp="f.E_APP=7"]
-;房中のテクニック
+;房中のテクニック敵は魅了への抵抗として使用？MNDで良いので使う機会はない
 [eval exp="f.E_SEX=18"]
 ;呼吸＞行動回数
 [eval exp="f.E_ACT=4"]
