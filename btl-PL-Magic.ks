@@ -6,10 +6,15 @@
 [endif]
 
 なずな の忍術・火遁[p]
+[Calc_Status]
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , f.P_MGP = f.P_MGP - 10"]
 [eval exp="tf.RATE = 20.0 , tf.ACC = 1000 , tf.CRTrate = 0"]
 
-[Calc_P_Damage]
+;乱数の発生
+[eval exp="tf.Max=9 , tf.Min=0"][dice]
+[eval exp="tf.ATP = (tf.P_MND - tf.E_MND) * 20 + (tf.P_MND * 6)"]
+[eval exp="tf.Damage = Math.floor(tf.ATP)"][eval exp="tf.Damage = 0" cond="tf.Damage<0"]
+
 [quake count=5 time=300 hmax=20]
 [EnName]に[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.E_HP = tf.E_HP - tf.Damage"][limit]
@@ -61,12 +66,11 @@
 [Calc_Status]
 [eval exp="tf.TAG = Math.floor(tf.P_SEX - tf.E_MND) * 5 "]
 [eval exp="tf.TAG = tf.TAG + 50"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-
+[dice99]
 ;魅了によるスタン
 [if exp="tf.TAG > tf.dice"]
-[eval exp="tf.E_stan=1"]
-[EnName]は行動不能になった（1ターン）[p]
+[eval exp="tf.E_Stan=1"]
+[EnName]は前かがみになった。行動不能（1ターン）[p]
 [endif]
 
 [DeActivate][MiniStatus][Triage]
@@ -75,13 +79,13 @@
 
 *忍術4
 [er]
-[if exp="f.P_MGP < 3"]
+[if exp="f.P_MGP < 1"]
 気力が足りない！[p]
 [jump storage="battle.ks" target="*忍術"]
 [endif]
 
-なずな の忍術・着衣[p]
-なずなは目にも留まらぬ速さで着衣した[p]
+なずな の忍術・早着替え[p]
+なずなは目にも留まらぬ速さで装束を纏った[p]
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , f.P_MGP = f.P_MGP - 3"]
 [eval exp="tf.P_DRESS=2"]
 [chara_mod name="kunugi" face="default"]
@@ -94,6 +98,6 @@
 ３ターン攻撃力が増加し、欲情が増加しない。
 [jump storage="battle.ks" target="*手札一覧"]
 
-*忍術６
+*忍術6
 [er]
 [jump storage="battle.ks" target="*手札一覧"]

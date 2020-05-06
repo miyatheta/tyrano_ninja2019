@@ -1,13 +1,98 @@
+;------------------------------------------------------------------------------
+;攻撃パターン選択
+
 *敵攻撃パターン選択
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
-[if exp="tf.dice<20"]   [eval exp="tf.enemy_attack_pattern=1"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"][image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
-[elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
-[elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"][image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
-[else]                  [eval exp="tf.enemy_attack_pattern=5"][image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true][image layer=3 storage="card/Card_G.png" x=650 y=300 width=50 visible=true]
+[dice99]
+[if exp="tf.dice<20"]
+[eval exp="tf.enemy_attack_pattern=1"]
+[image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<50"]
+[eval exp="tf.enemy_attack_pattern=2"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<60"]
+[eval exp="tf.enemy_attack_pattern=3"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<80"]
+[eval exp="tf.enemy_attack_pattern=4"]
+[image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[else]
+[eval exp="tf.enemy_attack_pattern=5"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_G.png" x=650 y=300 width=50 visible=true]
+
 [endif]
 [jump storage="battle.ks" target="*手番開始"]
 [s]
+
+;------------------------------------------------------------------------------
+;攻撃パターン選択怒り状態
+*敵攻撃パターン選択怒り
+[dice99]
+[if exp="tf.dice<20"]
+[eval exp="tf.enemy_attack_pattern=1"]
+[image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<30"]
+[eval exp="tf.enemy_attack_pattern=2"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<50"]
+[eval exp="tf.enemy_attack_pattern=3"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<80"]
+[eval exp="tf.enemy_attack_pattern=4"]
+[image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[else]
+[eval exp="tf.enemy_attack_pattern=5"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_G.png" x=650 y=300 width=50 visible=true]
+
+[endif]
+[jump storage="battle.ks" target="*手番開始"]
+[s]
+
+;------------------------------------------------------------------------------
+;攻撃パターン選択欲情状態
+*敵攻撃パターン選択欲情
+[dice99]
+[if exp="tf.dice<30"]
+[eval exp="tf.enemy_attack_pattern=1"]
+[image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<50"]
+[eval exp="tf.enemy_attack_pattern=2"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<60"]
+[eval exp="tf.enemy_attack_pattern=3"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[elsif exp="tf.dice<80"]
+[eval exp="tf.enemy_attack_pattern=4"]
+[image layer=3 storage="card/Card_G.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
+
+[else]
+[eval exp="tf.enemy_attack_pattern=5"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_G.png" x=650 y=300 width=50 visible=true]
+
+[endif]
+[jump storage="battle.ks" target="*手番開始"]
+[s]
+;------------------------------------------------------------------------------
+;攻撃パターン適用
 
 *敵攻撃パターン適用
 [jump target="*敵攻撃パターン1" cond="tf.enemy_attack_pattern==1"]
@@ -18,11 +103,12 @@
 [s]
 
 *敵攻撃パターン1
-[call target="*弱攻撃"][P_Counter][P_Barrier]
+[call target="*組付"][P_Barrier]
+[jump storage="btl-bound.ks" target="*拘束開始" cond="tf.Mount > 0"]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン2
-[call target="*組付"][P_Barrier][jump storage="btl-bound.ks" target="*拘束開始" cond="tf.Mount > 0"]
+[call target="*弱攻撃"][P_Counter][P_Barrier]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン3
@@ -30,7 +116,7 @@
 [jump storage="battle.ks" target="*ターン終了"][s]
 
 *敵攻撃パターン4
-[call target="*練気法"]
+[call target="*剛力"]
 [call target="*弱攻撃"][P_Counter][P_Barrier]
 [jump storage="battle.ks" target="*ターン終了"][s]
 
@@ -38,6 +124,9 @@
 [call target="*弱攻撃"][P_Counter][P_Barrier]
 [call target="*金縛り"]
 [jump storage="battle.ks" target="*ターン終了"][s]
+
+;------------------------------------------------------------------------------
+;攻撃の実行
 
 *弱攻撃
 [EnName]の弱攻撃[p]
@@ -105,16 +194,145 @@
 [return]
 [s]
 
-*練気法
-「練気法」[p]
-敵の物理攻撃力が上昇[p]
+*剛力
+[EnName]の「剛力」[p]
+[EnName]の物理攻撃力が上昇(１ターン)[p]
 [eval exp="tf.E_STRb1 = 5"]
 [return]
 [s]
 
 *金縛り
-「金縛り」[p]
-敵に気圧されたなずなの回避が低下(3ターン)[p]
+[EnName]の「金縛りの術」[p]
+[dice99]
+[eval exp="tf.TAG = Math.floor(tf.P_MND)"]
+目標値[emb exp="tf.TAG"]以下＞ダイス[emb exp="tf.dice"][p]
+[if exp="tf.TAG > tf.dice"]
+しかし、なずな には効果がなかった[p]
+[else]
+なずな の回避が低下(３ターン)[p]
 [eval exp="tf.P_AGId3 = 5 "][limit]
+[endif]
 [return]
+[s]
+
+;------------------------------------------------------------------------------
+;拘束時の行動選択
+
+*敵拘束行動選択
+[jump target="*敵行動選択怒り" cond="tf.E_anger_count>0"]
+[jump target="*敵行動選択欲情" cond="tf.E_charm_count>0"]
+[dice99]
+[if exp="tf.dice<20"][eval exp="tf.enemy_attack_pattern=1"]
+[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=2"]
+[elsif exp="tf.dice<60"][eval exp="tf.enemy_attack_pattern=3"]
+[elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=4"]
+[else][eval exp="tf.enemy_attack_pattern=5"]
+[endif]
+[jump storage="btl-bound.ks" target="*敵拘束行動パターン適用"]
+[s]
+
+*敵拘束行動選択怒り
+[dice99]
+[if exp="tf.dice<20"][eval exp="tf.enemy_attack_pattern=1"]
+[elsif exp="tf.dice<30"][eval exp="tf.enemy_attack_pattern=2"]
+[elsif exp="tf.dice<40"][eval exp="tf.enemy_attack_pattern=3"]
+[elsif exp="tf.dice<70"][eval exp="tf.enemy_attack_pattern=4"]
+[else][eval exp="tf.enemy_attack_pattern=5"]
+[endif]
+[jump storage="btl-bound.ks" target="*敵拘束行動パターン適用"]
+[s]
+
+*敵拘束行動選択欲情
+[dice99]
+[if exp="tf.dice<30"][eval exp="tf.enemy_attack_pattern=1"]
+[elsif exp="tf.dice<55"][eval exp="tf.enemy_attack_pattern=2"]
+[elsif exp="tf.dice<80"][eval exp="tf.enemy_attack_pattern=3"]
+[elsif exp="tf.dice<90"][eval exp="tf.enemy_attack_pattern=4"]
+[else][eval exp="tf.enemy_attack_pattern=5"]
+[endif]
+[jump storage="btl-bound.ks" target="*敵拘束行動パターン適用"]
+[s]
+
+;------------------------------------------------------------------------------
+;拘束時の行動実行
+
+*敵拘束行動1
+;脱衣
+[dice05]
+[jump target="*敵拘束行動2" cond="tf.P_DRESS < 1 && tf.dice < 3"]
+[jump target="*敵拘束行動3" cond="tf.P_DRESS < 1"]
+[EnName]はなずな の装束を剥ぎ取ろうとした[p]
+
+[if exp="tf.OrgaStan > 0 && tf.P_DRESS > 1"]
+絶頂で身動きの取れないなずな は一気に全裸に剥かれてしまった[r][EnName]の精神力が低下した[p]
+[eval exp="tf.P_DRESS = 0"]
+[chara_mod name="kunugi" face="nude"]
+
+[elsif exp="tf.OrgaStan > 0 && tf.P_DRESS > 0"]
+絶頂で身動きの取れないなずな は為す術なく全裸にされた[r][EnName]の精神力が低下した[p]
+[eval exp="tf.P_DRESS = 0"]
+[chara_mod name="kunugi" face="nude"]
+
+[elsif exp="tf.P_DRESS > 1"]
+[eval exp="tf.P_DRESS = 1"]
+なずな は下着姿に剥かれた[r][EnName]の精神力が低下した[p]
+[chara_mod name="kunugi" face="seminude"]
+
+[elsif exp="tf.P_DRESS > 0"]
+[eval exp="tf.P_DRESS = 0"]
+なずな は一糸まとわぬ姿に剥かれた[r][EnName]の精神力が低下した[p]
+[chara_mod name="kunugi" face="nude"]
+[endif]
+[jump storage="btl-bound.ks" target="*敵拘束行動終了"]
+[s]
+
+*敵拘束行動2
+[EnName]はなずな の胸を揉みしだいた[p]
+[if exp="f.P_BOOB==2"]
+#なずな
+いやあっ！！[p]
+揉みしだかれたなずな の乳房から母乳が迸った[p]
+[endif]
+[eval exp="tf.RATE= f.P_BOOB"][ITAZRA]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
+[emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
+[EnName]の精神力が低下した[p]
+;絶頂判定＆正気度判定
+[Orgasm][SANcheck][MiniStatus]
+[jump storage="btl-bound.ks" target="*敵拘束行動終了"]
+[s]
+
+*敵拘束行動3
+[EnName]はなずな の秘処をまさぐった[p]
+[eval exp="tf.RATE = 2"][ITAZRA]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
+[emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
+[EnName]の精神力が低下した[p]
+;絶頂判定＆正気度判定
+[Orgasm][SANcheck][MiniStatus]
+[jump storage="btl-bound.ks" target="*敵拘束行動終了"]
+[s]
+
+*敵拘束行動4
+[EnName]の攻撃[p]
+[quake count=3 time=300 hmax=30]
+[Calc_Status]
+[eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
+なずな に[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[MiniStatus][Triage]
+[MAZO][Orgasm][SANcheck][MiniStatus]
+[jump storage="btl-bound.ks" target="*敵拘束行動終了"]
+[s]
+
+*敵拘束行動5
+[EnName]はなずな を締め上げた[p]
+[quake count=5 time=300 hmax=20]
+[Calc_Status]
+[eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
+なずな に[emb exp="tf.Damage"]のダメージ[p]
+[eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[MiniStatus][Triage]
+[MAZO][Orgasm][SANcheck][MiniStatus]
+[jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]

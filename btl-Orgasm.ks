@@ -13,7 +13,7 @@
 
 ;絶頂判定=(敵の性技技能値SEX-P.MND-tf.P_MGP)+50⇒耐えた/失敗⇒スタン&SAN減少
 [eval exp="tf.TAG = (tf.E_SEX - tf.P_MND - tf.P_MGP ) * 5 + 50"]
-[eval exp="tf.Max=99 , tf.Min=0"][dice]
+[dice99]
 [if exp="tf.Kaikan > 999 && tf.TAG > tf.dice"]
 [quake count=8 time=300 hmax=30]
 なずなは絶頂を堪えた[p]
