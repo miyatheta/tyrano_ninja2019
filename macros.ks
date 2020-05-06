@@ -153,7 +153,7 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 
 [macro name="Initialize_BadStatus"]
 ;状態異常の初期値設定
-[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaSEX = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
+[eval exp="tf.P_Stan = 0 , tf.P_ORGA = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaSEX = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousMNDb =0 "]
 [eval exp="tf.E_charm_STR=0 , tf.E_charm_count=0"]
 [eval exp="tf.E_anger_STR=0 , tf.E_anger_DEX=0 ,tf.E_anger_count=0"]
@@ -235,10 +235,18 @@ tf.P_HPtxt = '体力：' + tf.P_HP ;
 tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
 tf.P_EROtxt = '欲情：' + tf.P_ERO , tf.P_EXHtxt = '疲労：' + f.P_EXH;
 tf.BadStxt ='';
-if(f.P_MAZO>0){tf.BadStxt += '【虐】';}
-if(f.P_HYPNO>0){tf.BadStxt += '【催】';}
+if(f.P_MAZO>0){tf.BadStxt += '[被虐]';}
+if(f.P_HYPNO>0){tf.BadStxt += '[催淫]';}
+if(f.P_KOHUN>0){tf.BadStxt += '[興奮]';}
+if(f.P_CURSE>1){tf.BadStxt += '[淫紋]';}
+if(f.P_BOOB>1){tf.BadStxt += '[噴乳]';}
+if(f.P_ADDICT>1){tf.BadStxt += '[媚薬]';}
+tf.Worstxt ='';
+if(tf.Arousal>0){tf.Worstxt += '[欲情]';}
+if(tf.P_ORGA>0){tf.Worstxt += '[絶頂]';}
 [endscript]
-[ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=480 ]
+[ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=476 ]
+[ptext name="Worstxt" text="&tf.Worstxt" layer="2" color="0xdc143c" edge="0x000000" size=15 x=100 y=476 overwrite=true]
 [ptext name="BadStxt" text="&tf.BadStxt" layer="2" color="0xc71585" edge="0x000000" size=15 x=100 y=490 overwrite=true]
 [ptext name="P_HPtxt" text="&tf.P_HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
 [ptext name="P_MGPtxt" text="&tf.P_MGPtxt" layer="2" edge="0x000000" size=20 x=140 y=510 overwrite=true]
@@ -498,13 +506,13 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 
 [macro name="SANcheck"]
 ;理性喪失量判定
-[eval exp="tf.Damage = Math.floor(tf.Kaikan/100)+1"][dice]
-[if exp="tf.Orga == 4 && f.Insanity==0"]
-絶頂によりなずなの理性が[emb exp="tf.Damage"]減少[p]
+[eval exp="tf.Damage = 1"][dice]
+[if exp="tf.P_ORGA == 4 && f.Insanity==0"]
+絶頂によりなずなの理性が[emb exp="tf.Damage"]減少した[p]
 [eval exp="tf.P_SAN = tf.P_SAN - tf.Damage"]
 [endif]
 ;発狂判定
-[if exp="10 <= f.P_SAN - tf.P_SAN"]
+[if exp="5 <= f.P_SAN - tf.P_SAN"]
 [dice99]
 [eval exp="f.Insanity = 1" cond="tf.dice > tf.P_SAN"]
 なずなは法悦した[p]

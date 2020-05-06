@@ -24,10 +24,10 @@
 [glink target="*状態異常" exp="f.P_KOHUN=5" text="有効" size="15" width="30" height="13" x="700" y="530"]
 [glink target="*状態異常" exp="f.P_KOHUN=0" text="無効" size="15" width="30" height="13" x="800" y="530"]
 
-[glink target="*状態異常" exp="f.P_BOOB=3" text="有効" size="15" width="30" height="13" x="420" y="530"]
-[glink target="*状態異常" exp="f.P_BOOB=0" text="無効" size="15" width="30" height="13" x="520" y="530"]
-[glink target="*状態異常" exp="f.P_CURSE=5" text="有効" size="15" width="30" height="13" x="700" y="530"]
-[glink target="*状態異常" exp="f.P_CURSE=0" text="無効" size="15" width="30" height="13" x="800" y="530"]
+[glink target="*状態異常" exp="f.P_BOOB=3" text="有効" size="15" width="30" height="13" x="420" y="560"]
+[glink target="*状態異常" exp="f.P_BOOB=0" text="無効" size="15" width="30" height="13" x="520" y="560"]
+[glink target="*状態異常" exp="f.P_CURSE=5" text="有効" size="15" width="30" height="13" x="700" y="560"]
+[glink target="*状態異常" exp="f.P_CURSE=0" text="無効" size="15" width="30" height="13" x="800" y="560"]
 [glink target="*テストコンフィグ" text="戻る" size="15" width="30" height="13" x="840" y="590"]
 [s]
 

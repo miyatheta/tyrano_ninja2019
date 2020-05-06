@@ -54,10 +54,10 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [eval exp="tf.Turn +=1"]
 ;状態異常のカウント・治癒
 ;絶頂
-[eval exp="tf.Orga = tf.Orga - 1"]
-[if exp="tf.Orga > 0"]
+[eval exp="tf.P_ORGA = tf.P_ORGA - 1"]
+[if exp="tf.P_ORGA > 0"]
 くぬぎは絶頂の余韻から抜け出せないでいる![p]
-[elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
+[elsif exp="tf.P_ORGA == 0 && tf.Arousal > 0"]
 くぬぎは絶頂から抜け出した[p]
 [eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1"]
 [eval exp="tf.Arousal = 1"]
