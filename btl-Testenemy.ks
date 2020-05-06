@@ -293,7 +293,7 @@
 いやあっ！！[p]
 揉みしだかれたなずな の乳房から母乳が迸った[p]
 [endif]
-[eval exp="tf.RATE= f.P_BOOB"][ITAZRA]
+[eval exp="tf.RATE= f.P_BOOB"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
 [EnName]の精神力が低下した[p]
@@ -304,7 +304,7 @@
 
 *敵拘束行動3
 [EnName]はなずな の秘処をまさぐった[p]
-[eval exp="tf.RATE = 2"][ITAZRA]
+[eval exp="tf.RATE = 2"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
 [EnName]の精神力が低下した[p]

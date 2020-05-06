@@ -120,8 +120,8 @@ tf.P_DUR = f.P_DUR  - tf.P_DURd3 - tf.P_DURd1 + tf.P_DURb3 + tf.P_DURb1 ;
 tf.P_AGI = f.P_AGI  - tf.P_AGId3 - tf.P_AGId1 + tf.P_AGIb3 + tf.P_AGIb1 - tf.ArousAGId;
 tf.P_DEX = f.P_DEX  - tf.P_DEXd3 - tf.P_DEXd1 + tf.P_DEXb3 + tf.P_DEXb1 - tf.ArousDEXd;
 tf.P_LUK = f.P_LUK  - tf.P_LUKd3 - tf.P_LUKd1 + tf.P_LUKb3 + tf.P_LUKb1 ;
-tf.P_MND = f.P_MND  - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 ;
-tf.P_SEX = f.P_SEX  - tf.P_SEXd3 - tf.P_SEXd1 + tf.P_SEXb3 + tf.P_SEXb1 ;
+tf.P_MND = f.P_MND  - tf.P_MNDd3 - tf.P_MNDd1 + tf.P_MNDb3 + tf.P_MNDb1 - f.P_KOHUN;
+tf.P_SEX = f.P_SEX  - tf.P_SEXd3 - tf.P_SEXd1 + tf.P_SEXb3 + tf.P_SEXb1 - f.P_HYPNO;
 
 tf.E_STR = f.E_STR - tf.E_STRd3 - tf.E_STRd1 + tf.E_STRb3 + tf.E_STRb1 + tf.E_anger_STR - tf.E_charm_STR;
 tf.E_DUR = f.E_DUR - tf.E_DURd3 - tf.E_DURd1 + tf.E_DURb3 + tf.E_DURb1 ;
@@ -153,7 +153,7 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 
 [macro name="Initialize_BadStatus"]
 ;状態異常の初期値設定
-[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaPOWb = 0 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
+[eval exp="tf.P_Stan = 0 , tf.Orga = 0 , tf.OrgaStan = 0 , tf.OrgaCount=0 , tf.OrgaSEX = 1 ,f.P_INRAN = 0 , tf.Kaikan = 0 , f.Insanity=0"]
 [eval exp="tf.Arousal=0 , tf.ArousSTRd =0 , tf.ArousAGId =0 , tf.ArousDEXd =0 , tf.ArousMNDb =0 "]
 [eval exp="tf.E_charm_STR=0 , tf.E_charm_count=0"]
 [eval exp="tf.E_anger_STR=0 , tf.E_anger_DEX=0 ,tf.E_anger_count=0"]
@@ -234,8 +234,12 @@ tf.Decktxt = '山札：' + f.Deck.length + '/' + f.Cards.length ;
 tf.P_HPtxt = '体力：' + tf.P_HP ;
 tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
 tf.P_EROtxt = '欲情：' + tf.P_ERO , tf.P_EXHtxt = '疲労：' + f.P_EXH;
+tf.BadStxt ='';
+if(f.P_MAZO>0){tf.BadStxt += '【虐】';}
+if(f.P_HYPNO>0){tf.BadStxt += '【催】';}
 [endscript]
 [ptext text="なずな" layer="2" edge="0x000000" size=25 x=20 y=480 ]
+[ptext name="BadStxt" text="&tf.BadStxt" layer="2" color="0xc71585" edge="0x000000" size=15 x=100 y=490 overwrite=true]
 [ptext name="P_HPtxt" text="&tf.P_HPtxt" layer="2" edge="0x000000" size=20 x=20 y=510 overwrite=true]
 [ptext name="P_MGPtxt" text="&tf.P_MGPtxt" layer="2" edge="0x000000" size=20 x=140 y=510 overwrite=true]
 [ptext name="Decktxt" text="&tf.Decktxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
@@ -461,25 +465,14 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [eval exp="tf.GoSKB = 1" cond="tf.E_ERO >= 1000"]
 [endmacro]
 
-[macro name="ITAZRA"]
-;快感＝行為の基礎倍率RATE×
-;部位ごとの乗算は他のマクロで実行する
-[eval exp="tf.Max=5 , tf.Min=0"][dice]
-[eval exp="tf.Bonus = Math.floor(tf.E_SEX - tf.P_SEX)"][eval exp="tf.Bonus = 1" cond="tf.Bonus < 1"]
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE) + (tf.Bonus * 5) + tf.dice"]
-;命中判定=P_MNDとE_SEXで対抗ロール。ダイスの最大値は快感の大きさに比例⇒結果でリアクションを変更
-[eval exp="tf.Max = tf.Kaikan , tf.Min=0"][dice]
-[eval exp="tf.Resist = Math.floor(tf.P_MND - tf.E_SEX) * 5 + 50"]
-[eval exp="tf.Resist > tf.dice"]
-(対抗ロール[emb exp="tf.Resist"]>[emb exp="tf.dice"])[r]
-[endmacro]
-
+;快感値計算
 [macro name="SUKEBE"]
 ;快感＝行為の基礎倍率RATE×
 ;部位ごとの乗算は他のマクロで実行する
-[eval exp="tf.Max=5 , tf.Min=0"][dice]
-[eval exp="tf.Bonus = Math.floor(tf.E_SEX - tf.P_SEX)"][eval exp="tf.Bonus = 1" cond="tf.Bonus < 1"]
-[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE) + (tf.Bonus * 5) + tf.dice"]
+[dice05]
+[eval exp="tf.Bonus = Math.floor(tf.E_SEX - tf.P_SEX + f.P_MAZO)"]
+[eval exp="tf.Bonus = 1" cond="tf.Bonus < 1"]
+[eval exp="tf.Kaikan = Math.floor(tf.E_SEX * tf.RATE * f.P_ADDICT * f.P_CURSE * tf.OrgaSEX) + (tf.Bonus * 5) + tf.dice"]
 ;命中判定=P_MNDとE_SEXで対抗ロール。ダイスの最大値は快感の大きさに比例⇒結果でリアクションを変更
 [eval exp="tf.Max = tf.Kaikan , tf.Min=0"][dice]
 [eval exp="tf.Resist = Math.floor(tf.P_MND - tf.E_SEX) * 5 + 50"]
@@ -487,12 +480,14 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 (対抗ロール[emb exp="tf.Resist"]>[emb exp="tf.dice"])[r]
 [endmacro]
 
+;被虐
 [macro name="MAZO"]
 [if exp="f.P_MAZO>0"]
-[eval exp="tf.RATE=f.P_MAZO*2 "]
-[eval exp="tf.Kaikan = Math.floor(tf.RATE * 10)"]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[eval exp="tf.RATE = f.P_MAZO"]
+[dice05]
+[eval exp="tf.Kaikan = Math.floor(4 * tf.RATE * tf.OrgaSEX) + tf.dice"]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
+【被虐性癖】[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Kaikan"]上昇した[p]
 [endif]
 [endmacro]
 
@@ -502,17 +497,18 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endmacro]
 
 [macro name="SANcheck"]
-;理性喪失判定
-[eval exp="tf.Max=Math.floor(tf.Kaikan/100)+1 , tf.Min=1"][dice]
+;理性喪失量判定
+[eval exp="tf.Damage = Math.floor(tf.Kaikan/100)+1"][dice]
 [if exp="tf.Orga == 4 && f.Insanity==0"]
-絶頂によりなずなの理性が[emb exp="tf.dice"]減少[p]
-[eval exp="tf.P_SAN = tf.P_SAN - tf.dice"]
+絶頂によりなずなの理性が[emb exp="tf.Damage"]減少[p]
+[eval exp="tf.P_SAN = tf.P_SAN - tf.Damage"]
 [endif]
 ;発狂判定
-[if exp="5 < f.P_SAN - tf.P_SAN"]
-[eval exp="f.Insanity=1"]
+[if exp="10 <= f.P_SAN - tf.P_SAN"]
+[dice99]
+[eval exp="f.Insanity = 1" cond="tf.dice > tf.P_SAN"]
+なずなは法悦した[p]
 [endif]
-[eval exp="tf.Kaikan = 0 , tf.Yokujo = 0"]
 [endmacro]
 
 [macro name="SCALD"]

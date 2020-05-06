@@ -15,7 +15,7 @@
 なずな は絶頂の余韻から抜け出せないでいる![p]
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
 なずな は絶頂から抜け出した[p]
-[eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1"]
+[eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1"]
 [eval exp="tf.Arousal = 1"]
 [endif]
 
@@ -46,7 +46,7 @@
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
 なずな は絶頂から抜け出した[p]
 [eval exp="tf.OrgaStan = 0"]
-[eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1 , tf.Arousal = 1"]
+[eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1 , tf.Arousal = 1"]
 [endif]
 
 [if exp="tf.Arousal == 1"]

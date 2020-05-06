@@ -1,17 +1,17 @@
 *Sex
-[ITAZRA]
-[eval exp="tf.P_ERO = tf.P_ERO + tf.Yokujo"][limit]
-[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Yokujo"]上昇した[p]
+[SUKEBE]
+[eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan"][limit]
+[emb exp="tf.Kaikan"]の快感[r]なずなの欲情が[emb exp="tf.Kaikan"]上昇した[p]
 [if exp="tf.Kaikan > 99 && tf.Orga < 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは絶頂した[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[eval exp="tf.Orga = 4 , tf.OrgaSEX = 3"]
 [elsif exp="tf.Kaikan > 99 && tf.Orga >= 1"]
 [quake count=8 time=300 hmax=30]
 [eval exp="tf.OrgaCount = tf.OrgaCount+1"]
 なずなは[emb exp="tf.OrgaCount"]回目の絶頂を迎えた[p]
-[eval exp="tf.Orga = 4 , tf.OrgaPOWb = 2"]
+[eval exp="tf.Orga = 4 , tf.OrgaSEX = 3"]
 [endif]
 [SANcheck]
 [jump target="&tf.label"]
@@ -87,7 +87,7 @@
 [eval exp="tf.label='*bochu001-sex02' , tf.RATE=4"][jump target="*Sex"]
 *bochu001-sex02
 
-[eval exp="tf.RATE=3 "][ITAZRA]
+[eval exp="tf.RATE=3 "][SUKEBE]
 ＜欲情度によって返答が変化[p]
 「あうっ！・・・このっ、いきなり、挿れてんじゃないわよ！！」[p]
 「おおっと？痛かったかい？」[p]
@@ -237,7 +237,7 @@
 [eval exp="tf.label='*bochu001-sex08' , tf.RATE=4 "][jump target="*Sex"]
 *bochu001-sex08
 
-[eval exp="tf.RATE=3 "][ITAZRA]
+[eval exp="tf.RATE=3 "][SUKEBE]
 「あああああっ！！深いいいいっ！！んんんんっ！！！」[p]
 「オラオラオラオラぁっ！！鳴け！！喘げ！！」[p]
 ヨガり声を上げ悶えるなずなの身体を固定するように杭を打つような勢いで敵の腰が上下する[p]

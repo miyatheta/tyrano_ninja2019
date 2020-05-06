@@ -43,6 +43,8 @@ n = f.Cards.length;
 for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
 
+;デバッグ用の設定
+@call storage="btl-ConfigTest.ks" target="*テストコンフィグ"
 戦闘を開始します[p]
 ;------------------------------------------------------------------------------
 
@@ -57,7 +59,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 くぬぎは絶頂の余韻から抜け出せないでいる![p]
 [elsif exp="tf.Orga == 0 && tf.Arousal > 0"]
 くぬぎは絶頂から抜け出した[p]
-[eval exp="tf.OrgaCount = 0, tf.OrgaPOWb = 1"]
+[eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1"]
 [eval exp="tf.Arousal = 1"]
 [endif]
 ;欲情

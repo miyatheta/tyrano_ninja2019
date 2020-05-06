@@ -75,7 +75,7 @@ if(tf.TAG==1){
 [er]
 なずなの反撃[p]
 [Calc_Status]
-[eval exp="tf.RATE = 10.0 , tf.ACC = 1000 , tf.CRTrate = 1"]
+[eval exp="tf.RATE = 10.0 , tf.ACC = 100 , tf.CRTrate = 1"]
 [Calc_P_DamageEx]
 
 [quake count=5 time=300 hmax=20]
