@@ -74,12 +74,20 @@
 [er]
 [ShowCardList]
 [MiniStatus]
-[if exp="f.Black>=3"][wt7][jump target="*息切れ"][endif]
+[if exp="f.Black>=3"]
+[glink text="息切れ" size="18" width="15" height="100" x="350" y="500" color="gray" target="*息切れ"]
+[else]
 [glink text="拘束中" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧"]
+[endif]
 [s]
 
 *攻撃
 [er]
+[if exp="f.Black>=3"]
+なずなは息切れしている[p]
+[jump target="*手札一覧"]
+[endif]
+
 [if exp="f.Red<1"][jump target="*手札一覧"][endif]
 [if exp="f.Red>0"][link target="*攻撃2"]
 抵抗する：STRに応じて拘束値を減少[endlink][endif][r]

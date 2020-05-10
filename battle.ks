@@ -106,7 +106,11 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 ;PLの行動選択
 *攻撃
 [er]
-[jump target="*手札一覧" cond="f.Black>=3"]
+[if exp="f.Black>=3"]
+なずなは息切れしている[p]
+[jump target="*手札一覧"]
+[endif]
+
 [jump target="*手札一覧" cond="f.Red<1"]
 [if exp="f.Red>0"][link storage="btl-PL-Attack.ks" target="*攻撃1"]拳　/弱攻撃ーー[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
 [if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃2"]蹴り/中攻撃ーー[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
@@ -118,7 +122,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 *技能
 [er]
-[jump target="*手札一覧" cond="f.Black>=3"]
 [jump target="*手札一覧" cond="f.Green<1"]
 [if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル1"]必至(命中率上昇)　[endlink]　　　[endif]
 [if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル2"]心眼(会心発生上昇)[endlink][endif][r]
@@ -131,7 +134,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 *忍術
 [er]
-;[jump target="*息切れ" cond="f.Black>=3"]
 [jump target="*手札一覧" cond="f.Blue<1"]
 [if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術4"]早着替え(要気力 1)　　[endlink][endif]
 [if exp="f.Blue>0"][link storage="btl-PL-Magic.ks" target="*忍術2"]変わり身(要気力 5)[endlink][endif][r]
@@ -142,9 +144,13 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 *疲労
 [er]
-[if exp="f.Black>=3"][jump target="*息切れ"][endif]
-疲労カードにコマンド、ボーナスはありません。[r]手札に疲労カードが３枚集まると息切れ(スタン)します。[r]
-息切れ発生時、疲労カードが３枚消えます[l][er]
+[if exp="f.Black>=3"]
+なずなは息切れしている[p]
+[jump target="*手札一覧"]
+[endif]
+
+疲労札にコマンド、ボーナスはありません。[r]手札に疲労札が３枚以上あると「息切れ」になります。[r]
+息切れ発生時は攻撃を行えません。[r]息切れ後は手札の疲労札が消えます[l][er]
 [jump target="*手札一覧"]
 [s]
 

@@ -259,7 +259,11 @@ if(tf.P_ORGA>0){tf.Worstxt += '[絶頂]';}
 tf.TURNtxt = '手番' + tf.Turn ;
 tf.E_HPtxt = '体力：' + tf.E_HP ;
 tf.E_MGPtxt = '気力：' + tf.E_MGP ;
-tf.E_MNTtxt = '拘束：' + tf.Mount ;
+if(tf.Mount > 0){
+  tf.E_MNTtxt = '拘束：' + tf.Mount ;
+}else{
+  tf.E_MNTtxt = '　';
+}
 if(tf.E_anger_count>0){
   tf.E_Mental = '怒り'
 }else if(tf.E_charm_count>0){
@@ -273,7 +277,8 @@ if(tf.E_anger_count>0){
 [ptext name="E_HPtxt" text="&tf.E_HPtxt" layer="2" edge="0x000000" size=20 x=620 y=30 overwrite=true]
 [ptext name="E_MGPtxt" text="&tf.E_MGPtxt" layer="2" edge="0x000000" size=20 x=740 y=30 overwrite=true]
 [ptext name="E_Mental" text="&tf.E_Mental" layer="2" edge="0x000000" size=20 x=860 y=30 overwrite=true]
-[ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=620 y=50 overwrite=true cond="tf.Mount>0"]
+[ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=620 y=50 overwrite=true]
+
 
 [layopt layer="4" visible=true]
 [iscript]
@@ -366,7 +371,7 @@ for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 [iscript]
 i = 0;
 n = 0;
-while(n < 3){
+while(n < f.Black){
   if(f.Cards[i]['color']=="black"){
     f.Cards.splice([i],1);
     n++;
@@ -375,7 +380,7 @@ while(n < 3){
     i++;
   }
 }
-f.P_EXH = f.P_EXH - 3;
+f.P_EXH = f.P_EXH - f.Black;
 [endscript]
 [DeckRemake]
 [endmacro]
