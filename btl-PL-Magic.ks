@@ -6,6 +6,8 @@
 [endif]
 
 なずな の忍術・火遁[p]
+[call storage="voice-PL.ks" target="*vc-katon"]
+
 [Calc_Status]
 [eval exp="tf.Cost = 1 , tf.Type='blue' , f.Blue = f.Blue - tf.Cost , f.P_MGP = f.P_MGP - 10"]
 [eval exp="tf.RATE = 20.0 , tf.ACC = 1000 , tf.CRTrate = 0"]
@@ -42,6 +44,8 @@
 *変わり身発動
 [er]
 変わり身の術[p]
+[call storage="voice-PL.ks" target="*vc-kawarimi"]
+
 なずな は衣服を身代わりに攻撃を回避した[p]
 なずな は衣服を失った[r][EnName]の精神力が低下した[p]
 [eval exp="tf.Mount = 0"]

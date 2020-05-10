@@ -388,13 +388,10 @@ f.P_EXH = f.P_EXH - f.Black;
 [macro name="Hirou"]
 [eval exp="f.P_EXH++"]
 ;Deckに要素を追加。カードの長さ＝追加するカードのナンバーになる。配列のナンバーは０から
-;疲労カードの追加スタン時は除外
-[if exp="tf.P_Stan < 1"]
 [iscript]
 f.Deck.push(f.Cards.length);
 f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 [endscript]
-[endif]
 [endmacro]
 
 [macro name="Calc_P_Hit"]

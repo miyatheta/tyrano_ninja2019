@@ -77,6 +77,7 @@ if(tf.TAG==1){
 [Calc_Status]
 [eval exp="tf.RATE = 9.0 , tf.ACC = 100 , tf.CRTrate = 1"]
 [Calc_P_DamageEx]
+[call storage="voice-PL.ks" target="*vc-counter"]
 
 [quake count=5 time=300 hmax=20]
 [EnName]に[emb exp="tf.Damage"]のダメージ[p]

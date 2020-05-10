@@ -177,6 +177,7 @@
 [Calc_Status]
 [eval exp="tf.RATE = 14.0 , tf.ACC = 40 , tf.CRTrate = 1.5"]
 [Calc_E_Damage]
+
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 [eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
 なずなは敵の攻撃を回避した[p]
@@ -290,15 +291,21 @@
 [jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]
 
+;------------------------------------------------------------------------------
 *敵拘束行動2
-[EnName]はなずな の胸を揉みしだいた[p]
-[if exp="f.P_BOOB==2"]
-#なずな
-いやあっ！！[p]
-揉みしだかれたなずな の乳房から母乳が迸った[p]
-[endif]
 [eval exp="tf.RATE= f.P_BOOB"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
+
+[EnName]はなずな の胸を揉みしだいた[p]
+[if exp="f.P_BOOB==2"]
+揉みしだかれたなずな の乳房から母乳が迸った[p]
+[call storage="voice-PL.ks" target="*vc-aeg"]
+[elsif exp="tf.P_ERO>500"]
+[call storage="voice-PL.ks" target="*vc-aeg"]
+[else]
+[call storage="voice-PL.ks" target="*vc-iya"]
+[endif]
+
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
 [EnName]の精神力が低下した[p]
 ;絶頂判定＆正気度判定
@@ -306,10 +313,18 @@
 [jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]
 
+;------------------------------------------------------------------------------
 *敵拘束行動3
-[EnName]はなずな の秘処をまさぐった[p]
 [eval exp="tf.RATE = 2"][SUKEBE]
 [eval exp="tf.P_ERO = tf.P_ERO + tf.Kaikan , tf.E_Sukeb_MND += 1"][limit]
+
+[EnName]はなずな の秘処をまさぐった[p]
+[if exp="tf.P_ERO>500"]
+[call storage="voice-PL.ks" target="*vc-aeg"]
+[else]
+[call storage="voice-PL.ks" target="*vc-iya"]
+[endif]
+
 [emb exp="tf.Kaikan"]の快感[r]なずな の欲情が[emb exp="tf.Kaikan"]上昇した[r]
 [EnName]の精神力が低下した[p]
 ;絶頂判定＆正気度判定
@@ -317,26 +332,34 @@
 [jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]
 
+;------------------------------------------------------------------------------
 *敵拘束行動4
-[EnName]の攻撃[p]
-[quake count=3 time=300 hmax=30]
 [Calc_Status]
 [eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
+
+[EnName]の攻撃[p]
+[quake count=3 time=300 hmax=30]
+[call storage="voice-PL.ks" target="*vc-damage"]
 なずな に[emb exp="tf.Damage"]のダメージ[p]
+
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[MiniStatus][Triage]
-[MAZO][Orgasm][SANcheck][MiniStatus]
+[MiniStatus][Triage][MAZO][Orgasm][SANcheck][MiniStatus]
 [jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]
 
+;------------------------------------------------------------------------------
 *敵拘束行動5
-[EnName]はなずな を締め上げた[p]
-[quake count=5 time=300 hmax=20]
 [Calc_Status]
 [eval exp="tf.Damage=Math.floor(tf.E_STR ) * 3"]
-なずな に[emb exp="tf.Damage"]のダメージ[p]
+
+[EnName]はなずな を締め上げた[p]
+[quake count=5 time=300 hmax=20]
+[call storage="voice-PL.ks" target="*vc-damage"]
+なずな に[emb exp="tf.Damage"]のダメージ[r]
+なずなの疲労度が１上昇した[p]
+
+[Hirou]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[MiniStatus][Triage]
-[MAZO][Orgasm][SANcheck][MiniStatus]
+[MiniStatus][Triage][MAZO][Orgasm][SANcheck][MiniStatus]
 [jump storage="btl-bound.ks" target="*敵拘束行動終了"]
 [s]

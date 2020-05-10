@@ -189,7 +189,10 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 *ターン終了
 [freeimage layer=3]
 [eval exp="tf.P_AVD=0"]
+;疲労カードの追加スタン時は除外
+[if exp="tf.P_Stan < 1"]
 [Hirou]
+[endif]
 ;バッドステータスのターン短縮
 [eval exp="tf.P_Stan = 0"]
 [jump target="*ターン開始"]
