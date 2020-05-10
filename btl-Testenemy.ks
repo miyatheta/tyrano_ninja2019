@@ -180,17 +180,21 @@
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 [eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
 なずなは敵の攻撃を回避した[p]
+
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]
 会心の一撃[r]
 なずなに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
+[MiniStatus][Triage][MAZO][Orgasm][SANcheck]
 [else]
+
 [quake count=5 time=300 hmax=20]
 なずなに[emb exp="tf.Damage"]のダメージ[p]
 [eval exp="tf.P_HP = tf.P_HP - tf.Damage"][limit]
-[endif]
 [MiniStatus][Triage][MAZO][Orgasm][SANcheck]
+[endif]
+
 [return]
 [s]
 

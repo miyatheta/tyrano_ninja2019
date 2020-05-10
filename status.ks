@@ -37,7 +37,7 @@
 [eval exp="f.P_BOOB=1 , f.P_ANAL=1 "]
 [eval exp="f.P_MAZO=0 , f.P_HYPNO=0 "]
 [eval exp="f.P_PARASITE=0 , f.P_PARASITE_count=0"]
-[eval exp="f.P_BIYAKU=0 , f.P_KOHUN=0 , f.P_CURSE=0 , f.P_INMU=0 , f.P_INRAN=0 , f.Insanity=0"]
+[eval exp="f.P_BIYAKU=0 , f.P_KOHUN=0 , f.P_CURSE=1 , f.P_ADDICT=1 , f.P_INMU=0 , f.P_INRAN=0 , f.Insanity=0"]
 
 ;体力
 [eval exp="f.E_HP=1000"]
