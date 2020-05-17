@@ -144,7 +144,7 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 [eval exp="tf.E_STRd1=0 , tf.E_DURd1=0 , tf.E_AGId1=0 , tf.E_DEXd1=0 , tf.E_MNDd1=0 , tf.E_SEXd1=0 , tf.E_LUKd1=0"]
 [eval exp="tf.P_STRb3=0 , tf.P_DURb3=0 , tf.P_AGIb3=0 , tf.P_DEXb3=0 , tf.P_MNDb3=0 , tf.P_SEXb3=0 , tf.P_LUKb3=0"]
 [eval exp="tf.E_STRd3=0 , tf.E_DURd3=0 , tf.E_AGId3=0 , tf.E_DEXd3=0 , tf.E_MNDd3=0 , tf.E_SEXd3=0 , tf.E_LUKd3=0"]
-;的に有益
+;敵に有益
 [eval exp="tf.P_STRd1=0 , tf.P_DURd1=0 , tf.P_AGId1=0 , tf.P_DEXd1=0 , tf.P_MNDd1=0 , tf.P_SEXd1=0 , tf.P_LUKd1=0"]
 [eval exp="tf.E_STRb1=0 , tf.E_DURb1=0 , tf.E_AGIb1=0 , tf.E_DEXb1=0 , tf.E_MNDb1=0 , tf.E_SEXb1=0 , tf.E_LUKb1=0"]
 [eval exp="tf.P_STRd3=0 , tf.P_DURd3=0 , tf.P_AGId3=0 , tf.P_DEXd3=0 , tf.P_MNDd3=0 , tf.P_SEXd3=0 , tf.P_LUKd3=0"]
@@ -233,7 +233,7 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 tf.Decktxt = '山札：' + f.Deck.length + '/' + f.Cards.length ;
 tf.P_HPtxt = '体力：' + tf.P_HP ;
 tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
-tf.P_EROtxt = '欲情：' + tf.P_ERO , tf.P_EXHtxt = '疲労：' + f.P_EXH;
+tf.P_EROtxt = '欲情：' + tf.P_ERO , f.P_EXHtxt = '疲労：' + f.P_EXH;
 tf.BadStxt ='';
 if(f.P_MAZO>0){tf.BadStxt += '[被虐]';}
 if(f.P_HYPNO>0){tf.BadStxt += '[催淫]';}
@@ -253,7 +253,7 @@ if(tf.P_ORGA>0){tf.Worstxt += '[絶頂]';}
 [ptext name="Decktxt" text="&tf.Decktxt" layer="2" edge="0x000000" size=20 x=20 y=540 overwrite=true]
 [ptext name="P_AVDtxt" text="&tf.P_AVDtxt" layer="2" edge="0x000000" size=20 x=140 y=540 overwrite=true]
 [ptext name="P_EROtxt" text="&tf.P_EROtxt" layer="2" edge="0x000000" size=20 x=20 y=570 overwrite=true]
-[ptext name="P_EXHtxt" text="&tf.P_EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
+[ptext name="P_EXHtxt" text="&f.P_EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 
 [iscript]
 tf.TURNtxt = '手番' + tf.Turn ;

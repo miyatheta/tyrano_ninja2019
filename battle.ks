@@ -20,6 +20,7 @@
 *Initialize
 [Initialize][Initialize_BadStatus]
 [Reflesh_PL_buff][Reflesh_EN_buff][Initialize_3Tbuff]
+
 *Initialize_Cards
 ;カードの情報を収めた連想(ハッシュ・辞書)配列(=オブジェクト)を収めた配列(多次元配列)を作成。
 ;Deck=カードのidを並べたもの。
@@ -41,6 +42,14 @@ f.Cards=[
 f.Deck = [];
 n = f.Cards.length;
 for( i=0 ; i<n ; i++){f.Deck.push(i);}
+[endscript]
+;疲労度の反映
+[iscript]
+n = f.P_EXH;
+for( i=0 ; i<n ; i++){
+  f.Deck.push(f.Cards.length);
+  f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
+}
 [endscript]
 
 ;デバッグ用の設定

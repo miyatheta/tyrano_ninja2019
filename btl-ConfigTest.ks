@@ -49,4 +49,12 @@
 [s]
 
 *戻る
+;疲労度の反映
+[iscript]
+n = f.P_EXH;
+for( i=0 ; i<n ; i++){
+  f.Deck.push(f.Cards.length);
+  f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
+}
+[endscript]
 [er][return][s]

@@ -168,7 +168,7 @@
 [er]
 なずな は呼吸を整えた[p]
 [eval exp="tf.P_ERO -= 100"][limit]
-[if exp="tf.P_EXH > 0"]
+[if exp="f.P_EXH > 0"]
 [MiniStatus]
 ;疲労カード削除
 [iscript]

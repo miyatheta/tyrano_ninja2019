@@ -1,8 +1,6 @@
 *game_lose
 [MiniStatus]
 くぬぎは敗北した。[p]
-[GoSKB]
-[if exp="tf.GoSKB == 1"]
 #敵
 ぐふふふふ！さぁて楽しませてもらおうか！！[p]
 #くぬぎ
@@ -11,16 +9,6 @@
 [EnName]は下卑た笑みを浮かべくぬぎに手を伸ばしてきた。[p]
 [chara_hide name="kunugi"][chara_hide name="gouza"]
 [jump target="*bochu"]
-[endif]
-#敵
-おらっ！！大人しくしな！！[p]
-#くぬぎ
-くふっ！！[p]
-「金燎様が生け捕りにしろと言っていたのはこの女だよな」[p]
-「仕方ねぇ、屋敷まで運ぶか・・・」[p]
-意識を失ったくぬぎを敵は抱えあげるとその場から立ち去った[p]
-[chara_hide name="kunugi"][chara_hide name="gouza"]
-[jump storage="prison.ks" target="*start"]
 [s]
 
 *game_win
