@@ -30,14 +30,17 @@ f.Cards=[
 {color:"red",value:1,active:1,txt:"攻撃2",tag:"*攻撃"},
 {color:"red",value:1,active:1,txt:"攻撃3",tag:"*攻撃"},
 {color:"red",value:1,active:1,txt:"攻撃4",tag:"*攻撃"},
+{color:"red",value:1,active:1,txt:"攻撃5",tag:"*攻撃"},
+{color:"blue",value:1,active:1,txt:"忍術1",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術2",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術3",tag:"*忍術"},
+{color:"blue",value:1,active:1,txt:"忍術4",tag:"*忍術"},
 {color:"blue",value:1,active:1,txt:"忍術5",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術6",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術7",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術8",tag:"*忍術"},
-{color:"green",value:1,active:1,txt:"技能9",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能⑩",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能⑪",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能⑫",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能1",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能2",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能3",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能4",tag:"*技能"},
+{color:"green",value:1,active:1,txt:"技能5",tag:"*技能"},
 ];
 f.Deck = [];
 n = f.Cards.length;
@@ -65,15 +68,15 @@ for( i=0 ; i<n ; i++){
 ;絶頂
 [eval exp="tf.P_ORGA = tf.P_ORGA - 1"]
 [if exp="tf.P_ORGA > 0"]
-くぬぎは絶頂の余韻から抜け出せないでいる![p]
+なずなは絶頂の余韻から抜け出せないでいる![p]
 [elsif exp="tf.P_ORGA == 0 && tf.Arousal > 0"]
-くぬぎは絶頂から抜け出した[p]
+なずなは絶頂から抜け出した[p]
 [eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1"]
 [eval exp="tf.Arousal = 1"]
 [endif]
 ;欲情
 [if exp="tf.Arousal == 1"]
-くぬぎの欲情が収まった[p]
+なずなの欲情が収まった[p]
 [eval exp="tf.P_ERO=0 , tf.Arousal=0 , tf.ArousSTRd=0 , tf.ArousAGId=0 , tf.ArousDEXd=0"]
 [endif]
 ;スタン
@@ -169,13 +172,13 @@ for( i=0 ; i<n ; i++){
 [cm]
 なずな は息切れをした！[r]
 この手番は行動ができない！[p]
-[Ikigire]
 [eval exp="tf.P_Stan = 1"]
 [MiniStatus]
 ;くみつき判定
 
 *攻守交代
 [cm]
+[Ikigire]
 [eval exp="f.P_MGP = f.P_MGP + f.Blue"][limit]
 [eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
 [Reflesh_EN_buff]

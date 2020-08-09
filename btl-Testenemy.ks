@@ -138,6 +138,7 @@
 なずなは敵の攻撃を回避した[p]
 
 [elsif exp="tf.P_Barrier==1"]
+;変わり身の発動
 [eval exp="tf.P_Barrier=2"]
 
 [elsif exp="tf.CRT>1"]
@@ -164,10 +165,15 @@
 [Calc_E_Hit]
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 なずなは敵の組付を躱した[p]
-[return]
-[endif]
+
+[elsif exp="tf.P_Barrier==1"]
+;変わり身の発動
+[eval exp="tf.P_Barrier=2"]
+
+[else]
 なずなは敵に組み付かれた[p]
 [eval exp="tf.Mount = 1000"]
+[endif]
 [return]
 [s]
 
@@ -181,6 +187,10 @@
 [if exp="tf.AvoidRate > tf.dice && tf.P_Stan < 1"]
 [eval exp="tf.P_Counter=2" cond="tf.P_Counter==1"]
 なずなは敵の攻撃を回避した[p]
+
+[elsif exp="tf.P_Barrier==1"]
+;変わり身の発動
+[eval exp="tf.P_Barrier=2"]
 
 [elsif exp="tf.CRT>1"]
 [quake count=5 time=300 hmax=20]

@@ -36,7 +36,8 @@
 [Initialize]
 [MiniStatus]
 疲労度：[r]
-快感度：
+快感度：[r]
+体力：
 [glink target="*ステータス" exp="f.P_EXH=0" text="0" size="15" width="30" height="13" x="450" y="500"]
 [glink target="*ステータス" exp="f.P_EXH=6" text="6" size="15" width="30" height="13" x="550" y="500"]
 [glink target="*ステータス" exp="f.P_EXH=12" text="12" size="15" width="30" height="13" x="650" y="500"]
@@ -44,6 +45,10 @@
 [glink target="*ステータス" exp="f.P_ERO=0" text="0" size="15" width="30" height="13" x="450" y="530"]
 [glink target="*ステータス" exp="f.P_ERO=300" text="300" size="15" width="30" height="13" x="550" y="530"]
 [glink target="*ステータス" exp="f.P_ERO=600" text="600" size="15" width="30" height="13" x="650" y="530"]
+
+[glink target="*ステータス" exp="f.P_HP=1500" text="1500" size="15" width="30" height="13" x="450" y="560"]
+[glink target="*ステータス" exp="f.P_HP=1000" text="1000" size="15" width="30" height="13" x="550" y="560"]
+[glink target="*ステータス" exp="f.P_HP=500" text="500" size="15" width="30" height="13" x="650" y="560"]
 
 [glink target="*テストコンフィグ" text="戻る" size="15" width="30" height="13" x="840" y="590"]
 [s]

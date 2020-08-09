@@ -17,15 +17,21 @@
 [jump target="&tf.label"]
 [s]
 
+
+*手札配布
+[er]
+[CardShuffle]
+[ShowCardList]
+[MiniStatus]
+[Calc_Card]
+[return]
+
 *start
-[clearfix]
-;ミニゲームの勝利数
-[eval exp="tf.VP=0"]
 [bg  time="1000" method="slide"  storage="sample_back.jpg" ]
 房中を開始します[p]
 幸運判定。運が悪いと敵の増援が出現[p]
+
 *bochu001
-#
 敵はなずなを後ろ手に縛り上げると背後から覆いかぶさった[p]
 「くっ！この！離しなさい！」[p]
 「負け犬が吠えるんじゃねえよ」[p]

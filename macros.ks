@@ -50,9 +50,9 @@ tf.dice = Math.floor(Math.random()*(tf.Max+1-tf.Min))+tf.Min;
 [freeimage layer=2]
 [freeimage layer=3]
 [freeimage layer=4]
-[freeimage layer=5]
-[freeimage layer=8]
-[freeimage layer=9]
+;[freeimage layer=5]
+;[freeimage layer=8]
+;[freeimage layer=9]
 [endmacro]
 
 ;戦闘関連
@@ -454,12 +454,12 @@ f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
 
 ;カウンター
 [macro name="P_Counter"]
-[call storage="btl-PL-Skill.ks" target="*PLカウンター発動" cond="tf.P_Counter > 1 "]
+[call storage="btl-PL-Skill.ks" target="*PLカウンター発動" cond="tf.P_Counter >= 2 "]
 [endmacro]
 
 ;身代わり
 [macro name="P_Barrier"]
-[call storage="btl-PL-Magic.ks" target="*変わり身発動" cond="tf.P_Barrier > 1"]
+[call storage="btl-PL-Magic.ks" target="*変わり身発動" cond="tf.P_Barrier >= 2"]
 [endmacro]
 
 ;勝敗判定
