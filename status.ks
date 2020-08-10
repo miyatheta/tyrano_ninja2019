@@ -3,6 +3,8 @@
 
 ;体力
 [eval exp="f.P_HP=2000 , f.P_HPmax=2000"]
+;行動力
+[eval exp="f.P_ACT=5"]
 ;気力＞SP
 [eval exp="f.P_MGP=0"]
 ;快感

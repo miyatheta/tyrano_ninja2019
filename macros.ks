@@ -134,8 +134,8 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 [endmacro]
 
 [macro name="Initialize"]
-[eval exp="tf.Turn=0 , tf.Mount=0"]
-[eval exp="tf.P_HP=f.P_HP , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_LUK=f.P_LUK , tf.P_MND=f.P_MND, tf.P_SEX=f.P_SEX"]
+[eval exp="tf.Round=0 , tf.Turn=0 , tf.Mount=0"]
+[eval exp="tf.P_HP=f.P_HP , tf.P_ACT=f.P_ACT , tf.P_STR=f.P_STR , tf.P_DUR=f.P_DUR , tf.P_AGI=f.P_AGI , tf.P_DEX=f.P_DEX , tf.P_LUK=f.P_LUK , tf.P_MND=f.P_MND, tf.P_SEX=f.P_SEX"]
 [eval exp="tf.P_AVD=f.P_AVD , tf.P_ERO=f.P_ERO , tf.P_SAN=f.P_SAN , tf.P_DRESS=f.P_DRESS , tf.P_ARMOR=f.P_ARMOR , tf.P_Barrier=0"]
 [eval exp="tf.E_HP=f.E_HP , tf.E_STR=f.E_STR , tf.E_DUR=f.E_DUR , tf.E_AGI=f.E_AGI , tf.E_DEX=f.E_DEX , tf.E_LUK=f.E_LUK , tf.E_MND=f.E_MND , tf.E_SEX=f.E_SEX"]
 [eval exp="tf.E_AVD=f.E_AVD ,tf.E_ERO=f.E_ERO , tf.E_SAN=f.E_SAN , tf.E_BND=f.E_BND , tf.E_MGP=f.E_MGP"]
@@ -256,7 +256,7 @@ if(tf.P_ORGA>0){tf.Worstxt += '[絶頂]';}
 [ptext name="P_EXHtxt" text="&f.P_EXHtxt" layer="2" edge="0x000000" size=20 x=20 y=600 overwrite=true]
 
 [iscript]
-tf.TURNtxt = '手番' + tf.Turn ;
+tf.Roundtxt = '手番：' + tf.Round ;
 tf.E_HPtxt = '体力：' + tf.E_HP ;
 tf.E_MGPtxt = '気力：' + tf.E_MGP ;
 if(tf.Mount > 0){
@@ -272,13 +272,11 @@ if(tf.E_anger_count>0){
   tf.E_Mental = '通常'
 }
 [endscript]
-[ptext text="&tf.E_name" layer="2" edge="0x000000" size=24 x=620 y=0 ]
-[ptext name="TURNtxt" text="&tf.TURNtxt" layer="2" edge="0x000000" size=20 x=740 y=5  overwrite=true]
-[ptext name="E_HPtxt" text="&tf.E_HPtxt" layer="2" edge="0x000000" size=20 x=620 y=30 overwrite=true]
-[ptext name="E_MGPtxt" text="&tf.E_MGPtxt" layer="2" edge="0x000000" size=20 x=740 y=30 overwrite=true]
-[ptext name="E_Mental" text="&tf.E_Mental" layer="2" edge="0x000000" size=20 x=860 y=30 overwrite=true]
-[ptext name="E_MNTtxt" text="&tf.E_MNTtxt" layer="2" edge="0x000000" size=20 x=620 y=50 overwrite=true]
-
+[ptext text="&tf.E_name" layer="2" edge="0x000000" size=18 x=500 y=5 ]
+[ptext name="Roundtxt" text="&tf.Roundtxt" layer="2" edge="0x000000" size=18 x=580 y=5  overwrite=true]
+[ptext name="E_HPtxt" text="&tf.E_HPtxt" layer="2" edge="0x000000" size=18 x=680 y=5 overwrite=true]
+[ptext name="E_MGPtxt" text="&tf.E_MGPtxt" layer="2" edge="0x000000" size=18 x=800 y=5 overwrite=true]
+[ptext name="E_Mental" text="&tf.E_Mental" layer="2" edge="0x000000" size=18 x=900 y=5 overwrite=true]
 
 [layopt layer="4" visible=true]
 [iscript]
@@ -320,11 +318,11 @@ for(i = f.Deck.length - 1; i >= 0; i--){
 [endmacro]
 
 [macro name="ShowCardList"]
-[glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['value']" cond="f.Cards[f.Hand[0]]['active']>0" target="&f.Cards[f.Hand[0]]['tag']" ]
-[glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['value']" cond="f.Cards[f.Hand[1]]['active']>0" target="&f.Cards[f.Hand[1]]['tag']" ]
-[glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['value']" cond="f.Cards[f.Hand[2]]['active']>0" target="&f.Cards[f.Hand[2]]['tag']" ]
-[glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['value']" cond="f.Cards[f.Hand[3]]['active']>0" target="&f.Cards[f.Hand[3]]['tag']" ]
-[glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['value']" cond="f.Cards[f.Hand[4]]['active']>0" target="&f.Cards[f.Hand[4]]['tag']" ]
+[glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['value'],f.Cards[f.Hand[0]]['active']=1" cond="f.Cards[f.Hand[0]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['value'],f.Cards[f.Hand[1]]['active']=1" cond="f.Cards[f.Hand[1]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['value'],f.Cards[f.Hand[2]]['active']=1" cond="f.Cards[f.Hand[2]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['value'],f.Cards[f.Hand[3]]['active']=1" cond="f.Cards[f.Hand[3]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['value'],f.Cards[f.Hand[4]]['active']=1" cond="f.Cards[f.Hand[4]]['active']>0" target="*敵攻撃選択" ]
 [endmacro]
 
 [macro name="Calc_Card"]

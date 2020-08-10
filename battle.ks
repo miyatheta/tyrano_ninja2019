@@ -26,75 +26,35 @@
 ;Deck=カードのidを並べたもの。
 [iscript]
 f.Cards=[
-{color:"red",value:1,active:1,txt:"攻撃1",tag:"*攻撃"},
-{color:"red",value:1,active:1,txt:"攻撃2",tag:"*攻撃"},
-{color:"red",value:1,active:1,txt:"攻撃3",tag:"*攻撃"},
-{color:"red",value:1,active:1,txt:"攻撃4",tag:"*攻撃"},
-{color:"red",value:1,active:1,txt:"攻撃5",tag:"*攻撃"},
-{color:"blue",value:1,active:1,txt:"忍術1",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術2",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術3",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術4",tag:"*忍術"},
-{color:"blue",value:1,active:1,txt:"忍術5",tag:"*忍術"},
-{color:"green",value:1,active:1,txt:"技能1",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能2",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能3",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能4",tag:"*技能"},
-{color:"green",value:1,active:1,txt:"技能5",tag:"*技能"},
+{color:"red",value:1,active:1,txt:"力壱1"},
+{color:"red",value:2,active:1,txt:"力弐2"},
+{color:"red",value:3,active:1,txt:"力参3"},
+{color:"red",value:2,active:1,txt:"力弐4"},
+{color:"red",value:3,active:1,txt:"力参5"},
+{color:"blue",value:1,active:1,txt:"心壱1"},
+{color:"blue",value:2,active:1,txt:"心弐2"},
+{color:"blue",value:3,active:1,txt:"心参3"},
+{color:"blue",value:2,active:1,txt:"心弐4"},
+{color:"blue",value:3,active:1,txt:"心参5"},
+{color:"green",value:1,active:1,txt:"技壱1"},
+{color:"green",value:2,active:1,txt:"技弐2"},
+{color:"green",value:3,active:1,txt:"技参3"},
+{color:"green",value:2,active:1,txt:"技弐4"},
+{color:"green",value:3,active:1,txt:"技参5"},
 ];
 f.Deck = [];
 n = f.Cards.length;
 for( i=0 ; i<n ; i++){f.Deck.push(i);}
-[endscript]
-;疲労度の反映
-[iscript]
-n = f.P_EXH;
-for( i=0 ; i<n ; i++){
-  f.Deck.push(f.Cards.length);
-  f.Cards.push({color:"black",value:1,active:1,txt:"疲労",tag:"*疲労"});
-}
 [endscript]
 
 ;デバッグ用の設定
 @call storage="btl-ConfigTest.ks" target="*テストコンフィグ"
 戦闘を開始します[p]
 ;------------------------------------------------------------------------------
-
-*ターン開始
+*ラウンド開始
 [Reflesh_PL_buff]
-;ターン開始
-[eval exp="tf.Turn +=1"]
-;状態異常のカウント・治癒
-;絶頂
-[eval exp="tf.P_ORGA = tf.P_ORGA - 1"]
-[if exp="tf.P_ORGA > 0"]
-なずなは絶頂の余韻から抜け出せないでいる![p]
-[elsif exp="tf.P_ORGA == 0 && tf.Arousal > 0"]
-なずなは絶頂から抜け出した[p]
-[eval exp="tf.OrgaCount = 0, tf.OrgaSEX = 1"]
-[eval exp="tf.Arousal = 1"]
-[endif]
-;欲情
-[if exp="tf.Arousal == 1"]
-なずなの欲情が収まった[p]
-[eval exp="tf.P_ERO=0 , tf.Arousal=0 , tf.ArousSTRd=0 , tf.ArousAGId=0 , tf.ArousDEXd=0"]
-[endif]
-;スタン
-[if exp="tf.E_Stan>0"][eval exp="tf.E_Stan=0"][EnName]が自由に動けるようになった[p][endif]
-
-;------------------------------------------------------------------------------
-;敵攻撃パターン選択
-*敵攻撃パターン選択
-[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択怒り" cond="tf.E_anger_count>0"]
-[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択欲情" cond="tf.E_charm_count>0"]
-[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択"]
-
-;------------------------------------------------------------------------------
-;PLの手番
-*手番開始
+[eval exp="tf.Round +=1"]
 [MiniStatus]
-[glink text="手番開始" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札構築" ]
-[s]
 
 *手札構築
 [CardShuffle]
@@ -102,39 +62,34 @@ for( i=0 ; i<n ; i++){
 [MiniStatus]
 [Calc_Card]
 
+;------------------------------------------------------------------------------
+;敵攻撃パターン選択
+*敵攻撃パターン選択
+;[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択怒り" cond="tf.E_anger_count>0"]
+;[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択欲情" cond="tf.E_charm_count>0"]
+;[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン選択"]
+
+;------------------------------------------------------------------------------
+*ターン開始
+ターン開始[er]
+[eval exp="tf.Turn +=1"]
+;状態異常のカウント・治癒
+
+
+;------------------------------------------------------------------------------
+;PLの選択
 *手札一覧
 [er]
 [ShowCardList]
 [MiniStatus]
-[if exp="f.Black>=3"]
-[glink text="息切れ" size="18" width="15" height="100" x="350" y="500" color="gray" target="*息切れ"]
-[else]
-[glink text="手番継続" size="18" width="15" height="100" x="350" y="500" color="gray" target="*手札一覧" cond="f.Red>0"]
-[glink text="手番終了" size="18" width="15" height="100" x="350" y="500" color="gray" target="*攻守交代" cond="f.Red<=0"]
-[endif]
+[glink text="スキル" size="18" height="30" x="310" y="500" color="gray" target="*技能" ]
+[glink text="必殺技" size="18" height="30" x="310" y="560" color="gray" target="*忍術" ]
 [s]
 
 ;------------------------------------------------------------------------------
 ;PLの行動選択
-*攻撃
-[er]
-[if exp="f.Black>=3"]
-なずなは息切れしている[p]
-[jump target="*手札一覧"]
-[endif]
-
-[jump target="*手札一覧" cond="f.Red<1"]
-[if exp="f.Red>0"][link storage="btl-PL-Attack.ks" target="*攻撃1"]拳　/弱攻撃ーー[eval exp="tf.ACC = 50"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃2"]蹴り/中攻撃ーー[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃4"]手裏剣/命中低下[eval exp="tf.ACC = 30"][Calc_P_Hit][endlink]　　[endif]
-[if exp="f.Red>1"][link storage="btl-PL-Attack.ks" target="*攻撃5"]撒き菱/攻撃低下[eval exp="tf.ACC = 40"][Calc_P_Hit][endlink][endif][r]
-[if exp="f.Red>2"][link storage="btl-PL-Attack.ks" target="*攻撃3"]回し蹴り/強攻撃[eval exp="tf.ACC = 10"][Calc_P_Hit][endlink]　　[endif]
-[link target="*手札一覧"]戻る[endlink]
-[s]
-
 *技能
 [er]
-[jump target="*手札一覧" cond="f.Green<1"]
 [if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル1"]必至(命中率上昇)　[endlink]　　　[endif]
 [if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル2"]心眼(会心発生上昇)[endlink][endif][r]
 [if exp="f.Green>0"][link storage="btl-PL-Skill.ks" target="*スキル3"]金剛(耐久力上昇)　[endlink]　　　[endif]
@@ -154,57 +109,26 @@ for( i=0 ; i<n ; i++){
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
-*疲労
-[er]
-[if exp="f.Black>=3"]
-なずなは息切れしている[p]
-[jump target="*手札一覧"]
-[endif]
-
-疲労札にコマンド、ボーナスはありません。[r]手札に疲労札が３枚以上あると「息切れ」になります。[r]
-息切れ発生時は攻撃を行えません。[r]息切れ後は手札の疲労札が消えます[l][er]
-[jump target="*手札一覧"]
-[s]
 
 ;------------------------------------------------------------------------------
-;PLの行動終了
-*息切れ
-[cm]
-なずな は息切れをした！[r]
-この手番は行動ができない！[p]
-[eval exp="tf.P_Stan = 1"]
-[MiniStatus]
-;くみつき判定
-
-*攻守交代
-[cm]
-[Ikigire]
-[eval exp="f.P_MGP = f.P_MGP + f.Blue"][limit]
-[eval exp="tf.P_AVD= (f.Red + f.Blue + f.Green)"]
-[Reflesh_EN_buff]
-[if exp="tf.P_Stan!=1"][ReActivate][endif]
-[MiniStatus]
-
-[if exp="tf.E_Stan>0"]
-敵は行動不能になっている[p]
-[jump target="*ターン終了"][s]
-[endif]
+*敵攻撃選択
+;[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン適用"]
+;[s]
 
 ;------------------------------------------------------------------------------
-;敵の手番
-*敵手番開始
-[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン適用"]
-[s]
-
-;------------------------------------------------------------------------------
-;ターン終了
 *ターン終了
-[freeimage layer=3]
-[eval exp="tf.P_AVD=0"]
-;疲労カードの追加スタン時は除外
-[if exp="tf.P_Stan < 1"]
-[Hirou]
-[endif]
-;バッドステータスのターン短縮
-[eval exp="tf.P_Stan = 0"]
+ターン終了[er]
+;行動力減少
+[eval exp="tf.P_ACT -=1"]
+[if exp="tf.P_ACT <1"]
 [jump target="*ターン開始"]
+[else]
+[jump target="*ラウンド終了"]
+[endif]
+[s]
+;------------------------------------------------------------------------------
+*ラウンド終了
+[freeimage layer=3]
+;バッドステータスのラウンド短縮
+[eval exp="tf.P_Stan = 0"]
+[jump target="*ラウンド開始"]

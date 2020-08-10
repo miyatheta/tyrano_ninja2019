@@ -6,14 +6,19 @@
 [if exp="tf.dice<20"]
 [eval exp="tf.enemy_attack_pattern=1"]
 [image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 
 [elsif exp="tf.dice<50"]
 [eval exp="tf.enemy_attack_pattern=2"]
+[image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_B.png" x=600 y=300 width=50 visible=true]
 [image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
 
 [elsif exp="tf.dice<60"]
 [eval exp="tf.enemy_attack_pattern=3"]
 [image layer=3 storage="card/Card_R.png" x=600 y=300 width=50 visible=true]
+[image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 [image layer=3 storage="card/Card_R.png" x=650 y=300 width=50 visible=true]
 
 [elsif exp="tf.dice<80"]
