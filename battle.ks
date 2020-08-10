@@ -65,8 +65,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endif]
 
 *手札構築
-[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
-[ShowCardList]
+[HandSet]
 [MiniStatus]
 [Calc_Card]
 

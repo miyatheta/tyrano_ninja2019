@@ -328,6 +328,15 @@ f.TrashBox=[];
 [endscript]
 [endmacro]
 
+[macro name="HandSet"]
+;HandにDeckからカード追加
+;追加分は削除
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
+[iscript]
+f.Deck.splice(0,5);
+[endscript]
+[endmacro]
+
 [macro name="ShowCardList"]
 [glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['value'],f.Cards[f.Hand[0]]['active']=0" cond="f.Cards[f.Hand[0]]['active']>0" target="*敵攻撃選択" ]
 [glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['value'],f.Cards[f.Hand[1]]['active']=0" cond="f.Cards[f.Hand[1]]['active']>0" target="*敵攻撃選択" ]
@@ -338,11 +347,12 @@ f.TrashBox=[];
 
 [macro name="CardTrash"]
 CardTrash[wt5]
-;TrashBoxにDeckをpushで破壊的結合。墓地を拡大。
-;Deck(シャッフルした山札)から今ターンのカードを削除
+;Handを全てActivate
+;TrashBoxにHandをpushで破壊的結合。墓地を拡大。
 [iscript]
+for(i=0; i<5 ;i++){f.Cards[f.Hand[i]]['active'] = 1 ;}
 Array.prototype.push.apply(f.TrashBox,f.Hand);
-f.Deck.splice(0,5);
+f.Hand=[]
 [endscript]
 [endmacro]
 
