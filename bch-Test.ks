@@ -1,6 +1,6 @@
 *手札配布
 [er]
-[CardShuffle]
+[DeckShuffle]
 [layopt layer="4" visible=true]
 [iscript]
 tf.Cardtxt ="全札：";

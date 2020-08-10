@@ -43,6 +43,7 @@ f.Cards=[
 {color:"green",value:3,active:1,txt:"技参5"},
 ];
 f.Deck = [];
+f.TrashBox = [];
 n = f.Cards.length;
 for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
@@ -57,7 +58,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [MiniStatus]
 
 *手札構築
-[CardShuffle]
+[DeckShuffle]
 [ShowCardList]
 [MiniStatus]
 [Calc_Card]
@@ -120,7 +121,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 ターン終了[er]
 ;行動力減少
 [eval exp="tf.P_ACT -=1"]
-[if exp="tf.P_ACT <1"]
+[if exp="tf.P_ACT >0"]
 [jump target="*ターン開始"]
 [else]
 [jump target="*ラウンド終了"]
@@ -128,7 +129,10 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [s]
 ;------------------------------------------------------------------------------
 *ラウンド終了
+ラウンド終了[er]
 [freeimage layer=3]
+;使用済みカードを墓地へ
+[CardTrash]
 ;バッドステータスのラウンド短縮
 [eval exp="tf.P_Stan = 0"]
 [jump target="*ラウンド開始"]

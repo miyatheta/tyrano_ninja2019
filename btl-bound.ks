@@ -65,7 +65,7 @@
 [s]
 
 *手札構築
-[CardShuffle]
+[DeckShuffle]
 [eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
 [ShowCardList]
 [Calc_Card]

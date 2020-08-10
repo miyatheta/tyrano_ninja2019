@@ -20,7 +20,7 @@
 
 *手札配布
 [er]
-[CardShuffle]
+[DeckShuffle]
 [ShowCardList]
 [MiniStatus]
 [Calc_Card]

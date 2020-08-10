@@ -287,10 +287,15 @@ while(i < f.Cards.length){
   i++;
 }
 [endscript]
-[ptext name="Cards" text="&f.Cards.length" layer="4" edge="0x000000" size=10 x=0 y=0 overwrite=true]
-[ptext name="Cardstxt" text="&tf.Cardtxt" layer="4" edge="0x000000" size=10 x=30 y=0 overwrite=true]
-[ptext name="Deck" text="&f.Deck" layer="4" edge="0x000000" size=10 x=0 y=10 overwrite=true]
-[ptext name="Hand" text="&f.Hand" layer="4" edge="0x000000" size=10 x=0 y=20 overwrite=true]
+[ptext name="Cards" text="&f.Cards.length" layer="4" edge="0xff0000" size=10 x=0 y=0 overwrite=true]
+[ptext text="Cards:" layer="4" edge="0xff0000" size=10 x=0 y=10]
+[ptext name="Cardstxt" text="&tf.Cardtxt" layer="4" edge="0xff0000" size=10 x=30 y=10 overwrite=true]
+[ptext text="Deck:" layer="4" edge="0xff0000" size=10 x=0 y=20]
+[ptext name="Deck" text="&f.Deck" layer="4" edge="0xff0000" size=10 x=30 y=20 overwrite=true]
+[ptext text="Hand:" layer="4" edge="0xff0000" size=10 x=0 y=30]
+[ptext name="Hand" text="&f.Hand" layer="4" edge="0xff0000" size=10 x=30 y=30 overwrite=true]
+[ptext text="Trash:" layer="4" edge="0xff0000" size=10 x=0 y=40]
+[ptext name="Trash" text="&f.TrashBox" layer="4" edge="0xff0000" size=10 x=30 y=40 overwrite=true]
 [endmacro]
 
 ;カード関係
@@ -303,8 +308,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
 [endmacro]
 
-[macro name="CardShuffle"]
-[DeckRemake]
+[macro name="DeckShuffle"]
 ;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
 [iscript]
 for(i = f.Deck.length - 1; i >= 0; i--){
@@ -318,11 +322,20 @@ for(i = f.Deck.length - 1; i >= 0; i--){
 [endmacro]
 
 [macro name="ShowCardList"]
-[glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['value'],f.Cards[f.Hand[0]]['active']=1" cond="f.Cards[f.Hand[0]]['active']>0" target="*敵攻撃選択" ]
-[glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['value'],f.Cards[f.Hand[1]]['active']=1" cond="f.Cards[f.Hand[1]]['active']>0" target="*敵攻撃選択" ]
-[glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['value'],f.Cards[f.Hand[2]]['active']=1" cond="f.Cards[f.Hand[2]]['active']>0" target="*敵攻撃選択" ]
-[glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['value'],f.Cards[f.Hand[3]]['active']=1" cond="f.Cards[f.Hand[3]]['active']>0" target="*敵攻撃選択" ]
-[glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['value'],f.Cards[f.Hand[4]]['active']=1" cond="f.Cards[f.Hand[4]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[0]]['color']" size="18" width="15" height="100" x="450" y="500" text="&f.Cards[f.Hand[0]]['txt']" exp="tf.Answer=f.Cards[f.Hand[0]]['value'],f.Cards[f.Hand[0]]['active']=0" cond="f.Cards[f.Hand[0]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[1]]['color']" size="18" width="15" height="100" x="550" y="500" text="&f.Cards[f.Hand[1]]['txt']" exp="tf.Answer=f.Cards[f.Hand[1]]['value'],f.Cards[f.Hand[1]]['active']=0" cond="f.Cards[f.Hand[1]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[2]]['color']" size="18" width="15" height="100" x="650" y="500" text="&f.Cards[f.Hand[2]]['txt']" exp="tf.Answer=f.Cards[f.Hand[2]]['value'],f.Cards[f.Hand[2]]['active']=0" cond="f.Cards[f.Hand[2]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[3]]['color']" size="18" width="15" height="100" x="750" y="500" text="&f.Cards[f.Hand[3]]['txt']" exp="tf.Answer=f.Cards[f.Hand[3]]['value'],f.Cards[f.Hand[3]]['active']=0" cond="f.Cards[f.Hand[3]]['active']>0" target="*敵攻撃選択" ]
+[glink color="&f.Cards[f.Hand[4]]['color']" size="18" width="15" height="100" x="850" y="500" text="&f.Cards[f.Hand[4]]['txt']" exp="tf.Answer=f.Cards[f.Hand[4]]['value'],f.Cards[f.Hand[4]]['active']=0" cond="f.Cards[f.Hand[4]]['active']>0" target="*敵攻撃選択" ]
+[endmacro]
+
+[macro name="CardTrash"]
+;TrashBoxにDeckをpushで破壊的結合。墓地を拡大。
+;Deck(シャッフルした山札)から今ターンのカードを削除
+[iscript]
+Array.prototype.push.apply(f.TrashBox,f.Hand);
+f.Deck.splice(0,4);
+[endscript]
 [endmacro]
 
 [macro name="Calc_Card"]
