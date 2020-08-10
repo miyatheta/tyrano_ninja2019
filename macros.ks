@@ -230,7 +230,7 @@ tf.E_SEX = f.E_SEX - tf.E_SEXd3 - tf.E_SEXd1 + tf.E_SEXb3 + tf.E_SEXb1 - tf.E_ch
 [Calc_Status]
 [layopt layer="2" visible=true]
 [iscript]
-tf.Decktxt = '山札：' + f.Deck.length + '/' + f.Cards.length ;
+tf.Decktxt = '行動力：' + tf.P_ACT ;
 tf.P_HPtxt = '体力：' + tf.P_HP ;
 tf.P_MGPtxt = '気力：' + f.P_MGP , tf.P_AVDtxt = '回避：+' + tf.P_AVD ;
 tf.P_EROtxt = '欲情：' + tf.P_ERO , f.P_EXHtxt = '疲労：' + f.P_EXH;
@@ -299,16 +299,8 @@ while(i < f.Cards.length){
 [endmacro]
 
 ;カード関係
-[macro name="DeckRemake"]
-;cardを増減したときなどにDeckの再構築を行う
-[iscript]
-f.Deck = [];
-n = f.Cards.length;
-for( i=0 ; i<n ; i++){f.Deck.push(i);}
-[endscript]
-[endmacro]
-
 [macro name="DeckShuffle"]
+DeckShuffle[wt5]
 ;Deckはシャッフルした山札（ただしカード自体ではなくカードの位置nの列。引き換え番号みたいなもの）
 [iscript]
 for(i = f.Deck.length - 1; i >= 0; i--){
@@ -318,7 +310,22 @@ for(i = f.Deck.length - 1; i >= 0; i--){
     f.Deck[r] = tmp;
 }
 [endscript]
-[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
+[endmacro]
+
+[macro name="DeckRemake"]
+DeckRemake[wt5]
+;ゴミ箱の中身をランダムで並べ替えてDeckに戻す
+[iscript]
+for(i = f.TrashBox.length - 1; i >= 0; i--){
+    var r = Math.floor(Math.random() * (i + 1));
+    var tmp = f.TrashBox[i];
+    f.TrashBox[i] = f.TrashBox[r];
+    f.TrashBox[r] = tmp;
+}
+Array.prototype.push.apply(f.Deck,f.TrashBox);
+f.TrashBox=[];
+
+[endscript]
 [endmacro]
 
 [macro name="ShowCardList"]
@@ -330,11 +337,12 @@ for(i = f.Deck.length - 1; i >= 0; i--){
 [endmacro]
 
 [macro name="CardTrash"]
+CardTrash[wt5]
 ;TrashBoxにDeckをpushで破壊的結合。墓地を拡大。
 ;Deck(シャッフルした山札)から今ターンのカードを削除
 [iscript]
 Array.prototype.push.apply(f.TrashBox,f.Hand);
-f.Deck.splice(0,4);
+f.Deck.splice(0,5);
 [endscript]
 [endmacro]
 

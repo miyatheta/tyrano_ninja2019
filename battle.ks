@@ -22,7 +22,7 @@
 [Reflesh_PL_buff][Reflesh_EN_buff][Initialize_3Tbuff]
 
 *Initialize_Cards
-;カードの情報を収めた連想(ハッシュ・辞書)配列(=オブジェクト)を収めた配列(多次元配列)を作成。
+;Cards=カードの情報を収めた連想(ハッシュ・辞書)配列(=オブジェクト)を収めた配列(多次元配列)を作成。
 ;Deck=カードのidを並べたもの。
 [iscript]
 f.Cards=[
@@ -47,7 +47,8 @@ f.TrashBox = [];
 n = f.Cards.length;
 for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [endscript]
-
+;初回シャッフル
+[DeckShuffle]
 ;デバッグ用の設定
 @call storage="btl-ConfigTest.ks" target="*テストコンフィグ"
 戦闘を開始します[p]
@@ -57,8 +58,14 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [eval exp="tf.Round +=1"]
 [MiniStatus]
 
+*山札再構成
+;手札不足時に山札を再構成
+[if exp="f.Deck.length <= tf.P_ACT"]
+[DeckRemake]
+[endif]
+
 *手札構築
-[DeckShuffle]
+[eval exp="f.Hand=[f.Deck[0],f.Deck[1],f.Deck[2],f.Deck[3],f.Deck[4]]"]
 [ShowCardList]
 [MiniStatus]
 [Calc_Card]
@@ -72,10 +79,9 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 ;------------------------------------------------------------------------------
 *ターン開始
-ターン開始[er]
+ターン開始[wt5]
 [eval exp="tf.Turn +=1"]
 ;状態異常のカウント・治癒
-
 
 ;------------------------------------------------------------------------------
 ;PLの選択
@@ -110,7 +116,6 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [link target="*手札一覧"]戻る[endlink][r]
 [s]
 
-
 ;------------------------------------------------------------------------------
 *敵攻撃選択
 ;[jump storage="btl-Testenemy.ks" target="*敵攻撃パターン適用"]
@@ -118,7 +123,7 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 
 ;------------------------------------------------------------------------------
 *ターン終了
-ターン終了[er]
+ターン終了[wt5]
 ;行動力減少
 [eval exp="tf.P_ACT -=1"]
 [if exp="tf.P_ACT >0"]
@@ -129,10 +134,12 @@ for( i=0 ; i<n ; i++){f.Deck.push(i);}
 [s]
 ;------------------------------------------------------------------------------
 *ラウンド終了
-ラウンド終了[er]
+ラウンド終了[wt5]
 [freeimage layer=3]
 ;使用済みカードを墓地へ
 [CardTrash]
+;行動力復元
+[eval exp="tf.P_ACT = f.P_ACT "]
 ;バッドステータスのラウンド短縮
 [eval exp="tf.P_Stan = 0"]
 [jump target="*ラウンド開始"]
